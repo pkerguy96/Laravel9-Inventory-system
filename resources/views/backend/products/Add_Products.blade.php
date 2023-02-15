@@ -14,6 +14,15 @@
 
                         <form method="post" action="{{ route('append.product') }}" id="myForm">
                             @csrf
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Product Name</label>
                                 <div class="form-group col-sm-10">
@@ -27,6 +36,7 @@
                                     <input name="ref_num" class="form-control" type="text">
                                 </div>
                             </div>
+
                             <!-- end row -->
                             <div class="row mb-3">
                                 <label for="example-number-input" class="col-sm-2 col-form-label">Product Quantity</label>
@@ -42,6 +52,18 @@
                                         <option selected="">Open this select menu</option>
                                         @foreach ( $suppliers as $supplier)
                                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- end row -->
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Brand Name</label>
+                                <div class="col-sm-10">
+                                    <select name="brand_id" class="form-select" aria-label="Default select example">
+                                        <option selected="">Open this select menu</option>
+                                        @foreach ( $brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->Brand_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -108,6 +130,9 @@
                 category_id: {
                     required: true,
                 },
+                brand_id: {
+                    required: true,
+                },
             },
             messages: {
                 product_name: {
@@ -124,6 +149,9 @@
                 },
                 category_id: {
                     required: 'Please Enter A Product Category',
+                },
+                brand_id: {
+                    required: 'Please Enter A Products Brand',
                 },
             },
             errorElement: 'span',

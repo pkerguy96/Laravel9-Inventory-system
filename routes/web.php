@@ -177,6 +177,15 @@ route::middleware('auth')->group(function () {
     /* All brands routes here */
     Route::controller(BrandsController::class)->group(function () {
         Route::get('/All/Brands', 'Allbrands')->name('all.Brands');
+        Route::get('/Add/Brands', 'AddBrand')->name('add.brand');
+        /* store new brand */
+        Route::post('/Store/Brands', 'StoreBrand')->name('append.brand');
+        /* Edit brand view */
+        Route::get('/Brands/Edit/{id}', 'EditBrand')->name('edit.Brand');
+        /* Edit brand */
+        Route::post('/Modify/Brands', 'ModifyBrand')->name('modify.Brand');
+        /* delete brand */
+        Route::get('/Brands/delete/{id}', 'Deletebrand')->name('delete.brand');
     });
 
 

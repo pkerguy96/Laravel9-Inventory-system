@@ -16,8 +16,8 @@ class FetchController extends Controller
 {
     public function FetchCategory(Request $request)
     {
-        $supplierid = $request->supplier_id;
-        $categories = Product::with(['categories'])->select('category_id')->where('supplier_id', $supplierid)->groupBy('category_id')->get();
+        $brand_id = $request->brand_id;
+        $categories = Product::with(['categories'])->select('category_id')->where('brand_id', $brand_id)->groupBy('category_id')->get();
         return response()->json($categories);
     }
     public function FetchProduct(Request $request)

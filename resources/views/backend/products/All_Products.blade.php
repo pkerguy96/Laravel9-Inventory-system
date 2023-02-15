@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>Sl</th>
+                                    <th>Brand</th>
                                     <th>Product Name</th>
                                     <th>Product Quantity</th>
                                     <th>Supplier</th>
@@ -38,12 +39,14 @@
                                 @foreach($products as $key => $item)
                                 <tr>
                                     <td> {{ $key+1}} </td>
+                                    <td> {{ $item['brands']->Brand_name ?? ' ' }} </td>
                                     <td> {{ $item->product_name }} </td>
                                     <td> {{ $item->product_qte}} </td>
                                     <!-- COME BACK FOR THIS TO CHECK WEATHER ITS DELETED OR NOT  -->
-                                    <td> {{ $item['suppliers']->name ?? 'deleted' }} </td>
-                                    <td> {{ $item['units']->unit_name }} </td>
-                                    <td> {{ $item['categories']->category_name }} </td>
+                                    <td> {{ $item['suppliers']->name ?? '' }} </td>
+                                    <td> {{ $item['units']->unit_name ?? ' '}} </td>
+                                    <td> {{ $item['categories']->category_name ?? ' '}} </td>
+
                                     <td>
                                         <a href="{{ route('edit.product',$item->id) }}" class="btn btn-info sm" title="Edit Data"> <i class="fas fa-edit"></i> </a>
 

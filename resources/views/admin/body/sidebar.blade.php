@@ -20,7 +20,7 @@
 
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class="fas fa-user-tie"></i>
                          <span>Manage Suppliers</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -29,7 +29,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class="fas fa-users"></i>
                          <span>Manage Customers</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -42,7 +42,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class="fas fa-vial "></i>
                          <span>Manage Units</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -51,7 +51,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class="fas fa-layer-group"></i>
                          <span>Manage Brands</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -60,7 +60,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class=" fas fa-sign"></i>
                          <span>Manage Categories</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -69,7 +69,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class=" fas fa-box-open"></i>
                          <span>Manage Products</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -78,7 +78,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class=" fas fa-credit-card"></i>
                          <span>Manage Purchases</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
@@ -90,7 +90,7 @@
                  </li>
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
-                         <i class="ri-mail-send-line"></i>
+                         <i class=" fas fa-file-invoice-dollar"></i>
                          <span>Invoice Management</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">

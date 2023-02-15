@@ -25,7 +25,6 @@
                                     <input class="form-control" type="text" name="purchase_no" id="purchase_no">
                                 </div>
                             </div>
-
                             <div class="col-md-4">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Supplier Name</label>
@@ -37,6 +36,20 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row" style="margin-top: 1%;">
+                            <div class="col-md-4">
+                                <div class="md-3">
+                                    <label for="example-text-input" class="form-label">Brand Name</label>
+                                    <select id="brand_id" name="brand_id" class="form-select " aria-label="Default select example">
+                                        <option selected="">Open this select menu</option>
+                                        @foreach ( $brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->Brand_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <div class="col-md-4">
                                 <div class="md-3">
@@ -55,16 +68,15 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
-
-                                    <i class="btn btn-info btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
+                                    <i class="btn btn-info btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore float-right"> Add More</i>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                     <!-- End of card body -->
                     <div class="card-body">
@@ -73,6 +85,7 @@
                             <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
                                 <thead>
                                     <tr>
+                                        <th>Brand Name</th>
                                         <th>Product Name</th>
                                         <th>Category</th>
                                         <th>Pieces</th>
@@ -88,7 +101,7 @@
                                 </tbody>
                                 <tbody id="rowAdd" class="rowAdd">
                                     <tr>
-                                        <td colspan="5"></td>
+                                        <td colspan="6"></td>
                                         <td>
                                             <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
                                         </td>
@@ -116,16 +129,16 @@
 
 
 <script type="text/javascript">
-    document.getElementById('supplier_id').addEventListener('change', function() {
-        console.log('100');
-        var supplier_id = this.value;
-        console.log(supplier_id);
-        fetch(`{{route('fetch-category') }}?supplier_id=${supplier_id}`, {
+    document.getElementById('brand_id').addEventListener('change', function() {
+
+        var brand_id = this.value;
+
+        fetch(`{{route('fetch-category') }}?brand_id=${brand_id}`, {
                 method: "GET",
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+
                 let html = '<option value="">Select Category</option>';
                 data.forEach(function(v) {
                     html += `<option value="${v.category_id}"> ${v.categories.category_name} </option>`;
@@ -141,16 +154,21 @@
 
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date[]" value="@{{date}}">
+        
         <input type="hidden" name="purchase_no[]" value="@{{purchase_no}}">
         <input type="hidden" name="supplier_id[]" value="@{{supplier_id}}">
+        <td>
+        <input type="hidden" name="brand_id[]" value="@{{brand_id}}">
+        @{{ brand_name }}
+        </td>
         <td>
         <input type="hidden" name="product_id[]" value="@{{product_id}}">
         @{{ product_name }}
         </td>
-    <td>
-        <input type="hidden" name="category_id[]" value="@{{category_id}}">
-        @{{ category_name }}
-    </td>
+        <td>
+            <input type="hidden" name="category_id[]" value="@{{category_id}}">
+            @{{ category_name }}
+        </td>
 
    
 
@@ -187,6 +205,9 @@
             var supplier_id = $('#supplier_id').val();
             var category_id = $('#category_id').val();
             var category_name = $('#category_id').find('option:selected').text();
+            var brand_id = $('#brand_id').val();
+            var brand_name = $('#brand_id').find('option:selected').text();
+            console.log(brand_name);
             var product_id = $('#product_id').val();
             var product_name = $('#product_id').find('option:selected').text();
             if (date == '') {
@@ -229,6 +250,8 @@
             var data = {
                 date: date,
                 purchase_no: purchase_no,
+                brand_id: brand_id,
+                brand_name: brand_name,
                 supplier_id: supplier_id,
                 category_id: category_id,
                 category_name: category_name,
@@ -236,6 +259,7 @@
                 product_name: product_name
             };
             var html = tamplate(data);
+            console.log(html);
             $("#rowAdd").append(html);
         });
         document.addEventListener('click', function(event) {
@@ -254,19 +278,7 @@
 
         });
 
-        /*  let unitprice = document.querySelectorAll('.unit_price');
-        let buying_qte = document.querySelectorAll('.buying_qty');
-        let sexybebe = [...unitprice, ...buying_qte];
-        console.log(sexybebe);
-        sexybebe.forEach(element => {
 
-            element.addEventListener('keyup', (e) => {
-                console.log('laliberte');
-
-            });
-
-        });
- */
 
 
         /* calculater total */

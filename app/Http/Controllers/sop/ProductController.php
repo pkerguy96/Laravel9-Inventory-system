@@ -6,6 +6,7 @@ use App\Models\Supplier;
 use App\Models\Unit;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,13 +24,30 @@ class ProductController extends Controller
         $suppliers = Supplier::all();
         $units = Unit::all();
         $categories = Category::all();
-        return view('backend.products.Add_Products', compact('suppliers', 'units', 'categories'));
+        $brands = Brand::all();
+        return view('backend.products.Add_Products', compact('suppliers', 'units', 'categories', 'brands'));
     }
     public function Storeproduct(Request $request)
     {
+        $request->validate(
+            ['product_name' => 'required|min:3',    'ref_num' => 'required', 'brand_id' => 'required', 'product_qte' => 'required', 'supplier_id' => 'required', 'unit_id' => 'required', 'category_id' => 'required'],
+            [
+                'product_name.required' => 'Please enter a product name.',
+                'product_name.min' => 'The name must be at least 3 characters long.',
+                'ref_num.required' => 'Please enter a referrence number.',
+                'brand_id.required' => 'Please enter a brand.',
+                'product_qte.required' => 'Please enter product quantity number.',
+                'supplier_id.required' => 'Please enter a supplier.',
+                'unit_id.required' => 'Please enter a unit.',
+                'category_id.required' => 'Please enter products category.',
+
+            ]
+        );
+
         Product::insert([
             'product_name' => $request->product_name,
             'ref_num' => $request->ref_num,
+            'brand_id' => $request->brand_id,
             'product_qte' => $request->product_qte,
             'supplier_id' => $request->supplier_id,
             'unit_id' => $request->unit_id,

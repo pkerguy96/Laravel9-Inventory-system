@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Unit;
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -24,7 +25,8 @@ class PurchaseController extends Controller
         $suppliers = Supplier::all();
         $units = Unit::all();
         $categories = Category::all();
-        return view('backend.purchases.Add_Purchases', compact('suppliers', 'units', 'categories'));
+        $brands = Brand::all();
+        return view('backend.purchases.Add_Purchases', compact('suppliers', 'units', 'categories', 'brands'));
     }
     public function storepurchase(request $request)
     {
