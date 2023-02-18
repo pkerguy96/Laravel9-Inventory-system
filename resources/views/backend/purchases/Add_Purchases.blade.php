@@ -92,6 +92,7 @@
                                         <th>Unit Price</th>
                                         <th>Description</th>
                                         <th>Total Price</th>
+
                                         <th>Action</th>
 
                                     </tr>
@@ -101,11 +102,28 @@
                                 </tbody>
                                 <tbody id="rowAdd" class="rowAdd">
                                     <tr>
-                                        <td colspan="6"></td>
+                                        <td colspan="6"> <strong class="text-right">Subtotal</strong></td>
+
                                         <td>
                                             <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
                                         </td>
                                         <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"> <strong class="text-right">Tax 20%</strong></td>
+
+
+                                        <td>
+                                            <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"> <strong class="text-right">Grand Total</strong></td>
+
+
+                                        <td>
+                                            <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control amount" readonly style="background-color: #ddd;">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table><br>
@@ -207,7 +225,7 @@
             var category_name = $('#category_id').find('option:selected').text();
             var brand_id = $('#brand_id').val();
             var brand_name = $('#brand_id').find('option:selected').text();
-            console.log(brand_name);
+            console.log(brand_id);
             var product_id = $('#product_id').val();
             var product_name = $('#product_id').find('option:selected').text();
             if (date == '') {
@@ -259,7 +277,7 @@
                 product_name: product_name
             };
             var html = tamplate(data);
-            console.log(html);
+
             $("#rowAdd").append(html);
         });
         document.addEventListener('click', function(event) {
@@ -269,7 +287,8 @@
             }
         });
         /* calculate unit * buyingp rice  the unit dosnt update*/
-        $(document).on('keyup click', '.unit_price', '.buying_qty', function() {
+        $(document).on('keyup click', '.unit_price, .buying_qty', function() {
+
             var unit_price = $(this).closest("tr").find("input.unit_price").val();
             var buying_qte = $(this).closest("tr").find("input.buying_qty").val();
             var total = unit_price * buying_qte;
@@ -291,6 +310,14 @@
                 }
             });
             $('#amount').val(sum);
+            // Calculate tax amount as 20% of subtotal
+
+            var onlytax = 0.20 * sum;
+            $('#tax').val(onlytax.toFixed(2));
+            var Gtotal = parseFloat(onlytax + sum);
+            $('#Gtotal').val(Gtotal.toFixed(2));
+
+
         }
 
 

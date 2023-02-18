@@ -44,9 +44,10 @@ class PurchaseController extends Controller
                 $purchase->purchase_no = $request->purchase_no[$i];
                 $purchase->supplier_id = $request->supplier_id[$i];
                 $purchase->category_id = $request->category_id[$i];
-
+                $purchase->category_id = $request->category_id[$i];
                 $purchase->product_id = $request->product_id[$i];
                 $purchase->buying_price = $request->buying_price[$i];
+                $purchase->brand_id = $request->brand_id[$i];
                 $purchase->unit_price = $request->unit_price[$i];
                 $purchase->qte = $request->buying_qty[$i];
                 $purchase->description = $request->description[$i];

@@ -64,7 +64,7 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     @foreach($available_locales as $locale_name => $available_locale)
                     @if($available_locale !== $lel)
-                    <a href="language/{{ $available_locale }}" class="dropdown-item notify-item">
+                    <a href="{{ url('/') }}/language/{{ $available_locale }}" class="dropdown-item notify-item">
                         <img src="{{asset('backend/assets/images/flags/'. $available_locale .'.jpg')}} " alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ $locale_name }}</span>
                     </a>
                     @endif

@@ -210,6 +210,12 @@ route::middleware('auth')->group(function () {
 
 
     /* Language routes here */
+    Route::get('{prefix?}/language/{locale}', function ($locale) {
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        return redirect()->back();
+    })->where('prefix', '.*');
+
     Route::get('language/{locale}', function ($locale) {
         app()->setLocale($locale);
         session()->put('locale', $locale);
