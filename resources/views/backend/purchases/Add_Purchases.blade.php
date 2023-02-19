@@ -102,7 +102,7 @@
                                 </tbody>
                                 <tbody id="rowAdd" class="rowAdd">
                                     <tr>
-                                        <td colspan="6"> <strong class="text-right">Subtotal</strong></td>
+                                        <td colspan="6" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
 
                                         <td>
                                             <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
@@ -110,7 +110,7 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6"> <strong class="text-right">Tax 20%</strong></td>
+                                        <td colspan="6" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
 
 
                                         <td>
@@ -118,10 +118,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="6"> <strong class="text-right">Grand Total</strong></td>
+                                        <td colspan="6" style="text-align: right;"><strong>Grand Total</strong></td>
 
 
                                         <td>
+
                                             <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control amount" readonly style="background-color: #ddd;">
                                         </td>
                                     </tr>
@@ -172,7 +173,7 @@
 
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date[]" value="@{{date}}">
-        
+      
         <input type="hidden" name="purchase_no[]" value="@{{purchase_no}}">
         <input type="hidden" name="supplier_id[]" value="@{{supplier_id}}">
         <td>
@@ -203,6 +204,7 @@
     </td>
 
      <td>
+     <input type="hidden" name="tax_col[]" value="0" >
         <input type="number" class="form-control buying_price text-right" name="buying_price[]" value="0" readonly> 
     </td>
 
@@ -299,8 +301,6 @@
 
 
 
-
-        /* calculater total */
         function totalAmountPrice() {
             var sum = 0;
             $(".buying_price").each(function() {
@@ -309,15 +309,13 @@
                     sum += parseFloat(value);
                 }
             });
-            $('#amount').val(sum);
+            $('#amount').val(sum.toFixed(2)); // round subtotal to 2 decimal places
             // Calculate tax amount as 20% of subtotal
-
             var onlytax = 0.20 * sum;
-            $('#tax').val(onlytax.toFixed(2));
+            $('#tax').val(onlytax.toFixed(2)); // round tax to 2 decimal places
+
             var Gtotal = parseFloat(onlytax + sum);
-            $('#Gtotal').val(Gtotal.toFixed(2));
-
-
+            $('#Gtotal').val(Gtotal.toFixed(2)); // round grand total to 2 decimal places
         }
 
 

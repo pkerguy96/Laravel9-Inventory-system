@@ -39,22 +39,24 @@ class PurchaseController extends Controller
         } else {
             $category_count = count($request->category_id);
             for ($i = 0; $i < $category_count; $i++) {
-                $purchase = new Purchase();
-                $purchase->date = date('Y-m-d', strtotime($request->date[$i]));
-                $purchase->purchase_no = $request->purchase_no[$i];
-                $purchase->supplier_id = $request->supplier_id[$i];
-                $purchase->category_id = $request->category_id[$i];
-                $purchase->category_id = $request->category_id[$i];
-                $purchase->product_id = $request->product_id[$i];
-                $purchase->buying_price = $request->buying_price[$i];
-                $purchase->brand_id = $request->brand_id[$i];
-                $purchase->unit_price = $request->unit_price[$i];
-                $purchase->qte = $request->buying_qty[$i];
-                $purchase->description = $request->description[$i];
-
-                $purchase->created_by = Auth::user()->id;
-                $purchase->status = '0';
-                $purchase->save();
+                $tax = calculatetax($request->buying_price[$i]);
+                $fields = [
+                    'date' => date('Y-m-d', strtotime($request->date[$i])),
+                    'purchase_no' => $request->purchase_no[$i],
+                    'supplier_id' => $request->supplier_id[$i],
+                    'category_id' => $request->category_id[$i],
+                    'product_id' => $request->product_id[$i],
+                    'buying_price' => $request->buying_price[$i],
+                    'brand_id' => $request->brand_id[$i],
+                    'unit_price' => $request->unit_price[$i],
+                    'tax_amount' => calculatetax($request->buying_price[$i]),
+                    'grand_total' => CalculateGrandAmount($request->buying_price[$i], $tax),
+                    'qte' => $request->buying_qty[$i],
+                    'description' => $request->description[$i],
+                    'created_by' => Auth::user()->id,
+                    'status' => '0',
+                ];
+                insertFields(Purchase::class, $fields);
             }
         }
         $notification = array(
