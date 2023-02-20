@@ -24,20 +24,30 @@ class SupplierController extends Controller
     /* adds supplier in DB */
     public function Storesupplier(Request $request)
     {
-        supplier::insert([
-            'name' =>  $request->name,
-            'phone' =>  $request->phone,
-            'address' =>  $request->address,
-            'email' =>  $request->email,
-            'created_by' => Auth::user()->id,
-            'created_at' => Carbon::now(),
-        ]);
-        $notification = array(
-            'message' => 'Supplier Added Successfully',
-            'alert-type' => 'success'
-        );
+        if (verifySupplierIce($request->ice)) {
+            $notification = array(
+                'message' => 'Supplier ice already exists in the database',
+                'alert-type' => 'error'
+            );
 
-        return redirect()->route('all.suppliers')->with($notification);
+            return redirect()->back()->with($notification);
+        } else {
+            supplier::insert([
+                'name' =>  $request->name,
+                'phone' =>  $request->phone,
+                'address' =>  $request->address,
+                'email' =>  $request->email,
+                'ice' =>  $request->ice,
+                'created_by' => Auth::user()->id,
+                'created_at' => Carbon::now(),
+            ]);
+            $notification = array(
+                'message' => 'Supplier Added Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->route('all.suppliers')->with($notification);
+        }
     }
     /* redirects to supplier page to modify it  */
     public function EditSupplier($id)

@@ -107,4 +107,10 @@ class PurchaseController extends Controller
         $data = Purchase::whereBetween('date', [$startdate, $enddate])->where('status', '1')->get();
         return view('backend.pdfs.Purchases_Search_Report_pdf', compact('data', 'startdate', 'enddate'));
     }
+    public function ViewPurchasesDetails($id)
+    {
+        $data = Purchase::findorfail($id);
+
+        return view('backend.pdfs.Purchases_details_pdf', compact('data'));
+    }
 }

@@ -196,7 +196,7 @@
     </td>
 
     <td>
-        <input type="number" class="form-control unit_price text-right" name="unit_price[]" value=""> 
+        <input type="number" step="0.01" class="form-control unit_price text-right" name="unit_price[]" value=""> 
     </td>
 
  <td>
@@ -204,8 +204,8 @@
     </td>
 
      <td>
-     <input type="hidden" name="tax_col[]" value="0" >
-        <input type="number" class="form-control buying_price text-right" name="buying_price[]" value="0" readonly> 
+    
+        <input type="number" class="form-control buying_price text-right"  name="buying_price[]" value="0" readonly> 
     </td>
 
      <td>

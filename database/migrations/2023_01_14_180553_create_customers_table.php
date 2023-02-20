@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
-            $table->string('ice')->nullable();
+            $table->string('ice')->nullable()->unique();
 
             $table->tinyInteger('status')->default(1);
             $table->integer('created_by')->nullable();

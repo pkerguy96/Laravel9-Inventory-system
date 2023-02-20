@@ -150,6 +150,8 @@ route::middleware('auth')->group(function () {
         Route::get('/Purchases/approve/purchase/{id}', 'approvepurchase')->name('approve.purchase');
         Route::get('/Purchases/Search/', 'SearchPurchases')->name('all.Purchases.search');
         Route::get('/Purchases/Search/Pdf', 'SearchPurchasesPdfPage')->name('search.date.purchases');
+        /* get purchases details */
+        Route::get('/Purchases/details/{id}', 'ViewPurchasesDetails')->name('Purchases.details');
     });
     /* All  Invoices REQUESTS here: */
     Route::controller(InvoiceController::class)->group(function () {

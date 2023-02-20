@@ -26,4 +26,8 @@ class Purchase extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+    public function brands()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
 }
