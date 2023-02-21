@@ -108,9 +108,9 @@
                                                 <td class="text-center">{{$data->id}}</td>
                                                 <td class="text-center">{{date('d-m-Y',strtotime($data->date))}}</td>
                                                 <td class="text-center">{{$data->purchase_no}}</td>
-                                                <td class="text-center">{{$data['brands']['Brand_name']}}</td>
-                                                <td class="text-center">{{$data['categories']['category_name']}}</td>
-                                                <td class="text-center">{{$data['products']['product_name']}}</td>
+                                                <td class="text-center">{{$data['brands']['Brand_name'] ?? 'N/A'}}</td>
+                                                <td class="text-center">{{$data['categories']['category_name'] ?? 'N/A'}}</td>
+                                                <td class="text-center">{{$data['products']['product_name'] ?? 'N/A'}}</td>
 
                                                 <td class="text-center">{{$data->qte}}</td>
                                                 <td class="text-center">{{$data->unit_price}} MAD</td>

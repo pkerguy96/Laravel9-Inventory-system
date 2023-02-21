@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\Unit;
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -33,13 +34,13 @@ class InvoiceController extends Controller
         {
             $latestInvoice = Invoice::latest('id')->first();
             if ($latestInvoice) {
-                $invoiceNumber = (int) substr($latestInvoice->invoice_number, -5);
+                $invoiceNumber = (int) substr($latestInvoice->invoice_no, -3);
                 $invoiceNumber++;
-                $invoiceNumber = str_pad($invoiceNumber, 5, "0", STR_PAD_LEFT);
+                $invoiceNumber = str_pad($invoiceNumber, 3, "0", STR_PAD_LEFT);
             } else {
                 $invoiceNumber = "000001";
             }
-            return Carbon::now()->format('Y') . '-' . $invoiceNumber;
+            return Carbon::now()->format('Y') . '/' . Carbon::now()->format('m') . Carbon::now()->format('d') . $invoiceNumber;
         }
         $invoice_no = generateInvoiceNumber();
         /* 
@@ -54,13 +55,14 @@ class InvoiceController extends Controller
         $date = date('Y-m-d');
         $categories = Category::all();
         $customers = Customer::all();
-        return view('backend.Invoices.Add_Invoices', compact('invoice_no', 'date', 'categories', 'customers'));
+        $brands = Brand::all();
+        return view('backend.Invoices.Add_Invoices', compact('invoice_no', 'date', 'categories', 'customers', 'brands'));
     }
     public function storeInvoices(Request $request)
     {
-        if ($request->category_id == null) {
+        if ($request->category_id == null || $request->pay_status == null || $request->customer_id == null) {
             $notification = array(
-                'message' => 'No category has been selected',
+                'message' => 'please select category',
                 'alert-type' => 'error'
             );
             return redirect()->back()->with($notification);
@@ -84,14 +86,18 @@ class InvoiceController extends Controller
                     if ($invoice->save()) {
                         $category_count = count($request->category_id);
                         for ($i = 0; $i < $category_count; $i++) {
+                            $tax = calculatetax($request->selling_price[$i]);
                             $invoice_details = new InvoiceDetail();
                             $invoice_details->invoice_id = $invoice->id;
                             $invoice_details->date = date('Y-m-d', strtotime($request->date));
                             $invoice_details->category_id = $request->category_id[$i];
                             $invoice_details->product_id = $request->product_id[$i];
                             $invoice_details->qte = $request->qte[$i];
+                            $invoice_details->brand_id = $request->brand_id[$i];
+                            $invoice_details->tax_amount = calculatetax($request->selling_price[$i]);
                             $invoice_details->unit_price = $request->unit_price[$i];
                             $invoice_details->selling_price = $request->selling_price[$i];
+                            $invoice_details->grand_total = CalculateGrandAmount($request->selling_price[$i], $tax);
                             $invoice_details->status = '0';
 
                             $invoice_details->save();
@@ -109,6 +115,8 @@ class InvoiceController extends Controller
                         } else {
                             $customerid = $request->customer_id;
                         }
+                        /* Add customer id in the invoice table after its created */
+                        invoice::findorfail($invoice->id)->update(['customer_id' => $customerid]);
                         $payements = new Payement();
                         $payements_details = new PayementDetail();
                         $payements->invoice_id = $invoice->id;
@@ -139,7 +147,7 @@ class InvoiceController extends Controller
         }
         $notification = array(
             'message' => 'Invoice Data inserted Successfuly',
-            'alert-type' => 'sucess'
+            'alert-type' => 'success'
         );
         return redirect()->route('all.invoices')->with($notification);
     }

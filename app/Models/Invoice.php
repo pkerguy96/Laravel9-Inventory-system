@@ -14,6 +14,10 @@ class Invoice extends Model
     {
         return $this->belongsTo(Payement::class, 'id', 'invoice_id');
     }
+    public function clients()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
     public function InvoiceDetails()
     {
         return $this->hasMany(InvoiceDetail::class, 'invoice_id', 'id');

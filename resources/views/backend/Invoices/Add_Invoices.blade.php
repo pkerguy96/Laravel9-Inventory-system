@@ -27,7 +27,24 @@
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
-
+                            <div class="col-md-2">
+                                <div class="md-3">
+                                    <label for="example-text-input" class="form-label">Due Date</label>
+                                    <input class="form-control" type="date" value="{{$date}}" name="due_date" id="date">
+                                </div>
+                            </div>
+                            <!-- brand start -->
+                            <div class="col-md-3">
+                                <div class="md-3">
+                                    <label for="example-text-input" class="form-label">Brand</label>
+                                    <select id="Brand_id" name="Brand_id" class="form-select " aria-label="Default select example">
+                                        @foreach ($brands as $key )
+                                        <option value="{{$key->id}}">{{$key->Brand_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- brand end -->
                             <div class="col-md-3">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Category</label>
@@ -39,8 +56,11 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="md-3">
+                        </div>
+                        <div class="row mt-3 ">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-3  ">
+                                <div class="md-3 ">
                                     <label for="example-text-input" class="form-label">Product Name</label>
                                     <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
                                         <option selected="">Open this select menu</option>
@@ -53,13 +73,14 @@
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
                                     <i class="btn btn-info btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
                                 </div>
                             </div>
+
                         </div>
 
 
@@ -71,6 +92,7 @@
                             <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
                                 <thead>
                                     <tr>
+                                        <th>Brand</th>
                                         <th>Product Name</th>
                                         <th>Category</th>
                                         <th width="7%">Pieces</th>
@@ -84,7 +106,7 @@
 
                                 </tbody>
                                 <tr>
-                                    <td colspan="4">Discount</td>
+                                    <td colspan="5" style="text-align: right;"><strong class="text-right">Discount </strong></td>
                                     <td>
                                         <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
                                     </td>
@@ -92,9 +114,25 @@
                                 </tr>
                                 <tbody id=" rowAdd" class="rowAdd">
                                     <tr>
-                                        <td colspan="4">Grand Total estimated amount</td>
+                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
+
                                         <td>
                                             <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
+
+
+                                        <td>
+                                            <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Grand Total estimated amount</strong></td>
+                                        <td>
+                                            <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
                                         </td>
                                         <td></td>
                                     </tr>
@@ -170,7 +208,10 @@
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date" value="@{{date}}">
         <input type="hidden" name="invoice_no" value="@{{invoice_no}}">
-        
+        <td>
+        <input type="hidden" name="brand_id[]" value="@{{brand_id}}">
+        @{{ brand_name }}
+        </td>
         <td>
         <input type="hidden" name="product_id[]" value="@{{product_id}}">
         @{{ product_name }}
@@ -201,7 +242,7 @@
     </td>
 
     </tr>
-
+ 
 </script>
 
 
@@ -210,7 +251,8 @@
         $(document).on("click", ".eeventmore", function() {
             var date = $('#date').val();
             var invoice_no = $('#invoice_no').val();
-
+            var brand_id = $('#Brand_id').val();
+            var brand_name = $('#Brand_id').find('option:selected').text();
             var category_id = $('#category_id').val();
             var category_name = $('#category_id').find('option:selected').text();
             var product_id = $('#product_id').val();
@@ -242,13 +284,15 @@
             var data = {
                 date: date,
                 invoice_no: invoice_no,
-
+                brand_id: brand_id,
+                brand_name: brand_name,
                 category_id: category_id,
                 category_name: category_name,
                 product_id: product_id,
                 product_name: product_name
             };
             var html = template(data);
+            console.log(html);
             $("#rowAdd").append(html);
         });
         document.addEventListener('click', function(event) {
@@ -257,15 +301,7 @@
                 totalAmountPrice();
             }
         });
-        /* calculate unit * buyingp rice  the unit dosnt update*/
-        /* $(document).on('keyup click', '.unit_price', '.qte', function() {
-            var unit_price = $(this).closest("tr").find("input.unit_price").val();
-            var buying_qte = $(this).closest("tr").find("input.qte").val();
-            var total = unit_price * buying_qte;
-            $(this).closest("tr").find("input.selling_price").val(total);
-            $('#discount_amount').trigger('keyup');
 
-        }); */
         $(document).on('keyup click', '.unit_price, .qte', function() {
             var currentStock = document.getElementById('stock_qte').value;
             var $row = $(this).closest("tr");
@@ -293,7 +329,14 @@
             if (!isNaN(discount) && discount.length != 0) {
                 sum -= parseFloat(discount);
             }
-            $('#amount').val(sum);
+
+            $('#amount').val(sum.toFixed(2)); // round subtotal to 2 decimal places
+            // Calculate tax amount as 20% of subtotal
+            var onlytax = 0.20 * sum;
+            $('#tax').val(onlytax.toFixed(2)); // round tax to 2 decimal places
+
+            var Gtotal = parseFloat(onlytax + sum);
+            $('#Gtotal').val(Gtotal.toFixed(2)); // round grand total to 2 decimal places
         }
 
 
@@ -353,4 +396,5 @@
         }
     });
 </script>
+
 @endsection

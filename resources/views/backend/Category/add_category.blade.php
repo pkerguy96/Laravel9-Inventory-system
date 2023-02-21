@@ -20,6 +20,7 @@
                                     <input name="name" class="form-control" type="text">
                                 </div>
                             </div>
+
                             <!-- end row -->
 
                             <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Category">
@@ -50,6 +51,7 @@
                 name: {
                     required: 'Please Enter Category Name',
                 },
+
 
             },
             errorElement: 'span',

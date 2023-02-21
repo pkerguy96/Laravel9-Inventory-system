@@ -4,6 +4,7 @@ namespace App\Http\Controllers\sop;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -14,10 +15,12 @@ class CategoryController extends Controller
     public function AllCategories()
     {
         $categories = Category::latest()->get();
-        return view('backend.Category.all_category', compact(('categories')));
+
+        return view('backend.Category.all_category', compact('categories'));
     }
     public function Addcategory()
     {
+
         return view('backend.Category.add_category');
     }
     /* adds Category in DB */
@@ -25,6 +28,7 @@ class CategoryController extends Controller
     {
         Category::insert([
             'category_name' =>  $request->name,
+
             'created_by' => Auth::user()->id,
             'created_at' => Carbon::now(),
         ]);

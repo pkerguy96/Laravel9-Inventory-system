@@ -17,11 +17,15 @@ return new class extends Migration
             $table->id();
             $table->integer('invoice_id')->nullable();
             $table->date('date')->nullable();
+            $table->integer('brand_id');
+
             $table->integer('category_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->double('qte')->nullable();
             $table->double('unit_price')->nullable();
             $table->double('selling_price')->nullable();
+            $table->double('tax_amount');
+            $table->double('grand_total');
             $table->string('status')->default(1);
 
             $table->timestamps();

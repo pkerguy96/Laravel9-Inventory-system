@@ -40,9 +40,10 @@
                                     <div class="col-6 mt-4">
                                         <h2>Client:</h2>
                                         <address>
-                                            <strong>Promed Plannet</strong><br>
-                                            Benni mellal ipse lorem lol <br>
-                                            jsmith@email.com
+                                            <strong>{{ $invoice['clients']['name'] }}</strong><br>
+                                            {{ $invoice['clients']['address'] }} <br>
+                                            Ice: {{ $invoice['clients']['ice'] }} <br>
+                                            {{ $invoice['clients']['phone'] }}
                                         </address>
                                     </div>
                                     <div class="col-6 mt-4 text-end">

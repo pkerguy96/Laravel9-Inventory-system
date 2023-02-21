@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 
+
 class SupplierController extends Controller
 {
     /* function that grabs all the suppliers */
@@ -24,14 +25,29 @@ class SupplierController extends Controller
     /* adds supplier in DB */
     public function Storesupplier(Request $request)
     {
-        if (verifySupplierIce($request->ice)) {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'email' => 'required|email',
+            'address' => 'required|string',
+            'ice' => 'required|string|unique:suppliers,ice',
+        ];
+        $messages = [
+            'name.required' => 'please enter a name',
+            'ice.unique' => 'The ICE field must be unique.'
+        ];
+
+        $result = verifySupplierIce($request, $rules, $messages);
+
+        if ($result['status'] === 'error') {
+            $errors = implode('<br>', $result['errors']);
             $notification = array(
-                'message' => 'Supplier ice already exists in the database',
+                'message' => $errors,
                 'alert-type' => 'error'
             );
-
             return redirect()->back()->with($notification);
         } else {
+
             supplier::insert([
                 'name' =>  $request->name,
                 'phone' =>  $request->phone,
