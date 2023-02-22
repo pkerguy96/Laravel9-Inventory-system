@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\sop\BrandsController;
 use App\Http\Controllers\sop\CategoryController;
 use App\Http\Controllers\sop\CustomerController;
+use App\Http\Controllers\sop\DeliveryController;
 use App\Http\Controllers\sop\FetchController;
 use App\Http\Controllers\sop\InvoiceController;
 use App\Http\Controllers\sop\ProductController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\sop\PurchaseController;
 use App\Http\Controllers\sop\StockController;
 use App\Http\Controllers\sop\SupplierController;
 use App\Http\Controllers\sop\UnitController;
+use App\Models\DeliveryReceipt;
 use App\Models\Invoice;
 
 Route::get('/', function () {
@@ -196,7 +198,9 @@ route::middleware('auth')->group(function () {
         Route::get('/Brands/delete/{id}', 'Deletebrand')->name('delete.brand');
     });
 
-
+    Route::controller(DeliveryController::class)->group(function () {
+        Route::get('/All/delivery', 'Alldelivery')->name('all.delivery.receipt');
+    });
 
 
     /* All API FETCH REQUESTS here: */

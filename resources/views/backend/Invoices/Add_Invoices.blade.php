@@ -154,7 +154,7 @@
                                     </select>
                                     <input type="text" name="paid_amount" class="form-control paid_amount" placeholder="Enter Amount" style="display: none;">
                                 </div>
-                                <div class="form-group col-md-9">
+                                <div class="form-group col-md-6">
                                     <label for="">customer Name</label>
                                     <select name="customer_id" id="customer_id" class="form-select">
 
@@ -164,25 +164,25 @@
                                         @endforeach
 
 
-                                        <optgroup label="Create new Customer">
-                                            <option value="0">New Customer</option>
-                                        </optgroup>
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="">delivery receipt</label>
+
+                                    <select name="delivery_id" class="form-select">
+
+                                        <option value="">Select delivery receipt </option>
+                                        @foreach ( $customers as $key)
+                                        <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
+                                        @endforeach
+
+
                                     </select>
                                 </div>
 
                             </div><br>
-                            <div class="row new_customer" style="display: none;">
-                                <div class="form-group col-md-4">
-                                    <input type="text" name="name" id="name" class="form-control" placeholder="Customer Name">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <input type="text" name="phone" id="phone" class="form-control" placeholder="Customer Phone">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <input type="email" name="email" id="email" class="form-control" placeholder="Customer Email">
-                                </div>
 
-                            </div><br>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-info" id="addButton">Add Invoice</button>
                             </div>
