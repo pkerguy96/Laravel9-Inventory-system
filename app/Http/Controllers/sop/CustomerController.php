@@ -79,6 +79,7 @@ class CustomerController extends Controller
     public function CustomersCredit()
     {
         $data = Payement::whereIn('pay_status', ['full_due', 'partial_paid'])->get();
+
         return view('backend.customers.Customers_CreditInfo', compact(('data')));
     }
     public function CustomersPrintPdf()
