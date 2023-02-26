@@ -200,6 +200,8 @@ route::middleware('auth')->group(function () {
 
     Route::controller(DeliveryController::class)->group(function () {
         Route::get('/All/delivery', 'Alldelivery')->name('all.delivery.receipt');
+        Route::get('/add/delivery', 'AddDelivery')->name('add.delivery');
+        Route::post('/store/delivery', 'storedevlivery')->name('store.delivery');
     });
 
 

@@ -12,7 +12,7 @@ class DeliveryReceipt extends Model
 
     public function customers()
     {
-        return $this->hasMany(Customer::class, 'customer_id', 'id');
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
     public function categories()
     {

@@ -21,11 +21,11 @@ return new class extends Migration
             $table->integer('category_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->date('date')->nullable();
+            $table->date('due_date')->nullable();
             $table->text('description')->nullable();
             $table->double('qte')->nullable();
-            $table->double('selling_price')->nullable();
-            $table->double('sub_total');
-            $table->double('grand_total');
+
+
 
             $table->timestamps();
         });

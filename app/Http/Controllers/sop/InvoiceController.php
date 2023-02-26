@@ -30,28 +30,9 @@ class InvoiceController extends Controller
     }
     public function AddInvoices()
     {
-        function generateInvoiceNumber()
-        {
-            $latestInvoice = Invoice::latest('id')->first();
-            if ($latestInvoice) {
-                $invoiceNumber = (int) substr($latestInvoice->invoice_no, -3);
-                $invoiceNumber++;
-                $invoiceNumber = str_pad($invoiceNumber, 3, "0", STR_PAD_LEFT);
-            } else {
-                $invoiceNumber = "000001";
-            }
-            return Carbon::now()->format('Y') . '/' . Carbon::now()->format('m') . Carbon::now()->format('d') . $invoiceNumber;
-        }
+
         $invoice_no = generateInvoiceNumber();
-        /* 
-        $invoicesData = Invoice::orderby('id', 'desc')->first();
-        if ($invoicesData == null) {
-            $count = '0';
-            $invoice_no = $count + 1;
-        } else {
-            $count = Invoice::orderby('id', 'desc')->first()->invoice_no;
-            $invoice_no = $count + 1;
-        } */
+
         $date = date('Y-m-d');
         $categories = Category::all();
         $customers = Customer::all();
