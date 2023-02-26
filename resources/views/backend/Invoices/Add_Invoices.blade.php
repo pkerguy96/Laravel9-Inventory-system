@@ -57,8 +57,8 @@
                             </div>
 
                         </div>
-                        <div class="row mt-3 ">
-                            <div class="col-md-1"></div>
+                        <div class="row mt-5 ">
+                            <div class=" col-md-1"></div>
                             <div class="col-md-3  ">
                                 <div class="md-3 ">
                                     <label for="example-text-input" class="form-label">Product Name</label>
@@ -168,16 +168,10 @@
 
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label for="">delivery receipt</label>
 
-                                    <select name="delivery_id" class="form-select">
-
-                                        <option value="">Select delivery receipt </option>
-                                        @foreach ( $customers as $key)
-                                        <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
-                                        @endforeach
-
-
+                                    <label for="example-text-input" class="form-label">delivery receipt</label>
+                                    <select id="delivery_id" name="delivery_id" class="form-select" aria-label="Default select example">
+                                        <option selected="">Select delivery receipt</option>
                                     </select>
                                 </div>
 
@@ -244,8 +238,6 @@
     </tr>
  
 </script>
-
-
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on("click", ".eeventmore", function() {
@@ -342,9 +334,6 @@
 
     });
 </script>
-
-
-
 <script type="text/javascript">
     document.getElementById('category_id').addEventListener('change', function() {
         var category_id = this.value;
@@ -362,7 +351,6 @@
             .catch(error => console.log(error));
     });
 </script>
-
 <script type="text/javascript">
     document.getElementById('product_id').addEventListener('change', function() {
         var product_id = this.value;
@@ -373,6 +361,26 @@
             .then(data => {
 
                 document.getElementById('stock_qte').value = data;
+            })
+            .catch(error => console.log(error));
+    });
+</script>
+<script type="text/javascript">
+    document.getElementById('customer_id').addEventListener('change', function() {
+        var customer_id = this.value;
+        fetch(`{{ route('get-customer-delivery-receipt') }}?customer_id=${customer_id}`, {
+                method: "GET",
+            })
+            .then(response => response.json())
+            .then(data => {
+                let html = '<option value="">No delivery receipts</option>';
+                if (data.length > 0) {
+                    html = '';
+                    data.forEach(function(v) {
+                        html += `<option value="${v.id}"> ${v.delivery_no} </option>`;
+                    });
+                }
+                document.getElementById('delivery_id').innerHTML = html;
             })
             .catch(error => console.log(error));
     });

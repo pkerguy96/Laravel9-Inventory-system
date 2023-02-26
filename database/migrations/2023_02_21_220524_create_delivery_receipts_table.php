@@ -17,13 +17,12 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->string('delivery_no')->nullable();
-            $table->integer('brand_id');
-            $table->integer('category_id')->nullable();
-            $table->integer('product_id')->nullable();
             $table->date('date')->nullable();
             $table->date('due_date')->nullable();
             $table->text('description')->nullable();
-            $table->double('qte')->nullable();
+            $table->double('total_qte')->nullable();
+            $table->integer('created_by');
+
 
 
 

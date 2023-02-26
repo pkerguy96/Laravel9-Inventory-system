@@ -30,7 +30,7 @@
                             <div class="col-md-2">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Due Date</label>
-                                    <input class="form-control" type="date" value="{{$date}}" name="due_date" id="date">
+                                    <input class="form-control" type="date" value="{{$date}}" name="due_date" id="due_date">
                                 </div>
                             </div>
                             <!-- brand start -->
@@ -164,6 +164,7 @@
 
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date" value="@{{date}}">
+        <input type="hidden" name="due_date" value="@{{due_date}}">
         <input type="hidden" name="delivery_no" value="@{{delivery_no}}">
         <td>
         <input type="hidden" name="brand_id[]" value="@{{brand_id}}">
@@ -199,6 +200,7 @@
     $(document).ready(function() {
         $(document).on("click", ".eeventmore", function() {
             var date = $('#date').val();
+            var due_date = $('#due_date').val();
             var delivery_no = $('#delivery_no').val();
             var brand_id = $('#Brand_id').val();
             var brand_name = $('#Brand_id').find('option:selected').text();
@@ -232,6 +234,7 @@
             var template = Handlebars.compile(source);
             var data = {
                 date: date,
+                due_date: due_date,
                 delivery_no: delivery_no,
                 brand_id: brand_id,
                 brand_name: brand_name,

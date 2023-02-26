@@ -28,9 +28,10 @@
                                     <th>Delivery Number</th>
                                     <th>Customer Name</th>
                                     <th>Date</th>
+                                    <th>Due Date</th>
                                     <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Total Amount</th>
+                                    <th>Total Quantity</th>
+                                    <th>Action</th>
                             </thead>
 
                             <tbody>
@@ -41,9 +42,15 @@
                                     <td> {{ $item->delivery_no }} </td>
                                     <td> {{ $item['customers']['name'] }} </td>
                                     <td> {{ date('d-m-Y',strtotime($item->date))}} </td>
+                                    <td> {{ date('d-m-Y',strtotime($item->due_date))}} </td>
                                     <td> {{ $item->description}} </td>
-                                    <td> {{ $item->qte}} </td>
-                                    <td> {{ $item->grand_total}} MAD</td>
+                                    <td> {{ $item->total_qte}} </td>
+                                    <td>
+
+                                        <a href="{{route('print.delivery',$item->id)}}" class="btn btn-success waves-effect waves-light" title="Print"> <i class="fas fa-print"></i> </a>
+                                        <a href="{{route('delete.delivery',$item->id)}}" class="btn btn-danger sm" title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i> </a>
+
+                                    </td>
 
                                 </tr>
                                 @endforeach

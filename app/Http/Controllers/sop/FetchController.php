@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Unit;
 use App\Models\Supplier;
 use App\Http\Controllers\Controller;
+use App\Models\DeliveryReceipt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -30,5 +31,10 @@ class FetchController extends Controller
     {
         $productStock = product::where('id', $request->product_id)->first()->product_qte;
         return response()->json($productStock);
+    }
+    public function CustomerDelivery(request $request)
+    {
+        $deliveryreceipt = DeliveryReceipt::where('customer_id', $request->customer_id)->get();
+        return response()->json($deliveryreceipt);
     }
 }

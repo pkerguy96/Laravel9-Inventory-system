@@ -202,6 +202,8 @@ route::middleware('auth')->group(function () {
         Route::get('/All/delivery', 'Alldelivery')->name('all.delivery.receipt');
         Route::get('/add/delivery', 'AddDelivery')->name('add.delivery');
         Route::post('/store/delivery', 'storedevlivery')->name('store.delivery');
+        Route::get('/print/delivery/{id}', 'PrintDelivery')->name('print.delivery');
+        Route::get('/delete/delivery/{id}', 'DeleteDelivery')->name('delete.delivery');
     });
 
 
@@ -213,6 +215,8 @@ route::middleware('auth')->group(function () {
         Route::get('/fetch-product', 'FetchProduct')->name('fetch-product');
         /* Get product stock */
         Route::get('/get-product-info', 'ProductStock')->name('get-product-info');
+        /* get customers delivery receipt in invoice */
+        Route::get('/get-delivery-slip', 'CustomerDelivery')->name('get-customer-delivery-receipt');
     });
 
 

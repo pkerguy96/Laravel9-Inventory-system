@@ -13,19 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('delivery_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('customer_id');
             $table->integer('delivery_id');
-
-            $table->string('invoice_no')->nullable();
-            $table->date('date')->nullable();
-            $table->text('description')->nullable();
-
-
-            $table->tinyInteger('status')->default('0')->comment('0=Pending,1=Approved');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->integer('brand_id');
+            $table->integer('category_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->double('qte')->nullable();
             $table->timestamps();
         });
     }
@@ -37,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('delivery_details');
     }
 };

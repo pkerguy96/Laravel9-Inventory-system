@@ -14,16 +14,8 @@ class DeliveryReceipt extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
-    public function categories()
+    public function DeliveryDetails()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
-    }
-    public function brands()
-    {
-        return $this->belongsTo(Brand::class, 'brand_id', 'id');
-    }
-    public function products()
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
+        return $this->hasMany(delivery_details::class, 'delivery_id', 'id');
     }
 }

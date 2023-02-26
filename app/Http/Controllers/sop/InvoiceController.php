@@ -56,6 +56,7 @@ class InvoiceController extends Controller
                 return redirect()->back()->with($notification);
             } else {
                 $invoice = new Invoice();
+                $invoice->delivery_id = $request->delivery_id;
                 $invoice->invoice_no = $request->invoice_no;
                 $invoice->date = date('Y-m-d', strtotime($request->date));
                 $invoice->description = $request->description;

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\sop;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Brand;
 use App\Models\DeliveryReceipt;
 use App\Http\Controllers\Controller;
+use App\Models\delivery_details;
 use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
@@ -34,24 +37,30 @@ class DeliveryController extends Controller
             );
             return redirect()->back()->with($notification);
         } else {
+            $delivery = new DeliveryReceipt();
+            $delivery->customer_id = $request->customer_id;
+            $delivery->delivery_no = $request->delivery_no;
+            $delivery->date =  date('Y-m-d', strtotime($request->date));
+            $delivery->due_date = date('Y-m-d', strtotime($request->due_date));
 
-            $category_count = count($request->category_id);
-            for ($i = 0; $i < $category_count; $i++) {
+            $delivery->description = $request->description;
+            $delivery->total_qte = $request->Gtotal;
+            $delivery->created_by = Auth::user()->id;
+            DB::transaction(function () use ($request, $delivery) {
+                $category_count = count($request->category_id);
+                if ($delivery->save()) {
+                    for ($i = 0; $i < $category_count; $i++) {
 
-                $delivery_receipt = new DeliveryReceipt();
-
-                $delivery_receipt->delivery_no = $request->delivery_no;
-                $delivery_receipt->date = date('Y-m-d', strtotime($request->date));
-                $delivery_receipt->due_date = date('Y-m-d', strtotime($request->due_date));
-                $delivery_receipt->category_id = $request->category_id[$i];
-                $delivery_receipt->product_id = $request->product_id[$i];
-                $delivery_receipt->qte = $request->qte[$i];
-                $delivery_receipt->brand_id = $request->brand_id[$i];
-
-                $delivery_receipt->customer_id = $request->customer_id;
-
-                $delivery_receipt->save();
-            }
+                        $delivery_details = new delivery_details();
+                        $delivery_details->delivery_id = $delivery->id;
+                        $delivery_details->brand_id = $request->brand_id[$i];
+                        $delivery_details->category_id = $request->category_id[$i];
+                        $delivery_details->product_id = $request->product_id[$i];
+                        $delivery_details->qte = $request->qte[$i];
+                        $delivery_details->save();
+                    }
+                }
+            });
         }
 
         $notification = array(
@@ -59,5 +68,21 @@ class DeliveryController extends Controller
             'alert-type' => 'success'
         );
         return redirect()->route('all.delivery.receipt')->with($notification);
+    }
+    public function PrintDelivery($id)
+    {
+        $data = DeliveryReceipt::findorfail($id);
+        $delivery_details = delivery_details::Where('delivery_id', $id)->get();
+        return view('backend.pdfs.print_Deliverys', compact('data', 'delivery_details'));
+    }
+    public function DeleteDelivery($id)
+    {
+        DeliveryReceipt::findorfail($id)->delete();
+        delivery_details::Where('delivery_id', $id)->delete();
+        $notification = array(
+            'message' => 'Delivery Receipt Deleted ',
+            'alert-type' => 'info'
+        );
+        return redirect()->back()->with($notification);
     }
 }
