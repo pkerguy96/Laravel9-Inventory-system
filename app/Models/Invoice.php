@@ -22,4 +22,8 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceDetail::class, 'invoice_id', 'id');
     }
+    public function Delivery()
+    {
+        return $this->belongsTo(DeliveryReceipt::class, 'delivery_id', 'id');
+    }
 }

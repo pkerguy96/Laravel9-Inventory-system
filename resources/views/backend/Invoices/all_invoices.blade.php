@@ -36,12 +36,12 @@
 
                                 @foreach($allinvoices as $key => $item)
                                 <tr>
-                                    <td> {{ $key+1}} </td>
-                                    <td> {{ $item->invoice_no }} </td>
-                                    <td> {{ $item['payements']['customers']['name'] }} </td>
-                                    <td> {{ date('d-m-Y',strtotime($item->date))}} </td>
-                                    <td> {{ $item->description}} </td>
-                                    <td> {{ $item['payements']['total_amount']}} MAD</td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $key+1}} </a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item->invoice_no }} </a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item['payements']['customers']['name'] }} </a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}} </a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item->description}} </a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item['payements']['total_amount']}} MAD</a></td>
 
                                 </tr>
                                 @endforeach

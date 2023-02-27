@@ -2,7 +2,14 @@
 @section('admin')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<style>
+    @media screen and (max-width: 928) {
+        .eeventmore {
+            width: 300px;
+            margin-top: 5px;
+        }
+    }
+</style>
 <div class="page-content">
     <div class="container-fluid">
 
@@ -15,26 +22,26 @@
 
 
                         <div class="row">
-                            <div class="col-md-1" style="width:10%;">
+                            <div class="col-md-1 col-sm-2 regulation" style="width:10%;">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Invoice Number</label>
+                                    <label for="example-text-input" class="form-label ">Invoice Number</label>
                                     <input class="form-control" type="text" value="{{$invoice_no}}" name="invoice_no" id="invoice_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-2">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Date</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-2">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Due Date</label>
-                                    <input class="form-control" type="date" value="{{$date}}" name="due_date" id="date">
+                                    <input class="form-control" type="date" value="{{$date}}" name="due_date" id="due_date">
                                 </div>
                             </div>
                             <!-- brand start -->
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-2">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Brand</label>
                                     <select id="Brand_id" name="Brand_id" class="form-select " aria-label="Default select example">
@@ -45,7 +52,7 @@
                                 </div>
                             </div>
                             <!-- brand end -->
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-2">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Category</label>
                                     <select id="category_id" name="category_id" class="form-select " aria-label="Default select example">
@@ -58,7 +65,7 @@
 
                         </div>
                         <div class="row mt-5 ">
-                            <div class=" col-md-1"></div>
+                            <div class=" col-md-1" style="width:10%;"></div>
                             <div class="col-md-3  ">
                                 <div class="md-3 ">
                                     <label for="example-text-input" class="form-label">Product Name</label>
@@ -73,11 +80,11 @@
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-3">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
-                                    <i class="btn btn-info btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
+                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
                                 </div>
                             </div>
 
@@ -201,6 +208,7 @@
 
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date" value="@{{date}}">
+        <input type="hidden" name="due_date" value="@{{due_date}}">
         <input type="hidden" name="invoice_no" value="@{{invoice_no}}">
         <td>
         <input type="hidden" name="brand_id[]" value="@{{brand_id}}">
@@ -242,6 +250,7 @@
     $(document).ready(function() {
         $(document).on("click", ".eeventmore", function() {
             var date = $('#date').val();
+            var due_date = $('#due_date').val();
             var invoice_no = $('#invoice_no').val();
             var brand_id = $('#Brand_id').val();
             var brand_name = $('#Brand_id').find('option:selected').text();
@@ -275,6 +284,7 @@
             var template = Handlebars.compile(source);
             var data = {
                 date: date,
+                due_date: due_date,
                 invoice_no: invoice_no,
                 brand_id: brand_id,
                 brand_name: brand_name,

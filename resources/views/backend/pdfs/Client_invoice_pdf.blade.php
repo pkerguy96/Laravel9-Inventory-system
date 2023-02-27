@@ -2,7 +2,11 @@
 @section('admin')
 <div class="page-content">
     <div class="container-fluid">
-
+        <style>
+            .custom-margin {
+                margin-bottom: 13%;
+            }
+        </style>
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -29,7 +33,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="invoice-title">
-                                    <h4 class="float-end font-size-16"><strong>Invoice Number: {{ $invoice->invoice_no }}</strong></h4>
+                                    <h4 class="float-end font-size-16"><strong></strong></h4>
                                     <h3>
                                         <img src="{{asset('backend/assets/images/logo-sm.png')}}" alt="logo" height="24" /> Promed Plannet
                                     </h3>
@@ -41,16 +45,18 @@
                                         <h2>Client:</h2>
                                         <address>
                                             <strong>{{ $invoice['clients']['name'] }}</strong><br>
-                                            {{ $invoice['clients']['address'] }} <br>
-                                            Ice: {{ $invoice['clients']['ice'] }} <br>
-                                            {{ $invoice['clients']['phone'] }}
+                                            <strong>{{ $invoice['clients']['address'] }}</strong> <br>
+                                            <strong> Ice: {{ $invoice['clients']['ice'] }}</strong> <br>
+                                            <strong> {{ $invoice['clients']['phone'] }}</strong>
                                         </address>
                                     </div>
                                     <div class="col-6 mt-4 text-end">
                                         <address>
-                                            <h2>Facture n:</h2>
-                                            <strong>Order Date:</strong><br>
-                                            {{ date('d-m-Y',strtotime($invoice->date)) }}<br><br>
+                                            <h2>Invoice Number: {{ $invoice->invoice_no }}</h2>
+                                            <strong>Due Date: {{ date('d-m-Y',strtotime($invoice->date)) }}</strong><br>
+                                            <strong>Order Date: {{ date('d-m-Y',strtotime($invoice->due_date)) }}</strong><br>
+                                            <strong>Delivery Receipt: {{ $invoice['Delivery']['delivery_no'] }}</strong><br>
+                                            <br><br>
                                         </address>
                                     </div>
                                 </div>
@@ -194,9 +200,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
+                                        <div class="row pt-3 custom-margin ">
+                                            <div class="mb-5">
+                                                <h2 style="text-align: right; margin-right:20px;">signature</h2>
+
+                                            </div>
 
                                         </div>
+                                        <div class="text-center">
+                                            <hr class="p-1  text-dark " style="margin-left: 8%; margin-right:8%">
+                                            <p class=" text-center" style="margin-left: 8%; margin-right:8%"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro reprehenderit omnis eaque aliquam assumenda itaque doloremque illo voluptate suscipit. Soluta dolores maxime placeat sit sequi doloremque accusamus repellat commodi nesciunt?</p>
+                                        </div>
+
                                         <div class="d-print-none">
                                             <div class="float-end">
                                                 <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light"><i class="fa fa-print"></i></a>

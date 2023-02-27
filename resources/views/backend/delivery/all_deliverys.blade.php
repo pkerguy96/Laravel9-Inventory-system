@@ -38,13 +38,13 @@
 
                                 @foreach($deliverys as $key => $item)
                                 <tr>
-                                    <td> {{ $key+1}} </td>
-                                    <td> {{ $item->delivery_no }} </td>
-                                    <td> {{ $item['customers']['name'] }} </td>
-                                    <td> {{ date('d-m-Y',strtotime($item->date))}} </td>
-                                    <td> {{ date('d-m-Y',strtotime($item->due_date))}} </td>
-                                    <td> {{ $item->description}} </td>
-                                    <td> {{ $item->total_qte}} </td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important"> {{ $key+1}} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->delivery_no }} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item['customers']['name'] }} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}}</a> </td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->due_date))}}</a> </td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->description}} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->total_qte}} </a></td>
                                     <td>
 
                                         <a href="{{route('print.delivery',$item->id)}}" class="btn btn-success waves-effect waves-light" title="Print"> <i class="fas fa-print"></i> </a>

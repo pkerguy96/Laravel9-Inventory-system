@@ -59,6 +59,7 @@ class InvoiceController extends Controller
                 $invoice->delivery_id = $request->delivery_id;
                 $invoice->invoice_no = $request->invoice_no;
                 $invoice->date = date('Y-m-d', strtotime($request->date));
+                $invoice->due_date = date('Y-m-d', strtotime($request->due_date));
                 $invoice->description = $request->description;
                 $invoice->status = '0';
                 $invoice->created_by = Auth::user()->id;
