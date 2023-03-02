@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
+use App\Imports\CustomersImport;
 use App\Models\Payement;
 use App\Models\PayementDetail;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -26,21 +28,31 @@ class CustomerController extends Controller
     /* adds customer in DB */
     public function StoreCustomer(Request $request)
     {
-        Customer::insert([
-            'name' =>  $request->name,
-            'phone' =>  $request->phone,
-            'address' =>  $request->address,
-            'email' =>  $request->email,
-            'ice' =>  $request->ice,
-            'created_by' => Auth::user()->id,
-            'created_at' => Carbon::now(),
-        ]);
-        $notification = array(
-            'message' => 'Customer Added Successfully',
-            'alert-type' => 'success'
-        );
+        if ($request->hasFile('customers_csv')) {
 
-        return redirect()->route('all.customers')->with($notification);
+            $import = new CustomersImport();
+            Excel::import($import, $request->file('customers_csv'));
+            $notification = array(
+                'message' => 'Customers uploaded Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.customers')->with($notification);
+        } else {
+            Customer::insert([
+                'name' =>  $request->name,
+                'phone' =>  $request->phone,
+                'address' =>  $request->address,
+                'email' =>  $request->email,
+                'ice' =>  $request->ice,
+                'created_by' => Auth::user()->id,
+                'created_at' => Carbon::now(),
+            ]);
+            $notification = array(
+                'message' => 'Customer Added Successfully',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.customers')->with($notification);
+        }
     }
     /* redirects to customer page to modify it  */
     public function EditCustomer($id)

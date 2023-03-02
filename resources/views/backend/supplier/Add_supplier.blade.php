@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Add New Supplier </h4><br><br>
 
-                        <form method="post" action="{{ route('append.supplier') }}" id="myForm">
+                        <form method="post" action="{{ route('append.supplier') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Name</label>
@@ -55,7 +55,12 @@
                                 </div>
                             </div>
                             <!-- end row -->
-
+                            <div class="row mb-3">
+                                <label for="formFile" class="col-sm-2 col-form-label">Upload Suppliers by csv</label>
+                                <div class="form-group col-sm-10">
+                                    <input class="form-control" type="file" name="suppliers_csv" id="formFile">
+                                </div>
+                            </div>
 
                             <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Supplier">
                         </form>
@@ -74,6 +79,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
         $('#myForm').validate({
             rules: {
                 name: {
@@ -88,19 +94,25 @@
                 address: {
                     required: true,
                 },
+                ice: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
-                    required: 'Please Enter Suppliers Name',
+                    required: 'Please Enter Customers Name',
                 },
                 phone: {
-                    required: 'Please Enter Suppliers Phone Number',
+                    required: 'Please Enter Customers Phone Number',
                 },
                 email: {
-                    required: 'Please Enter Suppliers Email',
+                    required: 'Please Enter Customers Email',
                 },
                 address: {
-                    required: 'Please Enter Suppliers Address',
+                    required: 'Please Enter Customers Address',
+                },
+                ice: {
+                    required: 'Please Enter Companys Ice',
                 },
             },
             errorElement: 'span',
@@ -113,6 +125,9 @@
             },
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
+            },
+            invalidHandler: function(event) {
+                if ($("#formFile").prop("files").length) event.target.submit();
             },
         });
     });

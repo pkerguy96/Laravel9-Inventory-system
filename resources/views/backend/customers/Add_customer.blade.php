@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Add New Customer </h4><br><br>
 
-                        <form method="post" action="{{ route('append.customer') }}" id="myForm">
+                        <form method="post" action="{{ route('append.customer') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Customer Name</label>
@@ -56,7 +56,12 @@
                                 </div>
                             </div>
                             <!-- end row -->
-
+                            <div class="row mb-3">
+                                <label for="formFile" class="col-sm-2 col-form-label">Upload Customers by csv</label>
+                                <div class="form-group col-sm-10">
+                                    <input class="form-control" type="file" name="customers_csv" id="formFile">
+                                </div>
+                            </div>
                             <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Customer">
                         </form>
 
@@ -71,9 +76,9 @@
 
     </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready(function() {
+
         $('#myForm').validate({
             rules: {
                 name: {
@@ -86,6 +91,9 @@
                     required: true,
                 },
                 address: {
+                    required: true,
+                },
+                ice: {
                     required: true,
                 },
             },
@@ -102,6 +110,9 @@
                 address: {
                     required: 'Please Enter Customers Address',
                 },
+                ice: {
+                    required: 'Please Enter Companys Ice',
+                },
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -114,8 +125,12 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             },
+            invalidHandler: function(event) {
+                if ($("#formFile").prop("files").length) event.target.submit();
+            },
         });
     });
 </script>
+
 
 @endsection

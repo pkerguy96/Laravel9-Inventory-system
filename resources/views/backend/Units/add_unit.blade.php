@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Add New Unit </h4><br><br>
 
-                        <form method="post" action="{{ route('append.unit') }}" id="myForm">
+                        <form method="post" action="{{ route('append.unit') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Unit Name</label>
@@ -21,7 +21,12 @@
                                 </div>
                             </div>
                             <!-- end row -->
-
+                            <div class="row mb-3">
+                                <label for="formFile" class="col-sm-2 col-form-label">Upload Customers by csv</label>
+                                <div class="form-group col-sm-10">
+                                    <input class="form-control" type="file" name="units_csv" id="formFile">
+                                </div>
+                            </div>
                             <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Unit">
                         </form>
 
@@ -62,6 +67,9 @@
             },
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
+            },
+            invalidHandler: function(event) {
+                if ($("#formFile").prop("files").length) event.target.submit();
             },
         });
     });

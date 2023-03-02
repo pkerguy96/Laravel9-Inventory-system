@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\sop;
 
 use App\Http\Controllers\Controller;
+use App\Imports\BrandsImport;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class BrandsController extends Controller
 {
@@ -23,18 +24,33 @@ class BrandsController extends Controller
 
     public function StoreBrand(Request $request)
     {
+        if ($request->hasFile('brands_cvs')) {
+            $import = new BrandsImport();
+            Excel::import($import, $request->file('brands_cvs'));
 
 
-        Brand::insert([
-            'Brand_name' =>  $request->name,
-            'created_by' => Auth::user()->id,
-            'created_at' => Carbon::now(),
-        ]);
-        $notification = array(
-            'message' => 'Brand Added Successfully',
-            'alert-type' => 'success'
-        );
 
+            $duplicates = $import->getDuplicates();
+
+            if (!empty($duplicates)) {
+                $notification = array(
+                    'message' => 'Some brands already exist in the database: ' . implode(', ', $duplicates),
+                    'alert-type' => 'error'
+                );
+                return redirect()->route('all.Brands')->with($notification);
+            }
+            return redirect()->route('all.Brands')->with('success', 'User Imported Successfully');
+        } else {
+            Brand::insert([
+                'Brand_name' =>  $request->name,
+                'created_by' => Auth::user()->id,
+                'created_at' => Carbon::now(),
+            ]);
+            $notification = array(
+                'message' => 'Brand Added Successfully',
+                'alert-type' => 'success'
+            );
+        }
         return redirect()->route('all.Brands')->with($notification);
     }
     public function EditBrand($id)

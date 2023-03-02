@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Add New Brand </h4><br><br>
 
-                        <form method="post" action="{{ route('append.brand') }}" id="myForm">
+                        <form method="post" action="{{ route('append.brand') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Brand Name</label>
@@ -22,6 +22,12 @@
                             </div>
                             <!-- end row -->
 
+                            <div class="row mb-3">
+                                <label for="formFile" class="col-sm-2 col-form-label">Upload brands by csv</label>
+                                <div class="form-group col-sm-10">
+                                    <input class="form-control" type="file" name="brands_cvs" id="formFile">
+                                </div>
+                            </div>
                             <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Brand">
                         </form>
 
@@ -36,9 +42,10 @@
 
     </div>
 </div>
-
+<script src="{{ asset('backend/assets/libs/dropzone/min/dropzone.min.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+
         $('#myForm').validate({
             rules: {
                 name: {
@@ -48,7 +55,7 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Brands Name',
+                    required: 'Please Enter Customers Name',
                 },
 
             },
@@ -63,8 +70,12 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             },
+            invalidHandler: function(event) {
+                if ($("#formFile").prop("files").length) event.target.submit();
+            },
         });
     });
 </script>
+
 
 @endsection
