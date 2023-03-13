@@ -21,17 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/* Route::get('/{locale?}', function ($locale = null) {
-    if (isset($locale) && in_array($locale, config('app.available_locales'))) {
-        app()->setLocale($locale);
-    }
-
-    return view('welcome');
-}); */
-/* Route::controller(DemoController::class)->group(function () {
-    Route::get('/about', 'Index')->name('about.page')->middleware('check');
-    Route::get('/contact', 'ContactMethod')->name('cotact.page');
-}); */
 
 route::middleware('auth')->group(function () {
 

@@ -48,7 +48,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Supplier Name</label>
                                 <div class="col-sm-10">
-                                    <select name="supplier_id" class="form-select" aria-label="Default select example">
+                                    <select name="supplier_id" class="form-select " aria-label="Default select example">
                                         <option selected="">Open this select menu</option>
                                         @foreach ( $suppliers as $supplier)
                                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>

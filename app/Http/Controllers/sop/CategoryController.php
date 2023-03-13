@@ -4,10 +4,12 @@ namespace App\Http\Controllers\sop;
 
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use App\Imports\CategoryImport;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -26,18 +28,27 @@ class CategoryController extends Controller
     /* adds Category in DB */
     public function Storecategory(Request $request)
     {
-        Category::insert([
-            'category_name' =>  $request->name,
+        if ($request->hasFile('brands_cvs')) {
+            $import = new CategoryImport();
+            Excel::import($import, $request->file('brands_cvs'));
+            $duplicates = $import->getDuplicates();
 
-            'created_by' => Auth::user()->id,
-            'created_at' => Carbon::now(),
-        ]);
-        $notification = array(
-            'message' => 'Category Added Successfully',
-            'alert-type' => 'success'
-        );
+            if ($duplicates > 0) {
+                $notification = InsertNotification($duplicates . ' Categories Were Skipped The Rest Is  Imported Successfuly', 'info');
+            } else {
+                $notification = InsertNotification('Categories Imported Successfuly', 'success');
+            }
+            return redirect()->route('all.Categories')->with($notification);
+        } else {
+            Category::insert([
+                'category_name' =>  $request->name,
 
-        return redirect()->route('all.Categories')->with($notification);
+                'created_by' => Auth::user()->id,
+                'created_at' => Carbon::now(),
+            ]);
+            $notification = InsertNotification('Category Added Successfully', 'success');
+            return redirect()->route('all.Categories')->with($notification);
+        }
     }
     /* redirects to Category page to modify it  */
     public function Editcategory($id)

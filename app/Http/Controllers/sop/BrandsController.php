@@ -27,12 +27,10 @@ class BrandsController extends Controller
         if ($request->hasFile('brands_cvs')) {
             $import = new BrandsImport();
             Excel::import($import, $request->file('brands_cvs'));
-
-
-
             $duplicates = $import->getDuplicates();
 
             if (!empty($duplicates)) {
+
                 $notification = array(
                     'message' => 'Some brands already exist in the database: ' . implode(', ', $duplicates),
                     'alert-type' => 'error'

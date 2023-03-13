@@ -29,6 +29,7 @@
                                     <th>Phone Number</th>
                                     <th>Email</th>
                                     <th>Address</th>
+                                    <th>Ice</th>
                                     <th>Action</th>
 
                             </thead>
@@ -43,6 +44,7 @@
                                     <td> {{ $item->phone }} </td>
                                     <td> {{ $item->email }} </td>
                                     <td> {{ $item->address }} </td>
+                                    <td> {{ $item->ice ?? 'N/A' }} </td>
 
 
                                     <td>

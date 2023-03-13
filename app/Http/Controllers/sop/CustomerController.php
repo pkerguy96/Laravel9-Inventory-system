@@ -32,10 +32,12 @@ class CustomerController extends Controller
 
             $import = new CustomersImport();
             Excel::import($import, $request->file('customers_csv'));
-            $notification = array(
-                'message' => 'Customers uploaded Successfully',
-                'alert-type' => 'success'
-            );
+            $dupscount = $import->duplicatesrow();
+            if ($dupscount > 0) {
+                $notification = InsertNotification($dupscount . ' Customers Were Skipped The Rest Is  Imported Successfuly', 'info');
+            } else {
+                $notification = InsertNotification('Customers Imported Successfuly', 'success');
+            }
             return redirect()->route('all.customers')->with($notification);
         } else {
             Customer::insert([
@@ -47,10 +49,7 @@ class CustomerController extends Controller
                 'created_by' => Auth::user()->id,
                 'created_at' => Carbon::now(),
             ]);
-            $notification = array(
-                'message' => 'Customer Added Successfully',
-                'alert-type' => 'success'
-            );
+            $notification = InsertNotification('Customer Added Successfully', 'success');
             return redirect()->route('all.customers')->with($notification);
         }
     }
@@ -71,21 +70,15 @@ class CustomerController extends Controller
             'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now(),
         ]);
-        $notification = array(
-            'message' => 'Customer Modified Successfully',
-            'alert-type' => 'success'
-        );
 
+        $notification = InsertNotification('Customer Modified Successfully', 'success');
         return redirect()->route('all.customers')->with($notification);
     }
     public function DeleteCustomer($id)
     {
         Customer::findorfail($id)->delete();
-        $notification = array(
-            'message' => 'Customer Deleted Successfully',
-            'alert-type' => 'info'
-        );
 
+        $notification = InsertNotification('Customer Deleted Successfully', 'info');
         return redirect()->route('all.customers')->with($notification);
     }
     public function CustomersCredit()
@@ -107,10 +100,8 @@ class CustomerController extends Controller
     public function UpdateCustomerPayement(request $request, $inv_id)
     {
         if ($request->dueamount < $request->pay_amount || $request->pay_amount <= 0) {
-            $notification = array(
-                'message' => 'Please Re-Check the Payement Amount',
-                'alert-type' => 'error'
-            );
+
+            $notification = InsertNotification('Please Re-Check the Payement Amount', 'error');
 
             return redirect()->back()->with($notification);
         } else {
@@ -131,10 +122,8 @@ class CustomerController extends Controller
             $payement_details->date = date('y-m-d', strtotime($request->date));
             $payement_details->updated_by = Auth::user()->id;
             $payement_details->save();
-            $notification = array(
-                'message' => 'Invoice Updated Successfully',
-                'alert-type' => 'success'
-            );
+
+            $notification = InsertNotification('Invoice Updated Successfully', 'success');
 
             return redirect()->route('customers.credit')->with($notification);
         }

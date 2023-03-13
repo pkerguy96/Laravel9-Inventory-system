@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\sop;
 
 use Illuminate\Support\Facades\DB;
+use App\Events\ProductQuantityUpdated;
 
 use App\Models\Payement;
 use App\Models\PayementDetail;
@@ -56,6 +57,9 @@ class InvoiceController extends Controller
                 return redirect()->back()->with($notification);
             } else {
                 $invoice = new Invoice();
+
+
+                $invoice->customer_id = $request->customer_id;
                 $invoice->delivery_id = $request->delivery_id;
                 $invoice->invoice_no = $request->invoice_no;
                 $invoice->date = date('Y-m-d', strtotime($request->date));
@@ -86,18 +90,9 @@ class InvoiceController extends Controller
                             $invoice_details->save();
                         }
 
-                        if ($request->customer_id == '0') {
-                            $newcustomer = new Customer();
-                            $newcustomer->name = $request->name;
-                            $newcustomer->phone = $request->phone;
-                            $newcustomer->email = $request->email;
 
-                            $newcustomer->created_by = Auth::user()->id;
-                            $newcustomer->save();
-                            $customerid = $newcustomer->id;
-                        } else {
-                            $customerid = $request->customer_id;
-                        }
+                        $customerid = $request->customer_id;
+
                         /* Add customer id in the invoice table after its created */
                         invoice::findorfail($invoice->id)->update(['customer_id' => $customerid]);
                         $payements = new Payement();
@@ -160,6 +155,7 @@ class InvoiceController extends Controller
     }
     public function AcceptInvoices(request $request, $id)
     {
+
         foreach ($request->qte as $key => $value) {
             $invoiceDetails = InvoiceDetail::where('id', $key)->first();
             $product = Product::where('id', $invoiceDetails->product_id)->first();
@@ -170,6 +166,9 @@ class InvoiceController extends Controller
                 );
                 return redirect()->back()->with($notification);
             }
+
+
+
             $invoice = invoice::findorfail($id);
             $invoice->status = '1';
             $invoice->updated_by = Auth::user()->id;
@@ -180,11 +179,19 @@ class InvoiceController extends Controller
                     $invoiceDetails->status = '1';
                     $invoiceDetails->save();
                     $product = Product::where('id', $invoiceDetails->product_id)->first();
+
                     $product->product_qte = ((float)$product->product_qte) - ((float)$request->qte[$key]);
-                    $product->save();
+
+                    event(new ProductQuantityUpdated($product));
+
+
+                    $product->save();;
                 }
                 $invoice->save();
             });
+
+
+
             $notification = array(
                 'message' => 'Invoice Approved Successfully',
                 'alert-type' => 'success'

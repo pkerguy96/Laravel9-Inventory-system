@@ -42,7 +42,7 @@
 
     </div>
 </div>
-<script src="{{ asset('backend/assets/libs/dropzone/min/dropzone.min.js') }}"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
 

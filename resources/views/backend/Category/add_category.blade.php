@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Add New Category </h4><br><br>
 
-                        <form method="post" action="{{ route('append.category') }}" id="myForm">
+                        <form method="post" action="{{ route('append.category') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="example-text-input" class="col-sm-2 col-form-label">Category Name</label>
@@ -22,7 +22,12 @@
                             </div>
 
                             <!-- end row -->
-
+                            <div class="row mb-3">
+                                <label for="formFile" class="col-sm-2 col-form-label">Upload Categories by csv</label>
+                                <div class="form-group col-sm-10">
+                                    <input class="form-control" type="file" name="brands_cvs" id="formFile">
+                                </div>
+                            </div>
                             <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Category">
                         </form>
 
@@ -40,6 +45,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+
         $('#myForm').validate({
             rules: {
                 name: {
@@ -49,9 +55,8 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Category Name',
+                    required: 'Please Enter Customers Name',
                 },
-
 
             },
             errorElement: 'span',
@@ -65,8 +70,10 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             },
+            invalidHandler: function(event) {
+                if ($("#formFile").prop("files").length) event.target.submit();
+            },
         });
     });
 </script>
-
 @endsection
