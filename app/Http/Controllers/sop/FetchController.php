@@ -12,6 +12,8 @@ use App\Models\DeliveryReceipt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use App\Models\notifications;
+use Illuminate\Support\Facades\Session;
 
 class FetchController extends Controller
 {
@@ -36,5 +38,20 @@ class FetchController extends Controller
     {
         $deliveryreceipt = DeliveryReceipt::where('customer_id', $request->customer_id)->get();
         return response()->json($deliveryreceipt);
+    }
+    public function ReadNotification(request $request)
+    {
+        $notificationID = $request->notificationid;
+        notifications::where('id', $notificationID)->where('user_id', auth::user()->id)->update(['is_read' => true]);
+        $message = "Notification marked as read successfully!";
+        return response()->json(['message' => $message]);
+    }
+    public function deleteNotification(request $request)
+
+    {
+        $notificationID = $request->notificationid;
+        notifications::where('id', $notificationID)->where('user_id', auth::user()->id)->delete();
+        $message = 'Notification deleted successfully! ';
+        return response()->json(['message' => $message]);
     }
 }

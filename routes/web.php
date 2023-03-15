@@ -9,6 +9,7 @@ use App\Http\Controllers\sop\CustomerController;
 use App\Http\Controllers\sop\DeliveryController;
 use App\Http\Controllers\sop\FetchController;
 use App\Http\Controllers\sop\InvoiceController;
+use App\Http\Controllers\sop\NotificationController;
 use App\Http\Controllers\sop\ProductController;
 use App\Http\Controllers\sop\PurchaseController;
 use App\Http\Controllers\sop\StockController;
@@ -194,7 +195,10 @@ route::middleware('auth')->group(function () {
         Route::get('/print/delivery/{id}', 'PrintDelivery')->name('print.delivery');
         Route::get('/delete/delivery/{id}', 'DeleteDelivery')->name('delete.delivery');
     });
-
+    /* All notifications controller are here */
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/All/Notifications', 'allnotifications')->name('notifications.all');
+    });
 
     /* All API FETCH REQUESTS here: */
     Route::controller(FetchController::class)->group(function () {
@@ -206,6 +210,10 @@ route::middleware('auth')->group(function () {
         Route::get('/get-product-info', 'ProductStock')->name('get-product-info');
         /* get customers delivery receipt in invoice */
         Route::get('/get-delivery-slip', 'CustomerDelivery')->name('get-customer-delivery-receipt');
+        /* reads notification from notification bar in the header */
+        Route::get('/notification-is-read', 'ReadNotification')->name('notification-is-read');
+        /* deletes notification from the DB */
+        Route::get('/delete-notification-fromdb', 'deleteNotification')->name('delete-notification-fromdb');
     });
 
 

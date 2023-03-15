@@ -41,20 +41,7 @@
 
         <div class="d-flex">
 
-            <!-- start -->
 
-
-            <!-- <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                @foreach($available_locales as $locale_name => $available_locale)
-                @if($available_locale === $current_locale)
-                <span class="ml-2 mr-2 text-gray-700">{{ $locale_name }}</span>
-                @else
-                <a class="ml-1 underline ml-2 mr-2" href="language/{{ $available_locale }}">
-                    <span>{{ $locale_name }}</span>
-                </a>
-                @endif
-                @endforeach
-            </div> -->
 
             <div class="dropdown d-none d-sm-inline-block">
                 @php
@@ -77,7 +64,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ri-notification-3-line"></i>
-                    <span class="{{session('alert')?'noti-dot' : ''}}"></span>
+                    <span class="{{$notifications->count() > 0?'noti-dot' : ''}}"></span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown" style="">
                     <div class="p-3">
@@ -86,7 +73,7 @@
                                 <h6 class="m-0"> Notifications </h6>
                             </div>
                             <div class="col-auto">
-                                <a href="#!" class="small"> View All</a>
+                                <a href="{{route('notifications.all')}}" class="small"> View All</a>
                             </div>
                         </div>
                     </div>
@@ -101,25 +88,63 @@
                                         <div class="simplebar-content" style="padding: 0px;">
                                             <a href="" class="text-reset notification-item">
                                                 <div class="d-flex">
-                                                    <div class="{{session('alert')?'avatar-xs me-3' : ''}}">
-                                                        <span class=" avatar-title bg-primary rounded-circle font-size-16">
-                                                            <i class=" {{session('alert')?'fas fa-exclamation-triangle' : ''}}"></i>
-                                                        </span>
-                                                    </div>
-                                                    <div class="flex-1">
+
+                                                    <!-- start -->
+                                                    <a href="" class="text-reset notification-item w-100">
+                                                        @if($notifications->count()> 0)
+                                                        @foreach($notifications as $notification)
+                                                        <div class="d-flex">
+                                                            <div class="{{$notifications->count() > 0?'avatar-xs me-3' : ''}}">
+                                                                <span class=" avatar-title bg-primary rounded-circle font-size-16">
+
+                                                                    <i class=" {{$notifications->count() > 0?'fas fa-exclamation-triangle' : ''}}"></i>
+
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-1">
+
+                                                                <div class="notif-div">
+                                                                    <button type="button" class="btn-close" aria-label="Close" style="margin-left:98%;" data-attr-notid="{{$notification->id}}" onclick="removeNotification(event, this)"></button>
+                                                                    <h6 class="mb-1">{{ $notification->message }}</h6>
+                                                                    <div class="font-size-12 text-muted">
+                                                                        <p class="mb-1">Only {{ $notification['products']['product_qte']  }} Are Left </p>
+                                                                        <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</p>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                        @endforeach
+                                                        @else
+                                                        <div class=" text-center">
+                                                            <div class="font-size-12 text-muted ">
+                                                                <p class="mb-1">No Notifications Available. </p>
+
+                                                            </div>
+                                                        </div>
+                                                        @endif
+
+                                                    </a>
+                                                    <!-- ends -->
+                                                    <!--  <div class="flex-1">
 
 
                                                         @if($notifications->count()> 0)
                                                         @foreach($notifications as $notification)
-                                                        <h6 class="mb-1">{{ $notification->message }}</h6>
-                                                        <div class="font-size-12 text-muted">
-                                                            <p class="mb-1">Only {{ $notification['products']['product_qte'] }} Are Left </p>
-                                                            <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</p>
+                                                        <div class="notif-div">
+                                                            <button type="button" class="btn-close" aria-label="Close" style="margin-left:98%;" data-attr-notid="{{$notification->id}}" onclick="removeNotification(event, this)"></button>
+                                                            <h6 class="mb-1">{{ $notification->message }}</h6>
+                                                            <div class="font-size-12 text-muted">
+                                                                <p class="mb-1">Only {{ $notification['products']['product_qte']  }} Are Left </p>
+                                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</p>
+                                                            </div>
                                                         </div>
+
                                                         @endforeach
                                                         @endif
 
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </a>
 
@@ -138,7 +163,7 @@
                     </div>
                     <div class="p-2 border-top">
                         <div class="d-grid">
-                            <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
+                            <a class="btn btn-sm btn-link font-size-14 text-center" href="{{route('notifications.all')}}">
                                 <i class="mdi mdi-arrow-right-circle me-1"></i> View More..
                             </a>
                         </div>
@@ -187,6 +212,38 @@
 
         </div>
     </div>
+    <script>
+        function removeNotification(event, button) {
+            event.stopPropagation();
+            event.preventDefault(); // prevent the button from closing the notification bar
 
+            const notificationDiv = button.parentNode;
+            const Notificationid = +button.getAttribute('data-attr-notid');
+            if (!Notificationid) {
+                return;
+            } else {
+                const url = `{{route("notification-is-read")}}?notificationid=${Notificationid}`;
+                Notificationisread(url);
+
+            }
+            notificationDiv.remove();
+        }
+    </script>
+    <script>
+        async function Notificationisread(url) {
+            try {
+                const reponse = await fetch(url);
+                const data = await reponse.json();
+                $.notify(data.message, "success");
+
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+
+
+
+        }
+    </script>
 
 </header>
