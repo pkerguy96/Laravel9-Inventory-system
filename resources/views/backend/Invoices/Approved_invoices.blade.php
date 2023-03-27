@@ -27,7 +27,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <p>Customer Info</p>
+                                        <p>Customer Info:</p>
                                     </td>
                                     <td>
                                         <p>Name: <strong>{{$payement['customers']['name']}}</strong></p>
@@ -44,7 +44,12 @@
                                     <td></td>
                                     <td colspan="3">
 
-                                        <p>Descriptopn: <strong>{{$invoice->description}}</strong></p>
+                                        <p>Description: @if(isset($invoice->description))
+                                            <strong>{{$invoice->description}}</strong>
+                                            @else
+                                            <strong>N/A</strong>
+                                            @endif
+                                        </p>
 
                                     </td>
                                 </tr>
@@ -81,31 +86,42 @@
                                         <td class="text-center" style="background-color: #8B008B;">{{$invdetails['products']['product_qte']}}</td>
                                         <td class="text-center">{{$invdetails->qte}}</td>
                                         <td class="text-center">{{$invdetails->unit_price}}</td>
-                                        <td class="text-center">{{$invdetails->selling_price}}</td>
+                                        <td class="text-center">{{$invdetails->selling_price}} MAD</td>
                                     </tr>
                                     @php
                                     $total_price += $invdetails->selling_price;
+
                                     @endphp
                                     @endforeach
-                                    <tr>
-                                        <td colspan="6">Sub Total:</td>
-                                        <td>{{ $total_price }}</td>
-                                    </tr>
-                                    <tr>
+                                    @php
+                                    $tax_amount = calculateTax($total_price);
+                                    @endphp
+                                    <tr class="text-center">
                                         <td colspan="6">Discount:</td>
-                                        <td>{{ $payement->discount_amount }}</td>
+                                        @if(isset($payement->discount_amount))
+                                        <td>{{ $payement->discount_amount }} MAD</td>
+                                        @else
+                                        <td> N/A </td>
+                                        @endif
                                     </tr>
-                                    <tr>
+                                    <tr class="text-center">
+                                        <td colspan="6">Tax:</td>
+
+                                        <td>{{$tax_amount}} MAD</td>
+                                    </tr>
+
+
+                                    <tr class="text-center">
                                         <td colspan="6">Paid Amount</td>
-                                        <td>{{ $payement->paid_amount}}</td>
+                                        <td>{{ $payement->paid_amount}} MAD</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="text-center">
                                         <td colspan="6">Due Amount</td>
-                                        <td>{{ $payement->due_amount}}</td>
+                                        <td>{{ $payement->due_amount}} MAD</td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="6">Grand Amount</td>
-                                        <td>{{ $payement->total_amount}}</td>
+                                    <tr class="text-center">
+                                        <td colspan="6">Grand Total</td>
+                                        <td>{{ $payement->total_amount}}MAD</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -21,30 +21,32 @@
 
 
 
-                        <div class="row">
-                            <div class="col-md-1 col-sm-2 regulation" style="width:10%;">
+                        <div class="row justify-content-center justify-content-md-center justify-content-sm-between gap-sm-3 gap-md-5 flex-wrap">
+                            <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label ">Invoice Number</label>
+                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">Invoice Number</label>
                                     <input class="form-control" type="text" value="{{$invoice_no}}" name="invoice_no" id="invoice_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-2">
+                            <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Date</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-2">
+                            <div class="col-md-2 col-sm-12">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Due Date</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="due_date" id="due_date">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row d-flex justify-content-center  mt-2 mt-sm-1 mt-md-2 mt-lg-3 mt-xl-3 flex-wrap">
                             <!-- brand start -->
-                            <div class="col-md-3 col-sm-2">
-                                <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Brand</label>
-                                    <select id="Brand_id" name="Brand_id" class="form-select " aria-label="Default select example">
+                            <div class=" col-md-3 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="Brand_id" class="form-label">Brand</label>
+                                    <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
                                         @foreach ($brands as $key )
                                         <option value="{{$key->id}}">{{$key->Brand_name}}</option>
                                         @endforeach
@@ -52,10 +54,10 @@
                                 </div>
                             </div>
                             <!-- brand end -->
-                            <div class="col-md-3 col-sm-2">
-                                <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Category</label>
-                                    <select id="category_id" name="category_id" class="form-select " aria-label="Default select example">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="category_id" class="form-label">Category</label>
+                                    <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                         @foreach ($categories as $key )
                                         <option value="{{$key->id}}">{{$key->category_name}}</option>
                                         @endforeach
@@ -63,24 +65,26 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row mt-5 ">
-                            <div class=" col-md-1" style="width:10%;"></div>
-                            <div class="col-md-3  ">
-                                <div class="md-3 ">
-                                    <label for="example-text-input" class="form-label">Product Name</label>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="product_id" class="form-label">Product Name</label>
                                     <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
                                         <option selected="">Open this select menu</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-1">
-                                <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Stock</label>
+                            <div class="col-md-2 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="stock_qte" class="form-label">Stock</label>
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                        </div>
+
+                        <div class="row float-end mt-0 ">
+
+
+                            <div class="col-md-12">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
@@ -96,55 +100,60 @@
                     <div class="card-body">
                         <form action="{{route('store.invoice')}}" method="post" action="">
                             @csrf
-                            <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
-                                <thead>
+                            <div class="table-responsive">
+                                <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Brand</th>
+                                            <th>Product Name</th>
+                                            <th>Category</th>
+                                            <th width="7%">Pieces</th>
+                                            <th width="10%">Unit Price</th>
+                                            <th width="15%">Total Price</th>
+                                            <th width="7%">Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rowAdd" class="rowAdd">
+
+                                    </tbody>
                                     <tr>
-                                        <th>Brand</th>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th width="7%">Pieces</th>
-                                        <th width="10%">Unit Price</th>
-                                        <th width="15%">Total Price</th>
-                                        <th width="7%">Action</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody id="rowAdd" class="rowAdd">
-
-                                </tbody>
-                                <tr>
-                                    <td colspan="5" style="text-align: right;"><strong class="text-right">Discount </strong></td>
-                                    <td>
-                                        <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tbody id=" rowAdd" class="rowAdd">
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
-
+                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Discount </strong></td>
                                         <td>
-                                            <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
+                                            <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
                                         </td>
                                         <td></td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
+                                    <tbody id=" rowAdd" class="rowAdd">
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
+
+                                            <td>
+                                                <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
+                                                <input type="hidden" name="amountrd" id="amountrd" class="amountrd">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
 
 
-                                        <td>
-                                            <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Grand Total estimated amount</strong></td>
-                                        <td>
-                                            <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table><br>
+                                            <td>
+                                                <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"><strong class="text-right">Grand Total estimated amount</strong></td>
+                                            <td>
+                                                <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table><br>
+                            </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <textarea name="description" class="form-control" id="description" placeholder="Enter description here"></textarea>
@@ -218,6 +227,9 @@
         <input type="hidden" name="product_id[]" value="@{{product_id}}">
         @{{ product_name }}
         </td>
+       
+        
+    
     <td>
         <input type="hidden" name="category_id[]" value="@{{category_id}}">
         @{{ category_name }}
@@ -236,9 +248,13 @@
 
 
      <td>
-        <input type="number" class="form-control selling_price text-right" name="selling_price[]" value="0" readonly> 
+     <input type="hidden"  class="form-control unit_pricerd text-right" name="unit_pricerd[]" value=""> 
+    
+    <input type="hidden"  class="form-control selling_pricerd text-right" name="selling_pricerd[]" value=""> 
+        <input type="text" class="form-control selling_price text-right" name="selling_price[]" value="0" readonly> 
     </td>
-
+    
+   
      <td>
         <i class="btn btn-danger btn-sm fas fa-window-close removedeletebtn"></i>
     </td>
@@ -294,7 +310,7 @@
                 product_name: product_name
             };
             var html = template(data);
-            console.log(html);
+
             $("#rowAdd").append(html);
         });
         document.addEventListener('click', function(event) {
@@ -308,10 +324,19 @@
             var currentStock = document.getElementById('stock_qte').value;
             var $row = $(this).closest("tr");
             var unit_price = $row.find("input.unit_price").val();
+
+
             var buying_qte = $row.find("input.qte").val();
             $row.find("input.qte").attr("max", currentStock);
             var total = unit_price * buying_qte;
-            $row.find("input.selling_price").val(total);
+            /* get data that would be sent to controller  */
+
+            /* get data that would be sent to controller  */
+            $('.selling_pricerd').val(total);
+            $row.find("input.selling_price").val(total.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }));
             $('#discount_amount').trigger('keyup');
         });
         $(document).on('keyup', '#discount_amount', function() {
@@ -322,23 +347,37 @@
         function totalAmountPrice() {
             var sum = 0;
             $(".selling_price").each(function() {
-                var value = $(this).val();
+                var value = +$(this).val().replaceAll(",", "");
                 if (!isNaN(value) && value.length != 0) {
                     sum += parseFloat(value);
                 }
             });
-            var discount = parseFloat($('#discount_amount').val());
+            var discount = $('#discount_amount').val();
             if (!isNaN(discount) && discount.length != 0) {
-                sum -= parseFloat(discount);
+                if (parseFloat(discount) >= sum) {
+                    sum = 0;
+                } else {
+                    sum -= parseFloat(discount);
+                }
             }
+            $('#amountrd').val(sum);
+            $('#amount').val(sum.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })); // round subtotal to 2 decimal places
 
-            $('#amount').val(sum.toFixed(2)); // round subtotal to 2 decimal places
             // Calculate tax amount as 20% of subtotal
             var onlytax = 0.20 * sum;
-            $('#tax').val(onlytax.toFixed(2)); // round tax to 2 decimal places
+            $('#tax').val(onlytax.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })); // round tax to 2 decimal places
 
             var Gtotal = parseFloat(onlytax + sum);
-            $('#Gtotal').val(Gtotal.toFixed(2)); // round grand total to 2 decimal places
+            $('#Gtotal').val(Gtotal.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            })); // round grand total to 2 decimal places
         }
 
 
@@ -360,6 +399,20 @@
             })
             .catch(error => console.log(error));
     });
+    /* added */
+    var default_category_id = document.getElementById('category_id').value;
+    fetch(`{{ route('fetch-product') }}?category_id=${default_category_id}`, {
+            method: "GET",
+        })
+        .then(response => response.json())
+        .then(data => {
+            let html = '<option value="">Select Category</option>';
+            data.forEach(function(v) {
+                html += `<option value="${v.id}"> ${v.product_name} </option>`;
+            });
+            document.getElementById('product_id').innerHTML = html;
+        })
+        .catch(error => console.log(error));
 </script>
 <script type="text/javascript">
     document.getElementById('product_id').addEventListener('change', function() {

@@ -32,7 +32,47 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
-
+    <script>
+        async function getPrintFunction(data = {}) {
+            data = {
+                ...data,
+                logo: "{{ asset('/logo/logo.png') }}",
+            };
+            const regex = {
+                client: /@{{data-client}}/g,
+                address: /@{{data-address}}/g,
+                ice: /@{{data-ice}}/g,
+                phone: /@{{data-tel}}/g,
+                bill: /@{{data-bill}}/g,
+                date: /@{{data-date}}/g,
+                bon: /@{{data-bon}}/g,
+                rows: /@{{data-rows}}/g,
+                tax: /@{{data-tax}}/g,
+                total: /@{{data-total}}/g,
+                sub_total: /@{{data-sub}}/g,
+                total_tax: /@{{data-total-tax}}/g,
+                total_text: /@{{data-total-text}}/g,
+                logo: /@{{data-logo}}/g,
+            };
+            const req = await fetch("{{ asset('/printfiles/template.txt') }}");
+            let text = await req.text();
+            for (let name in regex) {
+                const cur = regex[name];
+                const val = (data && data[name]) || "";
+                text = text.replace(cur, val);
+            }
+            return function Print() {
+                var doc = window.open("", "PRINT");
+                doc.document.write(text);
+                doc.document.close();
+                doc.focus();
+                setTimeout(() => {
+                    doc.print();
+                    doc.close();
+                }, 1000);
+            };
+        }
+    </script>
 
 </head>
 
@@ -84,7 +124,7 @@
     <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
 
     <!-- apexcharts -->
-    <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <!-- <script src="{{ asset('backend/assets/libs/apexcharts/apexcharts.min.js') }}"></script> -->
 
     <!-- jquery.vectormap map -->
     <script src="{{ asset('backend/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
@@ -98,7 +138,7 @@
     <script src="{{ asset('backend/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('backend/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
 
-    <script src="{{ asset('backend/assets/js/pages/dashboard.init.js') }}"></script>
+    <!--  <script src="{{ asset('backend/assets/js/pages/dashboard.init.js') }}"></script> -->
 
     <!-- App js -->
     <script src="{{ asset('backend/assets/js/app.js') }}"></script>
@@ -144,6 +184,7 @@
     <!-- Form Select 2  JS -->
     <script src="{{ asset('backend/assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/form-advanced.init.js') }}"></script>
+
 </body>
 
 </html>

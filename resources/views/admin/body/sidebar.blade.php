@@ -125,6 +125,22 @@
                      </ul>
                  </li>
 
+                 <li class="menu-title">Admin Section</li>
+
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class="ri-account-circle-line"></i>
+                         <span>Admin Management</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="false">
+                         <li><a href="{{route('all.admins')}}">All Admins</a></li>
+                         <li><a href="{{route('all.roles')}}">All Roles</a></li>
+                         <li><a href="{{route('view.rolespermissions')}}">Roles And Permissions</a></li>
+
+
+                     </ul>
+                 </li>
+
 
 
 

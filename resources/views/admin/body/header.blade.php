@@ -19,7 +19,7 @@
                         <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo-sm-light" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('backend/assets/images/logo-light.png') }}" alt="logo-light" height="20">
+                        <img src="{{ asset('backend/assets/images/logo.png') }}" alt="logo-light" style="height:30%; width:40%;">
                     </span>
                 </a>
             </div>

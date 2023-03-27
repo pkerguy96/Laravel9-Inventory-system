@@ -14,30 +14,32 @@
 
 
 
-                        <div class="row">
-                            <div class="col-md-1" style="width:10%;">
+                        <div class="row justify-content-center justify-content-md-center justify-content-sm-between gap-sm-3 gap-md-5 flex-wrap">
+                            <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Receipt Number</label>
+                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">Receipt Number</label>
                                     <input class="form-control" type="text" value="{{$delivery_no}}" name="delivery_no" id="delivery_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Date</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-12">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Due Date</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="due_date" id="due_date">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row d-flex justify-content-center  mt-2 mt-sm-1 mt-md-2 mt-lg-3 mt-xl-3 flex-wrap">
                             <!-- brand start -->
-                            <div class="col-md-3">
-                                <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Brand</label>
-                                    <select id="Brand_id" name="Brand_id" class="form-select " aria-label="Default select example">
+                            <div class=" col-md-3 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="Brand_id" class="form-label">Brand</label>
+                                    <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
                                         @foreach ($brands as $key )
                                         <option value="{{$key->id}}">{{$key->Brand_name}}</option>
                                         @endforeach
@@ -45,10 +47,10 @@
                                 </div>
                             </div>
                             <!-- brand end -->
-                            <div class="col-md-3">
-                                <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Category</label>
-                                    <select id="category_id" name="category_id" class="form-select " aria-label="Default select example">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="category_id" class="form-label">Category</label>
+                                    <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                         @foreach ($categories as $key )
                                         <option value="{{$key->id}}">{{$key->category_name}}</option>
                                         @endforeach
@@ -56,28 +58,30 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row mt-3 ">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-3  ">
-                                <div class="md-3 ">
-                                    <label for="example-text-input" class="form-label">Product Name</label>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="product_id" class="form-label">Product Name</label>
                                     <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
                                         <option selected="">Open this select menu</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-1">
-                                <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Stock</label>
+                            <div class="col-md-2 col-sm-12">
+                                <div class="mb-3">
+                                    <label for="stock_qte" class="form-label">Stock</label>
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                        </div>
+
+                        <div class="row float-end mt-0 ">
+
+
+                            <div class="col-md-12">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
-                                    <i class="btn btn-info btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
+                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
                                 </div>
                             </div>
 
@@ -85,6 +89,7 @@
 
 
                     </div>
+
                     <!-- End of card body -->
                     <div class="card-body">
                         <form action="{{route('store.delivery')}}" method="post" action="">
@@ -306,6 +311,20 @@
             })
             .catch(error => console.log(error));
     });
+    // Call the fetch-product API with the default value of the category_id select element
+    var default_category_id = document.getElementById('category_id').value;
+    fetch(`{{ route('fetch-product') }}?category_id=${default_category_id}`, {
+            method: "GET",
+        })
+        .then(response => response.json())
+        .then(data => {
+            let html = '<option value="">Select Category</option>';
+            data.forEach(function(v) {
+                html += `<option value="${v.id}"> ${v.product_name} </option>`;
+            });
+            document.getElementById('product_id').innerHTML = html;
+        })
+        .catch(error => console.log(error));
 </script>
 
 <script type="text/javascript">

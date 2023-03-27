@@ -32,7 +32,7 @@ class SendStockQuantityNotification
      */
     public function handle(ProductQuantityUpdated $event)
     {
-        if ($event->product->product_quantity < 5) {
+        if ($event->product->product_qte < 5) {
             // Get all user IDs to notify
             $userIds = User::pluck('id')->toArray();
             $createdBy = $event->product->created_by;

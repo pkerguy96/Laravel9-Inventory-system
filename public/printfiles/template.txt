@@ -1,0 +1,302 @@
+<html>
+<head>
+    <style>
+         :root {
+            --green-color: lime;
+            --black-color: #1d1d1d;
+            --white-color: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: var(--black-color);
+        }
+        
+        .back {
+            position: fixed;
+            width: 120%;
+            display: block;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: -10;
+            opacity: 0.2;
+        }
+        
+        header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 44px;
+            z-index: -1;
+            background-color: var(--green-color);
+        }
+        
+        header::after {
+            content: "";
+            display: block;
+            width: 94%;
+            height: 6px;
+            background-color: var(--green-color);
+            margin: 30px auto 0 auto;
+            filter: drop-shadow(0px 4px 4px #1d1d1d50);
+        }
+        
+        header .logo {
+            width: 300px;
+        }
+        
+        header .logo img {
+            width: 100%;
+            display: block;
+            filter: drop-shadow(-4px 4px 4px #1d1d1d50);
+        }
+        
+        header .text {
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            border-radius: 20px;
+            justify-content: center;
+            border: 4px solid var(--green-color);
+            padding: 2px 20px;
+        }
+        
+        header .text h1 {
+            font-size: 40px;
+            font-weight: bolder;
+            color: var(--green-color);
+        }
+        
+        header .text p {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        main {
+            width: 96%;
+            margin: 20px auto 0 auto;
+        }
+        
+        main .info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            margin-bottom: 20px;
+        }
+        
+        main .info>* {
+            width: 100%;
+        }
+        
+        main .info div {
+            text-align: center;
+        }
+        
+        main .info h1 {
+            font-size: 28px;
+        }
+        
+        main .info h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        
+        main .info h3 {
+            font-size: 16px;
+        }
+        
+        main .price {
+            border: 2px solid var(--black-color);
+            text-align: center;
+            margin-top: 50px;
+            font-size: 18px;
+            font-weight: 900;
+        }
+        
+        main .price span {
+            color: var(--green-color);
+        }
+        
+        main .sign {
+            width: 200px;
+            margin-left: auto;
+            margin-top: 30px;
+        }
+        
+        .empty-footer {
+            height: 200px;
+        }
+        
+        footer {
+            padding: 20px;
+            background-color: var(--green-color);
+            text-align: center;
+            font-size: 12px;
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+        }
+        
+        footer::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -30px;
+            width: 94%;
+            height: 6px;
+            background-color: var(--green-color);
+            filter: drop-shadow(0px 4px 4px #1d1d1d50);
+        }
+        
+        @page {
+            size: A4;
+            margin: 5mm 5mm 5mm 5mm;
+            padding-bottom: 200px;
+        }
+        
+        .header-space {
+            height: 0;
+        }
+        
+        .footer-space {
+            height: 200px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        
+        .table th {
+            border: 1px solid var(--black-color);
+            padding: 5px;
+            background: var(--green-color);
+            color: var(--black-color);
+        }
+        
+        .table td {
+            border: 1px solid var(--black-color);
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .table td[colspan] {
+            border: unset;
+        }
+        
+        .table td.data {
+            background-color: var(--green-color);
+            color: var(--black-color);
+        }
+    </style>
+</head>
+<body>
+    <table style="width: 100%">
+        <thead>
+            <tr>
+                <td>
+                    <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="{{data-logo}}" class="back" />
+                    <header>
+                        <div class="logo">
+                            <img src="{{data-logo}}" alt="logo" />
+                        </div>
+                        <div class="text">
+                            <h1>PROMED PLANET</h1>
+                            <p>Matériel Médical Professionnel</p>
+                        </div>
+                    </header>
+                    <main>
+                        <section class="info">
+                            <div>
+                                <h1>CLIENT</h1>
+                            </div>
+                            <div></div>
+                            <div>
+                                <h2>{{data-client}}</h2>
+                                <h3>STE ERRAZI SERVICE MEDICAUX ( SARL-AU )</h3>
+                                <h3>{{data-address}}</h3>
+                                <h3>ICE: {{data-ice}}</h3>
+                                <h3>TEL: {{data-tel}}</h3>
+                            </div>
+                            <div>
+                                <h1>FACTURE N°: {{data-bill}}</h1>
+                                <h3>DATE: {{data-date}}</h3>
+                                <h3>Bon de livraison N° {{data-bon}}</h3>
+                            </div>
+                        </section>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Deignation</th>
+                                    <th>Quantite</th>
+                                    <th>Prix Unite</th>
+                                    <th>Prix Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{data-rows}}
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="data">Subtotal</td>
+                                    <td class="data">{{data-sub}} MAD</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="data">Tax</td>
+                                    <td class="data">{{data-tax}} %</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="data">Total tax</td>
+                                    <td class="data">{{data-total-tax}} MAD</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="data">Total</td>
+                                    <td class="data"><h3>{{data-total}} MAD</h3></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <section class="price">Arrêtée la présente facture à la somme de : <span>{{data-total-text}} Dirhams</span></section>
+                        <h3 class="sign">Signature</h3>
+                    </main>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="footer-space">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <footer>
+        <b>PROMED PLANET SARL AU</b> au capital de 100 000 MAD / <b>RC</b>: 12937 / <b>IF</b>: 52551967 / <b>TAXE PROFESSIONNELLE</b>: 41304239 <br /><b>ICE</b
+			>: 003103471000024 | <b>Compte bancaire</b>: 011 450 0000452100001985 13 <br /><b>SIEGE SOCIAL</b>: ETG 1 AV MED V° HAY CHARAF AIT KORCHI PRES DE LA GENDARMERIE ROYALE BENI MELLAL <br /><b>GSM</b>: 0661 47 25 34 // 0039 388 126 9567 | <b>Email</b>:
+        promed.planet@gmail.com | <b>Web</b>: www.promedpalnet.ma
+    </footer>
+</body>
+</html>

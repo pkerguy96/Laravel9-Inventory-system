@@ -42,6 +42,17 @@ class InvoiceController extends Controller
     }
     public function storeInvoices(Request $request)
     {
+        /*    dd($request->amountrd);
+        $category_count = count($request->category_id);
+        for ($i = 0; $i < $category_count; $i++) {
+
+            $sellingPrice = $request->amountrd[$i];
+
+            dd($sellingPrice);
+
+            dd(gettype($sellingPrice));
+        } */
+
         if ($request->category_id == null || $request->pay_status == null || $request->customer_id == null) {
             $notification = array(
                 'message' => 'please select category',
@@ -57,8 +68,6 @@ class InvoiceController extends Controller
                 return redirect()->back()->with($notification);
             } else {
                 $invoice = new Invoice();
-
-
                 $invoice->customer_id = $request->customer_id;
                 $invoice->delivery_id = $request->delivery_id;
                 $invoice->invoice_no = $request->invoice_no;
@@ -73,7 +82,8 @@ class InvoiceController extends Controller
                     if ($invoice->save()) {
                         $category_count = count($request->category_id);
                         for ($i = 0; $i < $category_count; $i++) {
-                            $tax = calculatetax($request->selling_price[$i]);
+                            $tax = calculatetax($request->selling_pricerd[$i]);
+
                             $invoice_details = new InvoiceDetail();
                             $invoice_details->invoice_id = $invoice->id;
                             $invoice_details->date = date('Y-m-d', strtotime($request->date));
@@ -81,10 +91,10 @@ class InvoiceController extends Controller
                             $invoice_details->product_id = $request->product_id[$i];
                             $invoice_details->qte = $request->qte[$i];
                             $invoice_details->brand_id = $request->brand_id[$i];
-                            $invoice_details->tax_amount = calculatetax($request->selling_price[$i]);
+                            $invoice_details->tax_amount = calculatetax($request->selling_pricerd[$i]);
                             $invoice_details->unit_price = $request->unit_price[$i];
-                            $invoice_details->selling_price = $request->selling_price[$i];
-                            $invoice_details->grand_total = CalculateGrandAmount($request->selling_price[$i], $tax);
+                            $invoice_details->selling_price = $request->selling_pricerd[$i];
+                            $invoice_details->grand_total = CalculateGrandAmount($request->selling_pricerd[$i], $tax);
                             $invoice_details->status = '0';
 
                             $invoice_details->save();
@@ -101,18 +111,18 @@ class InvoiceController extends Controller
                         $payements->customer_id = $customerid;
                         $payements->pay_status = $request->pay_status;
                         $payements->discount_amount = $request->discount_amount;
-                        $payements->total_amount = $request->amount;
+                        $payements->total_amount =  $invoice_details->grand_total;
                         if ($request->pay_status == 'full_paid') {
-                            $payements->paid_amount = $request->amount;
+                            $payements->paid_amount = $invoice_details->grand_total;
                             $payements->due_amount = '0';
-                            $payements_details->paid_amount_current = $request->amount;
+                            $payements_details->paid_amount_current = $invoice_details->grand_total;
                         } elseif ($request->pay_status == 'full_due') {
                             $payements->paid_amount = '0';
-                            $payements->due_amount = $request->amount;;
+                            $payements->due_amount = $invoice_details->grand_total;
                             $payements_details->paid_amount_current = '0';
                         } elseif ($request->pay_status == 'partial_paid') {
                             $payements->paid_amount = $request->paid_amount;
-                            $payements->due_amount = $request->amount - $request->paid_amount;
+                            $payements->due_amount = $invoice_details->grand_total - $request->paid_amount;
                             $payements_details->paid_amount_current = $request->paid_amount;
                         }
                         $payements->save();

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\notifications;
 use Illuminate\Support\Facades\Session;
+use Spatie\Permission\Models\Role;
 
 class FetchController extends Controller
 {
@@ -53,5 +54,15 @@ class FetchController extends Controller
         notifications::where('id', $notificationID)->where('user_id', auth::user()->id)->delete();
         $message = 'Notification deleted successfully! ';
         return response()->json(['message' => $message]);
+    }
+    public function getallroles()
+    {
+        $roles = Role::all();
+        return response()->json($roles);
+    }
+    public function getallpermissions(request $request)
+    {
+        $permissions = Role::findByName($request->rolename)->permissions;
+        return response()->json($permissions);
     }
 }

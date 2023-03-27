@@ -12,14 +12,15 @@ use App\Http\Controllers\sop\InvoiceController;
 use App\Http\Controllers\sop\NotificationController;
 use App\Http\Controllers\sop\ProductController;
 use App\Http\Controllers\sop\PurchaseController;
+use App\Http\Controllers\sop\RolesController;
 use App\Http\Controllers\sop\StockController;
 use App\Http\Controllers\sop\SupplierController;
 use App\Http\Controllers\sop\UnitController;
-use App\Models\DeliveryReceipt;
-use App\Models\Invoice;
+
 
 Route::get('/', function () {
-    return view('welcome');
+    /*   return view('welcome'); */
+    return redirect()->route('login');
 });
 
 
@@ -34,6 +35,7 @@ route::middleware('auth')->group(function () {
 
         Route::get('/change/password', 'ChangePassword')->name('change.password');
         Route::post('/update/password', 'UpdatePassword')->name('update.password');
+        Route::get('/all/admins', 'Alladmins')->name('all.admins');
     });
 
     /* All Suppliers Routes here: */
@@ -195,6 +197,18 @@ route::middleware('auth')->group(function () {
         Route::get('/print/delivery/{id}', 'PrintDelivery')->name('print.delivery');
         Route::get('/delete/delivery/{id}', 'DeleteDelivery')->name('delete.delivery');
     });
+    Route::controller(RolesController::class)->group(function () {
+        /* roles and permissions view route */
+        Route::get('/All/Permissions', 'Allrolespermissions')->name('view.rolespermissions');
+        /* save a new role route */
+        Route::post('/store/role', 'storerole')->name('append.role');
+        /* save a new permission route */
+        Route::post('/store/permissions', 'storepermissions')->name('append.permissions');
+        /* view all roles view */
+        Route::get('/All/Roles', 'allroles')->name('all.roles');
+        /* Delete role route  */
+        Route::get('/Delete/Role/{id}', 'DeleteRole')->name('delete.role');
+    });
     /* All notifications controller are here */
     Route::controller(NotificationController::class)->group(function () {
         Route::get('/All/Notifications', 'allnotifications')->name('notifications.all');
@@ -214,9 +228,10 @@ route::middleware('auth')->group(function () {
         Route::get('/notification-is-read', 'ReadNotification')->name('notification-is-read');
         /* deletes notification from the DB */
         Route::get('/delete-notification-fromdb', 'deleteNotification')->name('delete-notification-fromdb');
+
+        Route::get('/get-all-roles', 'getallroles')->name('get-all-roles');
+        Route::get('/get-permission', 'getallpermissions')->name('get-permission');
     });
-
-
 
     /* Language routes here */
     Route::get('{prefix?}/language/{locale}', function ($locale) {
