@@ -12,7 +12,7 @@
                  <li class="menu-title">Menu</li>
 
                  <li>
-                     <a href="index.html" class="waves-effect">
+                     <a href="{{ route('dashboard') }}" class="waves-effect">
                          <i class="ri-dashboard-line"></i>
                          <span>Dashboard</span>
                      </a>
@@ -130,12 +130,24 @@
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
                          <i class="ri-account-circle-line"></i>
+                         <span>Roles Management</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="false">
+
+                         <li><a href="{{route('all.roles')}}">All Roles</a></li>
+                         <li><a href="{{route('view.rolespermissions')}}">Roles And Permissions</a></li>
+
+
+                     </ul>
+                 </li>
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class="ri-account-circle-line"></i>
                          <span>Admin Management</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
                          <li><a href="{{route('all.admins')}}">All Admins</a></li>
-                         <li><a href="{{route('all.roles')}}">All Roles</a></li>
-                         <li><a href="{{route('view.rolespermissions')}}">Roles And Permissions</a></li>
+
 
 
                      </ul>

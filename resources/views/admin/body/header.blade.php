@@ -3,6 +3,7 @@
 
     <div class="navbar-header">
         <div class="d-flex">
+
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">

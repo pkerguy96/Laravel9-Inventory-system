@@ -39,8 +39,11 @@
                                     <td> {{ $item->name }} </td>
                                     <td class="text-center">
 
-
+                                        @if ($item->name == 'SuperAdmin')
+                                        @else
                                         <a href="{{route('delete.role',$item->id)}}" class="btn btn-danger sm" title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i> </a>
+                                        @endif
+
 
                                     </td>
 

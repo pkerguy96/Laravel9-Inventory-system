@@ -20,6 +20,22 @@ class RolesController extends Controller
     }
     public function storerole(request $request)
     {
+        $rules = [
+            'role_name' => 'required|min:3|max:50',
+        ];
+        $messages = [
+            'role_name.required' => 'please enter a name',
+        ];
+        /*  Inputs Validation*/
+        $result = verifySupplierIce($request, $rules, $messages);
+        if ($result['status'] === 'error') {
+            $errors = implode('<br>', $result['errors']);
+            $notification = array(
+                'message' => $errors,
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
         $rolename = $request->role_name;
         Role::create(['name' =>  $rolename]);
         $notification = InsertNotification('Role inserted successfuly.', 'success');
@@ -27,6 +43,7 @@ class RolesController extends Controller
     }
     public function storepermissions(Request $request)
     {
+
         $permissions = ['m_supp', 'm_cust', 'm_unit', 'm_brand', 'm_categ', 'm_prod', 'm_purch', 'm_recei', 'm_inv', 'm_stock',];
         if ($request->roles_data == null) {
             $notification = InsertNotification('Please select a role first!', 'error');
@@ -49,7 +66,7 @@ class RolesController extends Controller
             }
         }
         $notification = InsertNotification('Permissions updated successfully!', 'success');
-        return redirect()->back()->with($notification);
+        return redirect()->route('all.admins')->with($notification);
     }
     public function DeleteRole($id)
     {

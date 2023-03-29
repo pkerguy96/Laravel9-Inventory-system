@@ -169,7 +169,7 @@
             const response = await fetch('{{route("get-all-roles")}}');
             const data = await response.json();
 
-            let html = '<option value="lolipop">Select Category</option>';
+            let html = '<option value="">Select Role</option>';
             data.forEach(value => {
 
                 html += `<option value="${value.name}">${value.name}</option>`;

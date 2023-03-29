@@ -35,11 +35,21 @@ route::middleware('auth')->group(function () {
 
         Route::get('/change/password', 'ChangePassword')->name('change.password');
         Route::post('/update/password', 'UpdatePassword')->name('update.password');
-        Route::get('/all/admins', 'Alladmins')->name('all.admins');
+        Route::get('/all/Admins', 'Alladmins')->name('all.admins')->middleware('role:SuperAdmin');
+        /* edit admin view */
+        Route::get('/edit/Admin/{id}', 'Editadmin')->name('edit.admin')->middleware('role:SuperAdmin');
+        /* modify admin data */
+        Route::post('/Modify/Admin', 'Modifyadmin')->name('modify.admin')->middleware('role:SuperAdmin');
+        /* new admin route  */
+        Route::get('/New/Admin', 'Addnewadmin')->name('add.admin')->middleware('role:SuperAdmin');
+        /* stores new admins */
+        Route::post('/Store/Admin', 'StoreNewAdmin')->name('append.admin')->middleware('role:SuperAdmin');
+        /* deletes admin */
+        Route::get('/Delete/Admin/{id}', 'Deleteadmin')->name('delete.admin')->middleware('role:SuperAdmin');
     });
 
     /* All Suppliers Routes here: */
-    Route::controller(SupplierController::class)->group(function () {
+    Route::controller(SupplierController::class)->middleware('permission:m_supp')->group(function () {
         /* Get all suppliers */
         Route::get('/suplliers/all', 'Allsuppliers')->name('all.suppliers');
         /* Add new supplier */
@@ -54,8 +64,9 @@ route::middleware('auth')->group(function () {
         Route::get('/supplier/delete/{id}', 'DeleteSupplier')->name('delete.supplier');
     });
 
+
     /* All Customers Routes here: */
-    Route::controller(CustomerController::class)->group(function () {
+    Route::controller(CustomerController::class)->middleware('permission:m_cust')->group(function () {
         /* Get all customers */
         Route::get('/customers/all', 'Allcustomers')->name('all.customers');
         /* Add new customer */
@@ -86,7 +97,7 @@ route::middleware('auth')->group(function () {
         Route::get('/customers/wise/payment/report', 'CustomerWisepayement')->name('customers.wise.payement.report');
     });
     /* All unit Routes here: */
-    Route::controller(UnitController::class)->group(function () {
+    Route::controller(UnitController::class)->middleware('permission:m_unit')->group(function () {
         /* Get all Units */
         Route::get('/units/all', 'Allunits')->name('all.Units');;
         /* Add new unit */
@@ -101,7 +112,7 @@ route::middleware('auth')->group(function () {
         Route::get('/units/delete/{id}', 'DeleteUnit')->name('delete.unit');
     });
     /* All Categories Routes here: */
-    Route::controller(CategoryController::class)->group(function () {
+    Route::controller(CategoryController::class)->middleware('permission:m_categ')->group(function () {
         /* Get all Categories */
         Route::get('/categories/all', 'AllCategories')->name('all.Categories');
         /* Add new Category */
@@ -116,7 +127,7 @@ route::middleware('auth')->group(function () {
         Route::get('/categories/delete/{id}', 'Deletecategory')->name('delete.category');
     });
     /* All Products Routes here: */
-    Route::controller(ProductController::class)->group(function () {
+    Route::controller(ProductController::class)->middleware('permission:m_prod')->group(function () {
         /* Get all Products */
         Route::get('/Products/all', 'AllProducts')->name('all.Products');;
         /* Add new Products */
@@ -132,7 +143,7 @@ route::middleware('auth')->group(function () {
     });
 
     /* All Products Purchases here: */
-    Route::controller(PurchaseController::class)->group(function () {
+    Route::controller(PurchaseController::class)->middleware('permission:m_purch')->group(function () {
         /* Get all Purchases */
         Route::get('/Purchases/all', 'AllPurchases')->name('all.Purchases');
         /* Add new Purchases */
@@ -148,7 +159,7 @@ route::middleware('auth')->group(function () {
         Route::get('/Purchases/details/{id}', 'ViewPurchasesDetails')->name('Purchases.details');
     });
     /* All  Invoices REQUESTS here: */
-    Route::controller(InvoiceController::class)->group(function () {
+    Route::controller(InvoiceController::class)->middleware('permission:m_inv')->group(function () {
         /* Get all Invoices */
         Route::get('/Invoices/All', 'AllInvoices')->name('all.invoices');
         Route::get('/Invoices/Add', 'AddInvoices')->name('add.invoice');
@@ -168,7 +179,7 @@ route::middleware('auth')->group(function () {
 
 
     /* All stocks routs */
-    Route::controller(StockController::class)->group(function () {
+    Route::controller(StockController::class)->middleware('permission:m_stock')->group(function () {
         Route::get('/Stock/Report', 'Stockreport')->name('stock.report');
         Route::get('/Stock/Print/Report', 'PrintStockreport')->name('print.stock.report.pdf');
         Route::get('/Stock/search/filter', 'Searchbysuporstock')->name('Search.Stock.supplier');
@@ -177,7 +188,7 @@ route::middleware('auth')->group(function () {
     });
 
     /* All brands routes here */
-    Route::controller(BrandsController::class)->group(function () {
+    Route::controller(BrandsController::class)->middleware('permission:m_brand')->group(function () {
         Route::get('/All/Brands', 'Allbrands')->name('all.Brands');
         Route::get('/Add/Brands', 'AddBrand')->name('add.brand');
         /* store new brand */
@@ -190,14 +201,14 @@ route::middleware('auth')->group(function () {
         Route::get('/Brands/delete/{id}', 'Deletebrand')->name('delete.brand');
     });
 
-    Route::controller(DeliveryController::class)->group(function () {
+    Route::controller(DeliveryController::class)->middleware('permission:m_recei')->group(function () {
         Route::get('/All/delivery', 'Alldelivery')->name('all.delivery.receipt');
         Route::get('/add/delivery', 'AddDelivery')->name('add.delivery');
         Route::post('/store/delivery', 'storedevlivery')->name('store.delivery');
         Route::get('/print/delivery/{id}', 'PrintDelivery')->name('print.delivery');
         Route::get('/delete/delivery/{id}', 'DeleteDelivery')->name('delete.delivery');
     });
-    Route::controller(RolesController::class)->group(function () {
+    Route::controller(RolesController::class)->middleware('role:SuperAdmin')->group(function () {
         /* roles and permissions view route */
         Route::get('/All/Permissions', 'Allrolespermissions')->name('view.rolespermissions');
         /* save a new role route */
