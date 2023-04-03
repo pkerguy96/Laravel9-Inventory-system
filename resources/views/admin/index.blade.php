@@ -132,25 +132,7 @@ Cache::forget('invoice')
                                         </tr>
                                     </thead><!-- end thead -->
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mb-0">Charles Casey</h6>
-                                            </td>
-                                            <td>Web Developer</td>
-                                            <td>
-                                                <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 text-success align-middle me-2"></i>Active</div>
-                                            </td>
-                                            <td>
-                                                23
-                                            </td>
-                                            <td>
-                                                04 Apr, 2021
-                                            </td>
-                                            <td>$42,450</td>
-                                        </tr>
-                                        <!-- end -->
 
-                                        <!-- end -->
                                     </tbody><!-- end tbody -->
                                 </table> <!-- end table -->
                             </div>
