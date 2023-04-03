@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -30,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Schema::defaultStringLength(191);
         // Retrieve all unread notifications for the authenticated user
         View::composer('*', function ($view) {

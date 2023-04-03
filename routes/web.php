@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Demo\DemoController;
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\sop\BrandsController;
 use App\Http\Controllers\sop\CategoryController;
@@ -239,9 +239,11 @@ route::middleware('auth')->group(function () {
         Route::get('/notification-is-read', 'ReadNotification')->name('notification-is-read');
         /* deletes notification from the DB */
         Route::get('/delete-notification-fromdb', 'deleteNotification')->name('delete-notification-fromdb');
-
+        /* All roles requests */
         Route::get('/get-all-roles', 'getallroles')->name('get-all-roles');
         Route::get('/get-permission', 'getallpermissions')->name('get-permission');
+        /* ALL DASHBOARD REQUESTS HERE */
+        Route::get('/get-total-sells', 'gettotalsells')->name('get-total-sells');
     });
 
     /* Language routes here */
@@ -259,6 +261,7 @@ route::middleware('auth')->group(function () {
 });
 
 Route::get('/dashboard', function () {
+
     return view('admin.index');
 })->middleware(['auth'])->name('dashboard');
 
