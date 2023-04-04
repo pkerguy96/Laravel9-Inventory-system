@@ -124,21 +124,21 @@
 
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="body">
                                                     @php
                                                     $total_price = '0';
 
                                                     @endphp
                                                     @foreach ( $invoice['InvoiceDetails'] as $key => $invdetails)
-                                                    <tr class="border border-dark">
+                                                    <tr class="to-keep border border-dark">
                                                         <td class="text-center border border-right-1 border-dark">{{$key+1}}</td>
                                                         <td class="text-center border border-right-1 border-dark">{{$invdetails['products']['ref_num']}}</td>
                                                         <td class="text-center border border-right-1 border-dark">{{$invdetails['categories']['category_name']}}</td>
-                                                        <td class="text-center border border-right-1 border-dark">{{$invdetails['products']['product_name']}}</td>
+                                                        <td class="to-keep text-center border border-right-1 border-dark">{{$invdetails['products']['product_name']}}</td>
 
-                                                        <td class="text-center border border-right-1 border-dark">{{$invdetails->qte}}</td>
-                                                        <td class="text-center border border-right-1 border-dark">{{$invdetails->unit_price}} MAD</td>
-                                                        <td class="text-center">{{$invdetails->selling_price}} MAD</td>
+                                                        <td class="to-keep text-center border border-right-1 border-dark">{{$invdetails->qte}}</td>
+                                                        <td class="to-keep text-center border border-right-1 border-dark">{{$invdetails->unit_price}} MAD</td>
+                                                        <td class="to-keep text-center">{{$invdetails->selling_price}} MAD</td>
 
                                                     </tr>
                                                     @php
@@ -230,7 +230,7 @@
                                         <div class="d-print-none">
                                             <div class="float-end">
                                                 <a id="print" class="btn btn-success waves-effect waves-light"><i class="fa fa-print"></i></a>
-                                                <a href="{{route('generate-pdf',$invoice->id)}}" class="btn btn-primary waves-effect waves-light ms-2">Download</a>
+                                                <a href="#" class="btn btn-primary waves-effect waves-light ms-2">Download</a>
                                             </div>
                                         </div>
 
@@ -253,8 +253,12 @@
     </div> <!-- container-fluid -->
 </div>
 <script defer>
-    getPrintFunction({
-        client: "ahmedqo",
+    var body = document.querySelector("#body").cloneNode(true);
+    [...body.querySelectorAll("*")].forEach(e => {
+        if (!e.classList.contains("to-keep")) e.remove()
+    });
+    getPrintFunction("facture", {
+        client: "{{ $invoice['clients']['name'] }}",
         address: "04 rue nador",
         ice: "1000000s54s5455",
         phone: "4545545455454",
@@ -266,51 +270,7 @@
         sub_total: "1000000s54s5455",
         total_tax: "1000000s54s5455",
         total_text: "1000000s54s5455",
-        rows: `	<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-            <tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-          
-         
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>
-            
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-			</tr>`,
+        rows: body.innerHTML,
     }).then((print) => {
         document.querySelector("#print").addEventListener("click", print);
     });

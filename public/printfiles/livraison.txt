@@ -1,0 +1,89 @@
+<body>
+    <table style="width: 100%">
+        <thead>
+            <tr>
+                <td>
+                    <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="{{data-logo}}" class="back" />
+                    <header>
+                        <div class="logo">
+                            <img src="{{data-logo}}" alt="logo" />
+                        </div>
+                        <div class="text">
+                            <h1>PROMED PLANET</h1>
+                            <p>Matériel Médical Professionnel</p>
+                        </div>
+                    </header>
+                    <main>
+                        <section class="info">
+                            <div>
+                                <h1>CLIENT</h1>
+                            </div>
+                            <div></div>
+                            <div>
+                                <h2>{{data-client}}</h2>
+                                <h3>STE ERRAZI SERVICE MEDICAUX ( SARL-AU )</h3>
+                                <h3>{{data-address}}</h3>
+                                <h3>ICE: {{data-ice}}</h3>
+                                <h3>TEL: {{data-tel}}</h3>
+                            </div>
+                            <div>
+                                <h1>Bon de livraison N°: {{data-bon}}</h1>
+                                <h3>DATE: {{data-date}}</h3>
+                            </div>
+                        </section>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Designation</th>
+                                    <th>Quantite</th>
+                                    <th>Prix Unite</th>
+                                    <th>Prix Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{data-rows}}
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td class="data">Quantité Totale livrée</td>
+                                    <td class="data">{{data-quantity}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td class="data">Total</td>
+                                    <td class="data">{{data-total}} MAD</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <section class="price">Arrêtée la présente facture à la somme de : <span>{{data-total-text}} Dirhams</span></section>
+                        <h4 class="note">Note:</h4>
+                        <p>
+                            <strong>PROMED PLANET SARL AU</strong> est un spécialiste de la vente de matériel médical aux professionnels de santé et aux particuliers. <br />
+                            Nous sélectionnons et distribuons des produits des plus grandes marques pour que vous puissiez exercer votre profession ou surveiller votre santé avec le meilleur matériel et aux meilleur prix .
+                        </p>
+                        <h3 class="sign">Signature</h3>
+                    </main>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="footer-space">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <footer>
+        <b>PROMED PLANET SARL AU</b> au capital de 100 000 MAD / <b>RC</b>: 12937 / <b>IF</b>: 52551967 / <b>TAXE PROFESSIONNELLE</b>: 41304239 <br /><b>ICE</b
+			>: 003103471000024 | <b>Compte bancaire</b>: 011 450 0000452100001985 13 <br /><b>SIEGE SOCIAL</b>: ETG 1 AV MED V° HAY CHARAF AIT KORCHI PRES DE LA GENDARMERIE ROYALE BENI MELLAL <br /><b>GSM</b>: 0661 47 25 34 // 0039 388 126 9567 | <b>Email</b>:
+        promed.planet@gmail.com | <b>Web</b>: www.promedpalnet.ma
+    </footer>
+</body>

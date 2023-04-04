@@ -1,0 +1,221 @@
+<head>
+    <style>
+            :root {
+            --green-color: lime;
+            --black-color: #1d1d1d;
+            --white-color: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: var(--black-color);
+        }
+        
+        .back {
+            position: fixed;
+            width: 120%;
+            display: block;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: -10;
+            opacity: 0.2;
+        }
+        
+        header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 44px;
+            z-index: -1;
+            background-color: var(--green-color);
+        }
+        
+        header::after {
+            content: "";
+            display: block;
+            width: 94%;
+            height: 6px;
+            background-color: var(--green-color);
+            margin: 30px auto 0 auto;
+            filter: drop-shadow(0px 4px 4px #1d1d1d50);
+        }
+        
+        header .logo {
+            width: 300px;
+        }
+        
+        header .logo img {
+            width: 100%;
+            display: block;
+            filter: drop-shadow(-4px 4px 4px #1d1d1d50);
+        }
+        
+        header .text {
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            border-radius: 20px;
+            justify-content: center;
+            border: 4px solid var(--green-color);
+            padding: 2px 20px;
+        }
+        
+        header .text h1 {
+            font-size: 40px;
+            font-weight: bolder;
+            color: var(--green-color);
+        }
+        
+        header .text p {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        main {
+            width: 96%;
+            margin: 20px auto 0 auto;
+        }
+        
+        main .info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            margin-bottom: 20px;
+        }
+        
+        main .info>* {
+            width: 100%;
+        }
+        
+        main .info div {
+            text-align: center;
+        }
+        
+        main .info h1 {
+            font-size: 28px;
+        }
+        
+        main .info h2 {
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+        
+        main .info h3 {
+            font-size: 16px;
+        }
+        
+        main .price {
+            border: 2px solid var(--black-color);
+            text-align: center;
+            margin-top: 50px;
+            font-size: 18px;
+            font-weight: 900;
+        }
+        
+        main .price span {
+            color: var(--green-color);
+        }
+        
+        .span-2 {
+            grid-column: span 2;
+        }
+
+        .margin-top {
+            margin-top: 20px;
+        }
+
+         .margin-bottom {
+            margin-bottom: 20px;
+        }
+
+        main .note {
+            margin-top: 20px;
+        }
+
+        main .sign {
+            width: 200px;
+            margin-left: auto;
+            margin-top: 30px;
+        }
+        
+        .empty-footer {
+            height: 200px;
+        }
+        
+        footer {
+            padding: 20px;
+            background-color: var(--green-color);
+            text-align: center;
+            font-size: 12px;
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+        }
+        
+        footer::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -30px;
+            width: 94%;
+            height: 6px;
+            background-color: var(--green-color);
+            filter: drop-shadow(0px 4px 4px #1d1d1d50);
+        }
+        
+        @page {
+            size: A4;
+            margin: 5mm 5mm 5mm 5mm;
+        }
+        
+        .header-space {
+            height: 0;
+        }
+        
+        .footer-space {
+            height: 200px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        
+        .table th {
+            border: 1px solid var(--black-color);
+            padding: 5px;
+            background: var(--green-color);
+            color: var(--black-color);
+        }
+        
+        .table td {
+            border: 1px solid var(--black-color);
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .table td[colspan] {
+            border: unset;
+        }
+        
+        .table td.data {
+            background-color: var(--green-color);
+            color: var(--black-color);
+        }
+    </style>
+</head>

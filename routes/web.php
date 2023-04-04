@@ -129,7 +129,7 @@ route::middleware('auth')->group(function () {
     /* All Products Routes here: */
     Route::controller(ProductController::class)->middleware('permission:m_prod')->group(function () {
         /* Get all Products */
-        Route::get('/Products/all', 'AllProducts')->name('all.Products');;
+        Route::get('/Products/all', 'AllProducts')->name('all.Products');
         /* Add new Products */
         Route::get('/Products/add', 'Addproduct')->name('add.product');
         /* stores new Products */

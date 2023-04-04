@@ -1,0 +1,59 @@
+<body>
+    <table style="width: 100%">
+        <thead>
+            <tr>
+                <td>
+                    <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <img src="{{data-logo}}" class="back" />
+                    <header>
+                        <div class="logo">
+                            <img src="{{data-logo}}" alt="logo" />
+                        </div>
+                        <div class="text">
+                            <h1>PROMED PLANET</h1>
+                            <p>Matériel Médical Professionnel</p>
+                        </div>
+                    </header>
+                    <main>
+                        <section class="info">
+                            <div class="span-2">
+                                <h1>BON DE COMMANDE</h1>
+                                <h3>DATE: {{data-date}}</h3>
+                            </div>
+                        </section>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Quantite</th>
+                                    <th>Designation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{data-rows}}
+                            </tbody>
+                        </table>
+                        <h3 class="sign">Signature</h3>
+                    </main>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <div class="footer-space">&nbsp;</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <footer>
+        <b>PROMED PLANET SARL AU</b> au capital de 100 000 MAD / <b>RC</b>: 12937 / <b>IF</b>: 52551967 / <b>TAXE PROFESSIONNELLE</b>: 41304239 <br /><b>ICE</b
+			>: 003103471000024 | <b>Compte bancaire</b>: 011 450 0000452100001985 13 <br /><b>SIEGE SOCIAL</b>: ETG 1 AV MED V° HAY CHARAF AIT KORCHI PRES DE LA GENDARMERIE ROYALE BENI MELLAL <br /><b>GSM</b>: 0661 47 25 34 // 0039 388 126 9567 | <b>Email</b>:
+        promed.planet@gmail.com | <b>Web</b>: www.promedpalnet.ma
+    </footer>
+</body>

@@ -33,45 +33,209 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
     <script>
-        async function getPrintFunction(data = {}) {
+        async function getPrintFunction(type = "facture", data = {}) {
+            var path, regex;
+            switch (type) {
+                case "facture":
+                    path = "{{asset('printfiles/facture.txt')}}";
+                    regex = {
+                        client: /@{{data-client}}/g,
+                        address: /@{{data-address}}/g,
+                        ice: /@{{data-ice}}/g,
+                        phone: /@{{data-tel}}/g,
+                        bill: /@{{data-bill}}/g,
+                        date: /@{{data-date}}/g,
+                        bon: /@{{data-bon}}/g,
+                        rows: /@{{data-rows}}/g,
+                        tax: /@{{data-tax}}/g,
+                        total: /@{{data-total}}/g,
+                        sub_total: /@{{data-sub}}/g,
+                        total_tax: /@{{data-total-tax}}/g,
+                        total_text: /@{{data-total-text}}/g,
+                        logo: /@{{data-logo}}/g,
+                    };
+                    break;
+                case "livraison":
+                    path = "{{asset('printfiles/livraison.txt')}}";
+                    regex = {
+                        client: /@{{data-client}}/g,
+                        address: /@{{data-address}}/g,
+                        ice: /@{{data-ice}}/g,
+                        phone: /@{{data-tel}}/g,
+                        bon: /@{{data-bon}}/g,
+                        date: /@{{data-date}}/g,
+                        rows: /@{{data-rows}}/g,
+                        total: /@{{data-total}}/g,
+                        quantity: /@{{data-quantity}}/g,
+                        total_text: /@{{data-total-text}}/g,
+                        logo: /@{{data-logo}}/g,
+                    };
+                    break;
+                case "commande":
+                    path = "{{asset('printfiles/commande.txt')}}";
+                    regex = {
+                        date: /@{{data-date}}/g,
+                        rows: /@{{data-rows}}/g,
+                        logo: /@{{data-logo}}/g,
+                    };
+                    break;
+                case "devis":
+                    path = "{{asset('printfiles/devis.txt')}}";
+                    regex = {
+                        devis: /@{{data-devis}}/g,
+                        date: /@{{data-date}}/g,
+                        rows: /@{{data-rows}}/g,
+                        tax: /@{{data-tax}}/g,
+                        total: /@{{data-total}}/g,
+                        sub_total: /@{{data-sub}}/g,
+                        total_tax: /@{{data-total-tax}}/g,
+                        logo: /@{{data-logo}}/g,
+                    };
+                    break;
+            }
             data = {
                 ...data,
-                logo: "{{ asset('/logo/logo.png') }}",
+                logo: "{{asset('/backend/assets/images/logo.png')}}",
             };
-            const regex = {
-                client: /@{{data-client}}/g,
-                address: /@{{data-address}}/g,
-                ice: /@{{data-ice}}/g,
-                phone: /@{{data-tel}}/g,
-                bill: /@{{data-bill}}/g,
-                date: /@{{data-date}}/g,
-                bon: /@{{data-bon}}/g,
-                rows: /@{{data-rows}}/g,
-                tax: /@{{data-tax}}/g,
-                total: /@{{data-total}}/g,
-                sub_total: /@{{data-sub}}/g,
-                total_tax: /@{{data-total-tax}}/g,
-                total_text: /@{{data-total-text}}/g,
-                logo: /@{{data-logo}}/g,
-            };
-            const req = await fetch("{{ asset('/printfiles/template.txt') }}");
-            let text = await req.text();
+            let req = await fetch("{{asset('printfiles/style.txt')}}");
+            const css = await req.text();
+            req = await fetch(path);
+            let code = await req.text();
             for (let name in regex) {
                 const cur = regex[name];
                 const val = (data && data[name]) || "";
-                text = text.replace(cur, val);
+                code = code.replace(cur, val);
             }
             return function Print() {
                 var doc = window.open("", "PRINT");
-                doc.document.write(text);
+                doc.document.write(`<html>${css}${code}</html>`);
                 doc.document.close();
                 doc.focus();
                 setTimeout(() => {
                     doc.print();
-                    doc.close();
+                    //doc.close();
                 }, 1000);
             };
         }
+
+        // getPrintFunction("facture", {
+        //     client: "ahmedqo",
+        //     address: "04 rue nador",
+        //     ice: "1000000s54s5455",
+        //     phone: "4545545455454",
+        //     bill: "2023/10",
+        //     date: "1000000s54s5455",
+        //     bon: "1000000s54s5455",
+        //     tax: "1000000s54s5455",
+        //     total: "1000000s54s5455",
+        //     sub_total: "1000000s54s5455",
+        //     total_tax: "1000000s54s5455",
+        //     total_text: "1000000s54s5455",
+        //     rows: `	<tr>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 	</tr>`,
+        // }).then((print) => {
+        //     document.querySelector("#print-facture").addEventListener("click", print);
+        // });
+
+        // getPrintFunction("livraison", {
+        //     client: "ahmedqo",
+        //     address: "04 rue nador",
+        //     ice: "1000000s54s5455",
+        //     phone: "4545545455454",
+        //     bon: "2023/10",
+        //     date: "1000000s54s5455",
+        //     total: "1000000s54s5455",
+        //     quantity: "100",
+        //     total_text: "1000000s54s5455",
+        //     rows: `	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 		<td>&nbsp;</td>
+        // 	</tr>`,
+        // }).then((print) => {
+        //     document.querySelector("#print-livraison").addEventListener("click", print);
+        // });
+
+        // getPrintFunction("commande", {
+        //     date: "1000000s54s5455",
+        //     rows: `	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 	</tr>`,
+        // }).then((print) => {
+        //     document.querySelector("#print-commande").addEventListener("click", print);
+        // });
+
+        // getPrintFunction("devis", {
+        //     date: "1000000s54s5455",
+        //     devis: "2023/20",
+        //     total: "1000000s54s5455",
+        //     sub_total: "1000000s54s5455",
+        //     total_tax: "1000000s54s5455",
+        //     rows: `	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 	</tr>
+        // 	<tr>
+        // 		<td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        //         <td>&nbsp;</td>
+        // 	</tr>`,
+        // }).then((print) => {
+        //     document.querySelector("#print-devis").addEventListener("click", print);
+        // });
     </script>
 
 </head>
