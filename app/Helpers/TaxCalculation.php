@@ -2,6 +2,7 @@
 
 use App\Models\DeliveryReceipt;
 use App\Models\Invoice;
+use App\Models\quotation;
 use Illuminate\Support\Carbon;
 
 if (!function_exists('calculateTax')) {
@@ -36,7 +37,20 @@ if (!function_exists('generateInvoiceNumber')) {
         return Carbon::now()->format('y') . '/' . Carbon::now()->format('m') . Carbon::now()->format('d') . $invoiceNumber;
     }
 }
-
+if (!function_exists('generateQuotationNumber')) {
+    function generateQuotationNumber()
+    {
+        $latestQuotation = quotation::latest('id')->first();
+        if ($latestQuotation) {
+            $QuotationNumber = (int) substr($latestQuotation->quotation_no, -3);
+            $QuotationNumber++;
+            $QuotationNumber = str_pad($QuotationNumber, 3, "0", STR_PAD_LEFT);
+        } else {
+            $QuotationNumber = "001";
+        }
+        return Carbon::now()->format('y') . '/' . Carbon::now()->format('m') . Carbon::now()->format('d') . $QuotationNumber;
+    }
+}
 if (!function_exists('generateDeliveryNumber')) {
     function generateDeliveryNumber()
     {

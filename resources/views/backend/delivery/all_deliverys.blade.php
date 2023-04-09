@@ -29,7 +29,7 @@
                                     <th>Customer Name</th>
                                     <th>Date</th>
                                     <th>Due Date</th>
-                                    <th>Description</th>
+
                                     <th>Total Quantity</th>
                                     <th>Action</th>
                             </thead>
@@ -43,7 +43,7 @@
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item['customers']['name'] }} </a></td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}}</a> </td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->due_date))}}</a> </td>
-                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->description}} </a></td>
+
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->total_qte}} </a></td>
                                     <td>
 

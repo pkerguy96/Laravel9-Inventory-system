@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+
 use App\Http\Controllers\sop\BrandsController;
 use App\Http\Controllers\sop\CategoryController;
 use App\Http\Controllers\sop\CustomerController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\sop\InvoiceController;
 use App\Http\Controllers\sop\NotificationController;
 use App\Http\Controllers\sop\ProductController;
 use App\Http\Controllers\sop\PurchaseController;
+use App\Http\Controllers\sop\QuotationController;
 use App\Http\Controllers\sop\RolesController;
 use App\Http\Controllers\sop\StockController;
 use App\Http\Controllers\sop\SupplierController;
@@ -158,6 +160,14 @@ route::middleware('auth')->group(function () {
         /* get purchases details */
         Route::get('/Purchases/details/{id}', 'ViewPurchasesDetails')->name('Purchases.details');
     });
+    Route::controller(QuotationController::class)->group(function () {
+        Route::get('/Qotations/All', 'AllQuotations')->name('all.quotations');
+        Route::get('/Qotations/Add', 'AddQuotations')->name('add.quotation');
+        Route::post('/Qotations/Store', 'StoreQuotations')->name('store.quotation');
+        Route::get('/Qotations/Delete/{id}', 'DeleteQuotation')->name('delete.quotation');
+        Route::get('/Qotations/details/{id}', 'QuotationDetails')->name('quotation.details');
+    });
+    /* All qotations routes here   */
     /* All  Invoices REQUESTS here: */
     Route::controller(InvoiceController::class)->middleware('permission:m_inv')->group(function () {
         /* Get all Invoices */

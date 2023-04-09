@@ -91,6 +91,17 @@
                  <li>
                      <a href="javascript: void(0);" class="has-arrow waves-effect">
                          <i class=" fas fa-credit-card"></i>
+                         <span>Manage Qotations</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="false">
+                         <li><a href="{{route('all.quotations')}}">All Quotations</a></li>
+
+
+                     </ul>
+                 </li>
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class=" fas fa-credit-card"></i>
                          <span>Delivery Receipt</span>
                      </a>
                      <ul class="sub-menu" aria-expanded="false">

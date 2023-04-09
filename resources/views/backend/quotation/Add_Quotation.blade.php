@@ -25,19 +25,19 @@
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="white-space: nowrap;">Invoice Number</label>
-                                    <input class="form-control" type="text" value="{{$invoice_no}}" name="invoice_no" id="invoice_no" readonly style="background-color: #ddd;">
+                                    <input class="form-control" type="text" value="{{$quotation_no}}" name="quotation_no" id="quotation_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Date</label>
-                                    <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
+                                    <input class="form-control lowl " type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label">Due Date</label>
-                                    <input class="form-control" type="date" value="{{$date}}" name="due_date" id="due_date">
+                                    <input class="form-control tani" type="date" value="{{$date}}" name="due_date" id="due_date">
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                     </div>
                     <!-- End of card body -->
                     <div class="card-body">
-                        <form action="{{route('store.invoice')}}" method="post" action="">
+                        <form action="{{route('store.quotation')}}" method="post" action="">
                             @csrf
                             <div class="table-responsive">
                                 <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
@@ -160,41 +160,19 @@
                                 </div>
                             </div><br>
                             <div class="row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-12">
                                     <label for="">Payement Status</label>
-                                    <select name="pay_status" id="pay_status" class="form-select">
-                                        <option value="">Select Payement</option>
-                                        <option value="full_paid">Full Payement</option>
-                                        <option value="full_due">Full due</option>
-                                        <option value="partial_paid">Partial Payement</option>
-                                    </select>
-                                    <input type="text" name="paid_amount" class="form-control paid_amount" placeholder="Enter Amount" style="display: none;">
+                                    <div class="form-group col-sm-12">
+                                        <input name="payement_status" class="form-control" type="text">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="">customer Name</label>
-                                    <select name="customer_id" id="customer_id" class="form-select">
-
-                                        <option value="">Select Customer</option>
-                                        @foreach ( $customers as $key)
-                                        <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
-                                        @endforeach
 
 
-                                    </select>
-
-                                </div>
-                                <div class="form-group col-md-3">
-
-                                    <label for="example-text-input" class="form-label">delivery receipt</label>
-                                    <select id="delivery_id" name="delivery_id" class="form-select" aria-label="Default select example">
-                                        <option selected="">Select delivery receipt</option>
-                                    </select>
-                                </div>
 
                             </div><br>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info" id="addButton">Add Invoice</button>
+                                <button type="submit" class="btn btn-info" id="addButton">Add Quotation</button>
                             </div>
                         </form>
 
@@ -218,7 +196,7 @@
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date" value="@{{date}}">
         <input type="hidden" name="due_date" value="@{{due_date}}">
-        <input type="hidden" name="invoice_no" value="@{{invoice_no}}">
+        <input type="hidden" name="quotation_no" value="@{{quotation_no}}">
         <td>
         <input type="hidden" name="brand_id[]" value="@{{brand_id}}">
         @{{ brand_name }}
@@ -267,7 +245,7 @@
         $(document).on("click", ".eeventmore", function() {
             var date = $('#date').val();
             var due_date = $('#due_date').val();
-            var invoice_no = $('#invoice_no').val();
+            var quotation_no = $('#quotation_no').val();
             var brand_id = $('#Brand_id').val();
             var brand_name = $('#Brand_id').find('option:selected').text();
             var category_id = $('#category_id').val();
@@ -301,7 +279,7 @@
             var data = {
                 date: date,
                 due_date: due_date,
-                invoice_no: invoice_no,
+                quotation_no: quotation_no,
                 brand_id: brand_id,
                 brand_name: brand_name,
                 category_id: category_id,
@@ -448,24 +426,18 @@
             .catch(error => console.log(error));
     });
 </script>
-<script type="text/javascript">
-    $(document).on('change', '#pay_status', function() {
-        var payement_status = $(this).val();
-        if (payement_status == 'partial_paid') {
-            $('.paid_amount').show();
-        } else {
-            $('.paid_amount').hide();
-        }
-    });
 
-    $(document).on('change', '#customer_id', function() {
-        var customer_id = $(this).val();
-        if (customer_id == '0') {
-            $('.new_customer').show();
-        } else {
-            $('.new_customer').hide();
+<script type="text/javascript">
+    const dateInput = document.querySelector('.lowl');
+    const dueDateInput = document.querySelector('.tani');
+
+    dueDateInput.addEventListener('change', () => {
+        const date = new Date(dateInput.value);
+        const dueDate = new Date(dueDateInput.value);
+        if (dueDate < date) {
+            toastr.error('Due date cannot be earlier than the selected date');
+            dueDateInput.value = dateInput.value;
         }
     });
 </script>
-
 @endsection

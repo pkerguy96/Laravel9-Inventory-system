@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Purchases Details</h4>
+            <h4 class="mb-sm-0">Delivery Details</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
@@ -48,16 +48,18 @@
                                 <h3>Client:</h3>
                                 <address>
                                     <strong>{{ $data['customers']['name'] }}</strong><br>
-                                    {{ $data['customers']['address']  }}<br>
-                                    {{ $data['customers']['email']  }}<br>
-                                    {{ $data['customers']['phone']  }}<br>
-                                    {{ $data['customers']['ice']  }}<br>
+                                    <strong>{{ $data['customers']['address']  }}</strong><br>
+                                    <strong>{{ $data['customers']['email']  }}</strong><br>
+                                    <strong>{{ $data['customers']['phone']  }}</strong><br>
+                                    <strong>{{ $data['customers']['ice']  }}</strong><br>
                                 </address>
                             </div>
                             <div class="col-6 mt-4 text-end">
-                                <h3>Delivery Receipt N: {{$data->delivery_no}}</h3>
-                                <b>Date : {{date('Y-m-d',strtotime($data->date))}}</b><br>
-                                <b>Due date: {{date('Y-m-d',strtotime($data->due_date))}}</b>
+                                <address>
+                                    <h3>Delivery Receipt N: {{$data->delivery_no}}</h3>
+                                    <strong>Date : {{date('Y-m-d',strtotime($data->date))}}</strong><br>
+                                    <strong>Due date: {{date('Y-m-d',strtotime($data->due_date))}}</strong>
+                                </address>
                             </div>
                         </div>
 
@@ -119,7 +121,7 @@
                                                     <strong>Total Quantity:</strong>
                                                 </td>
                                                 <td class="no-line text-center">
-                                                    <h6 class="m-0"> {{$data->total_qte}}</h6>
+                                                    <h6 class="m-0"> {{$data->total_qte}} Pieces</h6>
                                                 </td>
                                             </tr>
 
@@ -127,23 +129,13 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="pt-3">
-                                    <h5 class="fw-bold fs-4 fs-md-3 fs-sm-2">NOTE:</h5>
+                                <div class="pt-3 mb-3">
+                                    <strong class="fw-bold fs-4 fs-md-3 fs-sm-5 ">Description:</strong><br>
 
-                                    Promed Planet Sarl Au <font>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem praesentium sequi dignissimos quis ab officiis vitae culpa dolor, pariatur quod itaque ipsam commodi quibusdam harum similique vel eaque est magnam!</font>
-
-                                </div>
-                                <div class="row pt-3 custom-margin ">
-                                    <div class="mb-5">
-                                        <h2 style="text-align: right; margin-right:20px;">signature</h2>
-
-                                    </div>
+                                    {{$data->description}}
 
                                 </div>
-                                <div class="text-center">
-                                    <hr class="p-1  text-dark " style="margin-left: 8%; margin-right:8%">
-                                    <p class=" text-center" style="margin-left: 8%; margin-right:8%"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro reprehenderit omnis eaque aliquam assumenda itaque doloremque illo voluptate suscipit. Soluta dolores maxime placeat sit sequi doloremque accusamus repellat commodi nesciunt?</p>
-                                </div>
+
 
                                 <div class="d-print-none">
                                     <div class="float-end">
