@@ -28,23 +28,31 @@
                                     <th>Delivery Number</th>
                                     <th>Customer Name</th>
                                     <th>Date</th>
-                                    <th>Due Date</th>
-
                                     <th>Total Quantity</th>
+                                    <th>Discount</th>
+                                    <th>Grand Total</th>
                                     <th>Action</th>
                             </thead>
 
                             <tbody>
 
                                 @foreach($deliverys as $key => $item)
+                                @php
+                                $deliveryDiscount = $item->discount;
+                                $deliveryDetails = $item->DeliveryDetails->where('delivery_id', $item->id);
+                                $sellingPrices = $deliveryDetails->pluck('selling_price')->toArray();
+                                // calculate tax for the selling prices
+                                $Grand_total = CalculateGrandTotal($sellingPrices, $deliveryDiscount , 20);
+                                @endphp
+
                                 <tr>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important"> {{ $key+1}} </a></td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->delivery_no }} </a></td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item['customers']['name'] }} </a></td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}}</a> </td>
-                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->due_date))}}</a> </td>
-
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->total_qte}} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->discount ?? 'N/A'}} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{$Grand_total['grand_total']}} </a></td>
                                     <td>
 
                                         <a href="{{route('print.delivery',$item->id)}}" class="btn btn-success waves-effect waves-light" title="Print"> <i class="fas fa-print"></i> </a>

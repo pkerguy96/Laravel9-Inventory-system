@@ -13,18 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_details', function (Blueprint $table) {
+        Schema::create('order_form_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_id')->nullable();
-            $table->date('date')->nullable();
+            $table->integer('orderform_id');
             $table->integer('brand_id');
             $table->integer('category_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->double('qte')->nullable();
-            $table->double('unit_price')->nullable();
-            $table->double('selling_price')->nullable();
-            $table->string('status')->default(1);
-
             $table->timestamps();
         });
     }
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_details');
+        Schema::dropIfExists('order_form_details');
     }
 };

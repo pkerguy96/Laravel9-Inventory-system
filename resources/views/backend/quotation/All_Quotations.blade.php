@@ -29,7 +29,9 @@
                                     <th>Date</th>
                                     <th>Due Date</th>
                                     <th>Payement Type</th>
+                                    <th>Discount</th>
                                     <th>Total Quantity</th>
+                                    <th>Grand Total</th>
                                     <th>Action</th>
                             </thead>
 
@@ -37,13 +39,23 @@
 
 
                                 @foreach ($data as $key => $item)
+                                @php
+                                $QuotationDiscount = $item->discount;
+                                $QuotationDetail = $item->QuotationDetails->where('quotation_id', $item->id);
+                                $sellingPrices = $QuotationDetail->pluck('selling_price')->toArray();
+                                // calculate tax for the selling prices
+                                $Grand_total = CalculateGrandTotal($sellingPrices, $QuotationDiscount , 20);
+                                @endphp
+
                                 <tr>
                                     <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ $key+1 }}</a></td>
                                     <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ $item->quotation_no }}</a></td>
                                     <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date)) }}</a></td>
                                     <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->due_date)) }}</a></td>
                                     <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ $item->payement_type}}</a></td>
+                                    <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ $item->discount ? number_format($item->discount, 2, '.', ',') . ' MAD' : 'N/A' }} </a></td>
                                     <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ $item->total_qte }}</a></td>
+                                    <td><a href="{{ route('quotation.details',$item->id) }}" class="text-reset !important">{{ number_format( $Grand_total['grand_total'], 2, '.', ',') }} MAD </a></td>
                                     <td>
                                         <a href="{{route('delete.quotation',$item->id)}}" class="btn btn-danger sm" title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i> </a>
                                     </td>

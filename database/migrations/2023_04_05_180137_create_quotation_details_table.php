@@ -22,8 +22,7 @@ return new class extends Migration
             $table->double('qte')->nullable();
             $table->double('unit_price')->nullable();
             $table->double('selling_price')->nullable();
-            $table->double('tax_amount');
-            $table->double('grand_total');
+
             $table->timestamps();
         });
     }

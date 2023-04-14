@@ -13,17 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quotations', function (Blueprint $table) {
+        Schema::create('order_forms', function (Blueprint $table) {
             $table->id();
-            $table->string('quotation_no')->nullable();
+            $table->string('orderform_no')->nullable();
             $table->date('date')->nullable();
-            $table->date('due_date')->nullable();
-            $table->text('description')->nullable();
-            $table->string('payement_type')->nullable();
             $table->double('total_qte')->nullable();
-            $table->double('discount')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->integer('created_by');
             $table->timestamps();
         });
     }
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quotations');
+        Schema::dropIfExists('order_forms');
     }
 };

@@ -11,6 +11,7 @@ use App\Http\Controllers\sop\DeliveryController;
 use App\Http\Controllers\sop\FetchController;
 use App\Http\Controllers\sop\InvoiceController;
 use App\Http\Controllers\sop\NotificationController;
+use App\Http\Controllers\sop\OrderFormController;
 use App\Http\Controllers\sop\ProductController;
 use App\Http\Controllers\sop\PurchaseController;
 use App\Http\Controllers\sop\QuotationController;
@@ -18,7 +19,7 @@ use App\Http\Controllers\sop\RolesController;
 use App\Http\Controllers\sop\StockController;
 use App\Http\Controllers\sop\SupplierController;
 use App\Http\Controllers\sop\UnitController;
-
+use App\Models\OrderForm;
 
 Route::get('/', function () {
     /*   return view('welcome'); */
@@ -159,6 +160,12 @@ route::middleware('auth')->group(function () {
         Route::get('/Purchases/Search/Pdf', 'SearchPurchasesPdfPage')->name('search.date.purchases');
         /* get purchases details */
         Route::get('/Purchases/details/{id}', 'ViewPurchasesDetails')->name('Purchases.details');
+    });
+    Route::controller(OrderFormController::class)->group(function () {
+        Route::get('/OrderForms/All', 'AllOrderForms')->name('all.order.forms');
+        Route::get('/OrderForms/Add', 'AddOrderForm')->name('add.order.form');
+        Route::post('/OrderForms/Store', 'StoreOrderForm')->name('store.order.form');
+        Route::get('/OrderForms/Details/{id}', 'OrderFormDetails')->name('order.form.details');
     });
     Route::controller(QuotationController::class)->group(function () {
         Route::get('/Qotations/All', 'AllQuotations')->name('all.quotations');

@@ -17,13 +17,10 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->integer('delivery_id');
-
             $table->string('invoice_no')->nullable();
             $table->date('date')->nullable();
             $table->date('due_date')->nullable();
             $table->text('description')->nullable();
-
-
             $table->tinyInteger('status')->default('0')->comment('0=Pending,1=Approved');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

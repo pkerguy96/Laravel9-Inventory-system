@@ -2,41 +2,7 @@
 @section('admin')
 <div class="page-content">
     <div class="container-fluid">
-        <style>
-            .custom-margin {
-                margin-bottom: 13%;
-            }
 
-            /*    .btn {
-                z-index: 999;
-                position: relative;
-            } */
-
-            /*  .main-bg {
-                background-image: url("{{ asset('backend/assets/images/logo-promed-3adi.png') }}");
-                opacity: 0.3;
-                background-position: center;
-                background-size: cover;
-            } */
-            /*     .main-bg {
-                position: relative;
-                z-index: -1;
-            }
-
-            .main-bg::before {
-                content: "";
-                position: absolute;
-                top: 3%;
-                left: 0;
-                width: 98%;
-                height: 98%;
-                background-image: url("{{ asset('backend/assets/images/logo-promed-3adi.png') }}");
-                background-size: cover;
-                background-position: center center;
-                opacity: 0.1;
-                z-index: -2;
-            } */
-        </style>
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -83,7 +49,7 @@
                                     </div>
                                     <div class="col-6 mt-4 text-end">
                                         <address>
-                                            <h3>Invoice Number: {{ $invoice->invoice_no }}</h3>
+                                            <h5>Invoice Number: {{ $invoice->invoice_no }}</h5>
                                             <strong>Due Date: {{ date('d-m-Y',strtotime($invoice->date)) }}</strong><br>
                                             <strong>Order Date: {{ date('d-m-Y',strtotime($invoice->due_date)) }}</strong><br>
                                             <strong>Delivery Receipt: {{ $invoice['Delivery']['delivery_no'] }}</strong><br>
@@ -93,13 +59,6 @@
                                 </div>
                             </div>
                         </div>
-                        @php
-                        $payement = App\Models\Payement::where('invoice_id',$invoice->id)->first();
-                        @endphp
-
-
-
-
 
                         <div class="row">
                             <div class="col-12">
@@ -123,10 +82,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php
-                                                    $total_price = '0';
-                                                    $total_tax_amount = '0';
-                                                    @endphp
+
                                                     @foreach ( $invoice['InvoiceDetails'] as $key => $invdetails)
                                                     <tr>
                                                         <td class="text-center">{{$key+1}}</td>
@@ -137,11 +93,13 @@
                                                         <td class="text-center">{{$invdetails->unit_price}} MAD</td>
                                                         <td class="text-center">{{ number_format($invdetails->selling_price, 2, '.', ',') }} MAD</td>
                                                     </tr>
-                                                    @php
-                                                    $total_price += $invdetails->selling_price;
-                                                    $total_tax_amount += $invdetails->tax_amount;
-                                                    @endphp
+
                                                     @endforeach
+                                                    @php
+                                                    $sellingPrices = $invoice['InvoiceDetails']->pluck('selling_price')->toArray();
+                                                    $Subtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 0);
+                                                    $Grandtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 20);
+                                                    @endphp
                                                     <tr>
                                                         <td class="thick-line"></td>
                                                         <td class="thick-line"></td>
@@ -151,7 +109,7 @@
                                                         <td class="thick-line text-center">
                                                             <strong>Subtotal</strong>
                                                         </td>
-                                                        <td class="thick-line text-end"> {{ number_format($total_price, 2, '.', ',') }} MAD</td>
+                                                        <td class="thick-line text-end"> {{ number_format($Subtotal['grand_total'], 2, '.', ',') }} MAD</td>
                                                     </tr>
                                                     @if (is_null($payement->discount_amount))
                                                     @else
@@ -187,7 +145,7 @@
                                                         <td class="no-line text-center">
                                                             <strong>Total Tax</strong>
                                                         </td>
-                                                        <td class="no-line text-end">{{number_format( $total_tax_amount,2,'.',',')}} MAD</td>
+                                                        <td class="no-line text-end">{{number_format( $Grandtotal['tax_amount'],2,'.',',')}} MAD</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="no-line"></td>
@@ -199,16 +157,24 @@
                                                             <strong>Total</strong>
                                                         </td>
                                                         <td class="no-line text-end">
-                                                            <h4 class="m-0">{{ number_format( $payement->total_amount, 2, '.', ',') }} MAD</h4>
+                                                            <h4 class="m-0">{{ number_format($Grandtotal['grand_total'], 2, '.', ',') }} MAD</h4>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <hr>
+                                        @if (!is_null($invoice->description))
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <div class="card card-body ">
+                                                    <p class="card-text">Description: <b>{{$invoice->description }}</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
                                         @php
-                                        $totalAmount = $payement->total_amount;
-                                        $amountInWords = ucwords((new NumberFormatter('en', NumberFormatter::SPELLOUT))->format($totalAmount));
+                                        $amountInWords = ucwords((new NumberFormatter('en', NumberFormatter::SPELLOUT))->format($payement->total_amount));
                                         @endphp
                                         <div class="row ">
                                             <div class="col-md-12 text-center  ">
@@ -247,29 +213,7 @@
 
     </div> <!-- container-fluid -->
 </div>
-<script defer>
-    var body = document.querySelector("#body").cloneNode(true);
-    [...body.querySelectorAll("*")].forEach(e => {
-        if (!e.classList.contains("to-keep")) e.remove()
-    });
-    getPrintFunction("facture", {
-        client: "{{ $invoice['clients']['name'] }}",
-        address: "04 rue nador",
-        ice: "1000000s54s5455",
-        phone: "4545545455454",
-        bill: "2023/10",
-        date: "1000000s54s5455",
-        bon: "1000000s54s5455",
-        tax: "1000000s54s5455",
-        total: "{{ $payement->total_amount }}",
-        sub_total: "1000000s54s5455",
-        total_tax: "1000000s54s5455",
-        total_text: "1000000s54s5455",
-        rows: body.innerHTML,
-    }).then((print) => {
-        document.querySelector("#print").addEventListener("click", print);
-    });
-</script>
+
 <!-- End Page-content -->
 
 

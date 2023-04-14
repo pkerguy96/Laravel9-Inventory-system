@@ -2,6 +2,7 @@
 
 use App\Models\DeliveryReceipt;
 use App\Models\Invoice;
+use App\Models\OrderForm;
 use App\Models\quotation;
 use Illuminate\Support\Carbon;
 
@@ -12,7 +13,23 @@ if (!function_exists('calculateTax')) {
         $tax_rate = 0.2; // 20%
         $tax_amount = round($subtotal * $tax_rate, 2); // round to two decimal places
         return number_format((float)$tax_amount, 2, '.', ''); // format as a decimal with two decimal places
-
+    }
+}
+if (!function_exists('CalculateGrandTotal')) {
+    function CalculateGrandTotal($subtotal, $discount = 0, $tax = 0)
+    {
+        $items_count = count($subtotal);
+        $grand_amount = 0;
+        for ($i = 0; $i < $items_count; $i++) {
+            $grand_amount += $subtotal[$i];
+        }
+        $grand_total =  $grand_amount - $discount;
+        $tax_amount = $grand_total * ($tax / 100);
+        $total_amount = $grand_total + $tax_amount;
+        return array(
+            'grand_total' => $total_amount,
+            'tax_amount' => $tax_amount
+        );
     }
 }
 if (!function_exists('CalculateGrandAmount')) {
@@ -63,5 +80,19 @@ if (!function_exists('generateDeliveryNumber')) {
             $invoiceNumber = "001";
         }
         return Carbon::now()->format('y') . '/' . Carbon::now()->format('m') . Carbon::now()->format('d') . 'BL' . $invoiceNumber;
+    }
+}
+if (!function_exists('generateOrderFormNumber')) {
+    function generateOrderFormNumber()
+    {
+        $latestOrderForm = OrderForm::latest('id')->first();
+        if ($latestOrderForm) {
+            $OrderformNumber = (int) substr($latestOrderForm->orderform_no, -3);
+            $OrderformNumber++;
+            $OrderformNumber = str_pad($OrderformNumber, 3, "0", STR_PAD_LEFT);
+        } else {
+            $OrderformNumber = "001";
+        }
+        return Carbon::now()->format('y') . '/' . Carbon::now()->format('m') . Carbon::now()->format('d') . 'BD' . $OrderformNumber;
     }
 }

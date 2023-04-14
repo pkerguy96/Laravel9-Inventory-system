@@ -14,9 +14,7 @@
             </div>
         </div>
         <!-- end page title -->
-        @php
-        $payement = App\Models\Payement::where('invoice_id',$invoice->id)->first();
-        @endphp
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -44,11 +42,9 @@
                                     <td></td>
                                     <td colspan="3">
 
-                                        <p>Description: @if(isset($invoice->description))
-                                            <strong>{{$invoice->description}}</strong>
-                                            @else
-                                            <strong>N/A</strong>
-                                            @endif
+                                        <p>Description:
+                                            <strong>{{$invoice->description ?? 'N/A'}}</strong>
+
                                         </p>
 
                                     </td>
@@ -70,10 +66,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                    $total_price = '0';
 
-                                    @endphp
                                     @foreach ( $invoice['InvoiceDetails'] as $key => $invdetails)
                                     <tr>
                                         <input type="hidden" name="category_id[]" value="{{$invdetails->category_id}}">
@@ -86,43 +79,47 @@
                                         <td class="text-center" style="background-color: #8B008B;">{{$invdetails['products']['product_qte']}}</td>
                                         <td class="text-center">{{$invdetails->qte}}</td>
                                         <td class="text-center">{{$invdetails->unit_price}}</td>
-                                        <td class="text-center">{{$invdetails->selling_price}} MAD</td>
+                                        <td class="text-center">{{ number_format( $invdetails->selling_price, 2, '.', ',') }} MAD</td>
                                     </tr>
-                                    @php
-                                    $total_price += $invdetails->selling_price;
 
-                                    @endphp
                                     @endforeach
                                     @php
-                                    $tax_amount = calculateTax($total_price);
+                                    $sellingPrices = $invoice['InvoiceDetails']->pluck('selling_price')->toArray();
+                                    $Subtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 0);
+                                    $Grandtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 20);
                                     @endphp
                                     <tr class="text-center">
                                         <td colspan="6">Discount:</td>
-                                        @if(isset($payement->discount_amount))
-                                        <td>{{ $payement->discount_amount }} MAD</td>
-                                        @else
-                                        <td> N/A </td>
-                                        @endif
+
+                                        <td>{{ isset($payement->discount_amount) ? number_format($payement->discount_amount, 2, '.', ',').' MAD' : 'N/A' }}</td>
+
+
                                     </tr>
+                                    <tr class="text-center">
+                                        <td colspan="6">Subtotal:</td>
+
+                                        <td>{{ number_format(  $Subtotal['grand_total'] , 2, '.', ',') }} MAD</td>
+                                    </tr>
+
                                     <tr class="text-center">
                                         <td colspan="6">Tax:</td>
 
-                                        <td>{{$tax_amount}} MAD</td>
-                                    </tr>
-
-
-                                    <tr class="text-center">
-                                        <td colspan="6">Paid Amount</td>
-                                        <td>{{ $payement->paid_amount}} MAD</td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td colspan="6">Due Amount</td>
-                                        <td>{{ $payement->due_amount}} MAD</td>
+                                        <td> {{ number_format(  $Grandtotal['tax_amount'] , 2, '.', ',') }} MAD</td>
                                     </tr>
                                     <tr class="text-center">
                                         <td colspan="6">Grand Total</td>
-                                        <td>{{ $payement->total_amount}}MAD</td>
+                                        <td> {{ number_format( $Grandtotal['grand_total'] , 2, '.', ',') }} MAD</td>
                                     </tr>
+
+                                    <tr class="text-center">
+                                        <td colspan="6">Paid Amount</td>
+                                        <td> {{ number_format( $payement->paid_amount , 2, '.', ',') }} MAD</td>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <td colspan="6">Due Amount</td>
+                                        <td> {{ number_format(  $payement->due_amount , 2, '.', ',') }} MAD</td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                             <button type="submit" class="btn btn-info">Approve Invoice</button>

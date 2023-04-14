@@ -20,6 +20,9 @@ return new class extends Migration
             $table->integer('category_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->double('qte')->nullable();
+            $table->double('unit_price')->nullable();
+            $table->double('selling_price')->nullable();
+
             $table->timestamps();
         });
     }

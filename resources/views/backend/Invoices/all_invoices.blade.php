@@ -40,8 +40,8 @@
                                     <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item->invoice_no }} </a></td>
                                     <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item['payements']['customers']['name'] }} </a></td>
                                     <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}} </a></td>
-                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item->description}} </a></td>
-                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item['payements']['total_amount']}} MAD</a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item->description ?? 'N/A'}} </a></td>
+                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ number_format(  $item['payements']['total_amount'], 2, '.', ',') }} MAD</a></td>
 
                                 </tr>
                                 @endforeach

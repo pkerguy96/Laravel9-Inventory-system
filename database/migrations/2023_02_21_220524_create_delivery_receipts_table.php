@@ -18,9 +18,11 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->string('delivery_no')->nullable();
             $table->date('date')->nullable();
-            $table->date('due_date')->nullable();
+
             $table->text('description')->nullable();
             $table->double('total_qte')->nullable();
+            $table->double('discount')->nullable();
+
             $table->integer('created_by');
 
 

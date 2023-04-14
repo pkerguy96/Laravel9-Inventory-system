@@ -10,7 +10,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Delivery Receipt </h4><br><br>
+                        <h4 class="card-title">Add New Order Form </h4><br><br>
 
 
 
@@ -18,7 +18,7 @@
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="white-space: nowrap;">Receipt Number</label>
-                                    <input class="form-control" type="text" value="{{$delivery_no}}" name="delivery_no" id="delivery_no" readonly style="background-color: #ddd;">
+                                    <input class="form-control" type="text" value="{{$orderform_no}}" name="orderform_no" id="orderform_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
@@ -27,10 +27,6 @@
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="row d-flex justify-content-center  mt-2 mt-sm-1 mt-md-2 mt-lg-3 mt-xl-3 flex-wrap">
-                            <!-- brand start -->
                             <div class=" col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="Brand_id" class="form-label">Brand</label>
@@ -41,6 +37,10 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row d-flex justify-content-center  mt-2 mt-sm-1 mt-md-2 mt-lg-3 mt-xl-3 flex-wrap">
+                            <!-- brand start -->
+
                             <!-- brand end -->
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
@@ -87,7 +87,7 @@
 
                     <!-- End of card body -->
                     <div class="card-body">
-                        <form action="{{route('store.delivery')}}" method="post" action="">
+                        <form action="{{route('store.order.form')}}" method="post" action="">
                             @csrf
                             <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
                                 <thead>
@@ -96,8 +96,7 @@
                                         <th>Product Name</th>
                                         <th>Category</th>
                                         <th width="7%">Pieces</th>
-                                        <th width="10%">Unit Price</th>
-                                        <th width="15%">Total Price</th>
+
                                         <th width="7%">Action</th>
 
                                     </tr>
@@ -107,74 +106,21 @@
                                 </tbody>
 
                                 <tbody id=" rowAdd" class="rowAdd">
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Discount </strong></td>
-                                        <td>
-                                            <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                <tbody id=" rowAdd" class="rowAdd">
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
 
-                                        <td>
-                                            <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
-                                            <input type="hidden" name="amountrd" id="amountrd" class="amountrd">
-                                        </td>
-                                        <td></td>
-                                    </tr>
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
-
-
-                                        <td>
-                                            <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Grand Total estimated amount</strong></td>
+                                        <td colspan="3" style="text-align: right;"><strong class="text-right">Total Quantity</strong></td>
                                         <td>
                                             <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
                                         </td>
                                         <td></td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Total Quantity</strong></td>
-                                        <td>
-                                            <input type="text" name="Qtotal" value="0" id="Qtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
-                                        </td>
-                                        <td></td>
-                                    </tr>
                                 </tbody>
                             </table><br>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <textarea name="description" class="form-control" id="description" placeholder="Enter description here"></textarea>
-                                </div>
-                            </div><br>
-                            <div class="row">
-
-                                <div class="form-group col-md-6">
-                                    <label for="">customer Name</label>
-                                    <select name="customer_id" id="customer_id" class="form-select">
-
-                                        <option value="">Select Customer</option>
-                                        @foreach ( $customers as $key)
-                                        <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
-                                        @endforeach
 
 
-                                    </select>
-
-                                </div>
-
-
-                            </div><br>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info" id="addButton">Add Invoice</button>
+                                <button type="submit" class="btn btn-info" id="addButton">Add Order Form</button>
                             </div>
                         </form>
 
@@ -197,8 +143,8 @@
 
     <tr class="delete_add_more_item" id="delete_row">
         <input type="hidden" name="date" value="@{{date}}">
-        <input type="hidden" name="due_date" value="@{{due_date}}">
-        <input type="hidden" name="delivery_no" value="@{{delivery_no}}">
+      
+        <input type="hidden" name="orderform_no" value="@{{orderform_no}}">
         <td>
         <input type="hidden" name="brand_id[]" value="@{{brand_id}}">
         @{{ brand_name }}
@@ -207,9 +153,6 @@
         <input type="hidden" name="product_id[]" value="@{{product_id}}">
         @{{ product_name }}
         </td>
-       
-        
-    
     <td>
         <input type="hidden" name="category_id[]" value="@{{category_id}}">
         @{{ category_name }}
@@ -221,20 +164,8 @@
         <input type="number" min="1" class="form-control qte text-right" name="qte[]" value=""> 
     </td>
 
-    <td>
-        <input type="number" class="form-control unit_price text-right" name="unit_price[]" value="" max=""> 
-    </td>
-
-
-
-     <td>
-     <input type="hidden"  class="form-control unit_pricerd text-right" name="unit_pricerd[]" value=""> 
     
-    <input type="hidden"  class="form-control selling_pricerd text-right" name="selling_pricerd[]" value=""> 
-        <input type="text" class="form-control selling_price text-right" name="selling_price[]" value="0" readonly> 
-    </td>
-    
-   
+
      <td>
         <i class="btn btn-danger btn-sm fas fa-window-close removedeletebtn"></i>
     </td>
@@ -242,12 +173,14 @@
     </tr>
  
 </script>
+
+
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on("click", ".eeventmore", function() {
             var date = $('#date').val();
             var due_date = $('#due_date').val();
-            var delivery_no = $('#delivery_no').val();
+            var orderform_no = $('#orderform_no').val();
             var brand_id = $('#Brand_id').val();
             var brand_name = $('#Brand_id').find('option:selected').text();
             var category_id = $('#category_id').val();
@@ -281,7 +214,7 @@
             var data = {
                 date: date,
                 due_date: due_date,
-                delivery_no: delivery_no,
+                orderform_no: orderform_no,
                 brand_id: brand_id,
                 brand_name: brand_name,
                 category_id: category_id,
@@ -296,89 +229,41 @@
         document.addEventListener('click', function(event) {
             if (event.target.matches('.removedeletebtn')) {
                 event.target.closest('.delete_add_more_item').remove();
-                totalAmountPrice();
+                totalqte();
             }
         });
 
-        $(document).on('keyup click', '.unit_price, .qte', function() {
-            var currentStock = document.getElementById('stock_qte').value;
+
+
+        $(document).on('keyup click', '.qte', function() {
             var $row = $(this).closest("tr");
-            var unit_price = $row.find("input.unit_price").val();
-
-
-            var buying_qte = $row.find("input.qte").val();
+            var currentStock = document.getElementById('stock_qte').value;
             $row.find("input.qte").attr("max", currentStock);
+            var buying_qte = $row.find("input.qte").val();
             var qte = parseInt($row.find('input.qte').val()) || 0;
             if (qte > currentStock) {
                 // Set the qte value to current stock and trigger a change event to recalculate total qte
                 $row.find('input.qte').val(currentStock).change();
             }
             totalqte();
-            var total = unit_price * buying_qte;
-            /* get data that would be sent to controller  */
+        });
 
-            /* get data that would be sent to controller  */
-            $row.find('.selling_pricerd').val(total);
-            $row.find("input.selling_price").val(total.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }));
-            $('#discount_amount').trigger('keyup');
-        });
-        $(document).on('keyup', '#discount_amount', function() {
-            totalAmountPrice();
-        });
-        /* Quantity total */
         function totalqte() {
             var totalQte = 0;
-            var $qtotal = $('#Qtotal');
+            var $gtotal = $('#Gtotal');
             $('.qte').each(function() {
                 // add the value of each qte input to the total
                 totalQte += parseInt($(this).val()) || 0;
             });
-            // set the total qte to the qtotal input
-            $qtotal.val(totalQte);
+            // set the total qte to the gtotal input
+            $gtotal.val(totalQte);
         }
-        /* calculater total */
-        function totalAmountPrice() {
-            var sum = 0;
-            $(".selling_price").each(function() {
-                var value = +$(this).val().replaceAll(",", "");
-                if (!isNaN(value) && value.length != 0) {
-                    sum += parseFloat(value);
-                }
-            });
-            var discount = $('#discount_amount').val();
-            if (!isNaN(discount) && discount.length != 0) {
-                if (parseFloat(discount) >= sum) {
-                    sum = 0;
-                } else {
-                    sum -= parseFloat(discount);
-                }
-            }
-            $('#amountrd').val(sum);
-            $('#amount').val(sum.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })); // round subtotal to 2 decimal places
-
-            // Calculate tax amount as 20% of subtotal
-            var onlytax = 0.20 * sum;
-            $('#tax').val(onlytax.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })); // round tax to 2 decimal places
-
-            var Gtotal = parseFloat(onlytax + sum);
-            $('#Gtotal').val(Gtotal.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            })); // round grand total to 2 decimal places
-        }
-
 
     });
 </script>
+
+
+
 <script type="text/javascript">
     document.getElementById('category_id').addEventListener('change', function() {
         var category_id = this.value;
@@ -395,7 +280,7 @@
             })
             .catch(error => console.log(error));
     });
-    /* added */
+    // Call the fetch-product API with the default value of the category_id select element
     var default_category_id = document.getElementById('category_id').value;
     fetch(`{{ route('fetch-product') }}?category_id=${default_category_id}`, {
             method: "GET",
@@ -410,6 +295,7 @@
         })
         .catch(error => console.log(error));
 </script>
+
 <script type="text/javascript">
     document.getElementById('product_id').addEventListener('change', function() {
         var product_id = this.value;
@@ -422,45 +308,6 @@
                 document.getElementById('stock_qte').value = data;
             })
             .catch(error => console.log(error));
-    });
-</script>
-<script type="text/javascript">
-    document.getElementById('customer_id').addEventListener('change', function() {
-        var customer_id = this.value;
-        fetch(`{{ route('get-customer-delivery-receipt') }}?customer_id=${customer_id}`, {
-                method: "GET",
-            })
-            .then(response => response.json())
-            .then(data => {
-                let html = '<option value="">No delivery receipts</option>';
-                if (data.length > 0) {
-                    html = '';
-                    data.forEach(function(v) {
-                        html += `<option value="${v.id}"> ${v.delivery_no} </option>`;
-                    });
-                }
-                document.getElementById('delivery_id').innerHTML = html;
-            })
-            .catch(error => console.log(error));
-    });
-</script>
-<script type="text/javascript">
-    $(document).on('change', '#pay_status', function() {
-        var payement_status = $(this).val();
-        if (payement_status == 'partial_paid') {
-            $('.paid_amount').show();
-        } else {
-            $('.paid_amount').hide();
-        }
-    });
-
-    $(document).on('change', '#customer_id', function() {
-        var customer_id = $(this).val();
-        if (customer_id == '0') {
-            $('.new_customer').show();
-        } else {
-            $('.new_customer').hide();
-        }
     });
 </script>
 

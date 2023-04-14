@@ -42,29 +42,19 @@ class InvoiceController extends Controller
     }
     public function storeInvoices(Request $request)
     {
-        /*    dd($request->amountrd);
-        $category_count = count($request->category_id);
-        for ($i = 0; $i < $category_count; $i++) {
 
-            $sellingPrice = $request->amountrd[$i];
+        if (empty($request->category_id) || empty($request->pay_status) || empty($request->customer_id)   || empty($request->product_id) || empty($request->delivery_id)) {
 
-            dd($sellingPrice);
-
-            dd(gettype($sellingPrice));
-        } */
-
-        if ($request->category_id == null || $request->pay_status == null || $request->customer_id == null) {
-            $notification = array(
-                'message' => 'please select category',
-                'alert-type' => 'error'
-            );
+            $errorMessage = (empty($request->category_id)) ? "Please select a category. " : "";
+            $errorMessage .= (empty($request->pay_status)) ? "Please select a payment status. " : "";
+            $errorMessage .= (empty($request->customer_id)) ? "Please select a customer. " : "";
+            $errorMessage .= (empty($request->product_id)) ? "Please select a product. " : "";
+            $errorMessage .= (empty($request->delivery_id)) ? "Please select a delivery method. " : "";
+            $notification = InsertNotification($errorMessage, 'error');
             return redirect()->back()->with($notification);
         } else {
             if ($request->paid_amount > $request->amount) {
-                $notification = array(
-                    'message' => 'Partial Payement is greater then total please check again',
-                    'alert-type' => 'error'
-                );
+                $notification = InsertNotification('Partial Payement is greater then total please check again', 'error');
                 return redirect()->back()->with($notification);
             } else {
                 $invoice = new Invoice();
@@ -82,8 +72,6 @@ class InvoiceController extends Controller
                     if ($invoice->save()) {
                         $category_count = count($request->category_id);
                         for ($i = 0; $i < $category_count; $i++) {
-                            $tax = calculatetax($request->selling_pricerd[$i]);
-
                             $invoice_details = new InvoiceDetail();
                             $invoice_details->invoice_id = $invoice->id;
                             $invoice_details->date = date('Y-m-d', strtotime($request->date));
@@ -91,16 +79,11 @@ class InvoiceController extends Controller
                             $invoice_details->product_id = $request->product_id[$i];
                             $invoice_details->qte = $request->qte[$i];
                             $invoice_details->brand_id = $request->brand_id[$i];
-                            $invoice_details->tax_amount = calculatetax($request->selling_pricerd[$i]);
                             $invoice_details->unit_price = $request->unit_price[$i];
                             $invoice_details->selling_price = $request->selling_pricerd[$i];
-                            $invoice_details->grand_total = CalculateGrandAmount($request->selling_pricerd[$i], $tax);
                             $invoice_details->status = '0';
-
                             $invoice_details->save();
                         }
-
-
                         $customerid = $request->customer_id;
 
                         /* Add customer id in the invoice table after its created */
@@ -111,18 +94,19 @@ class InvoiceController extends Controller
                         $payements->customer_id = $customerid;
                         $payements->pay_status = $request->pay_status;
                         $payements->discount_amount = $request->discount_amount;
-                        $payements->total_amount =  $invoice_details->grand_total;
+                        $total_amount_with_tax =  CalculateGrandTotal($request->selling_pricerd, $request->discount_amount, 20);
+                        $payements->total_amount =  $total_amount_with_tax['grand_total'];
                         if ($request->pay_status == 'full_paid') {
-                            $payements->paid_amount = $invoice_details->grand_total;
+                            $payements->paid_amount =  $total_amount_with_tax['grand_total'];
                             $payements->due_amount = '0';
-                            $payements_details->paid_amount_current = $invoice_details->grand_total;
+                            $payements_details->paid_amount_current = $total_amount_with_tax['grand_total'];
                         } elseif ($request->pay_status == 'full_due') {
                             $payements->paid_amount = '0';
-                            $payements->due_amount = $invoice_details->grand_total;
+                            $payements->due_amount = $total_amount_with_tax['grand_total'];
                             $payements_details->paid_amount_current = '0';
                         } elseif ($request->pay_status == 'partial_paid') {
                             $payements->paid_amount = $request->paid_amount;
-                            $payements->due_amount = $invoice_details->grand_total - $request->paid_amount;
+                            $payements->due_amount = $total_amount_with_tax['grand_total'] - $request->paid_amount;
                             $payements_details->paid_amount_current = $request->paid_amount;
                         }
                         $payements->save();
@@ -133,10 +117,7 @@ class InvoiceController extends Controller
                 });
             }
         }
-        $notification = array(
-            'message' => 'Invoice Data inserted Successfuly',
-            'alert-type' => 'success'
-        );
+        $notification = InsertNotification('Invoice Data inserted Successfuly', 'sucess');
         return redirect()->route('all.invoices')->with($notification);
     }
     public function PendingInvoices()
@@ -160,8 +141,11 @@ class InvoiceController extends Controller
     }
     public function ApproveInvoices($id)
     {
+
+        $payement = Payement::where('invoice_id', $id)->first();
+
         $invoice = Invoice::with('InvoiceDetails')->findorfail($id);
-        return view('backend.Invoices.Approved_invoices', compact(('invoice')));
+        return view('backend.Invoices.Approved_invoices', compact('invoice', 'payement'));
     }
     public function AcceptInvoices(request $request, $id)
     {
@@ -189,12 +173,8 @@ class InvoiceController extends Controller
                     $invoiceDetails->status = '1';
                     $invoiceDetails->save();
                     $product = Product::where('id', $invoiceDetails->product_id)->first();
-
                     $product->product_qte = ((float)$product->product_qte) - ((float)$request->qte[$key]);
-
                     event(new ProductQuantityUpdated($product));
-
-
                     $product->save();;
                 }
                 $invoice->save();
@@ -223,8 +203,11 @@ class InvoiceController extends Controller
     /* Printing invoice details for clients */
     public function PrintClientInvoice($id)
     {
+
+        $payement = Payement::where('invoice_id', $id)->first();
+
         $invoice = Invoice::with('InvoiceDetails')->findorfail($id);
-        return view('backend.pdfs.Client_invoice_pdf', compact(('invoice')));
+        return view('backend.pdfs.Client_invoice_pdf', compact('invoice', 'payement'));
     }
     public function DailyInvoicePage()
     {

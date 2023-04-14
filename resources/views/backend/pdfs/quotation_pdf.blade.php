@@ -39,14 +39,30 @@
                                     </h3>
                                 </div>
                                 <hr>
+                                @php
 
+                                // Convert the dates to Carbon instances
+                                $startDate = \Carbon\Carbon::parse($quotation->date);
+                                $endDate = \Carbon\Carbon::parse($quotation->due_date);
+
+                                // Calculate the difference in weeks and days
+                                $dateDiff = $endDate->diff($startDate);
+
+                                $totalDaysDifference = $dateDiff->days;
+                                $weeksDifference = intval($totalDaysDifference / 7);
+                                $daysDifference = $totalDaysDifference % 7;
+                                @endphp
                                 <div class="row">
                                     <div class="col-6 mt-4">
-
+                                        <address>
+                                            <strong>Delivery delay: {{ $weeksDifference }} Weeks and {{$daysDifference}} days</strong><br>
+                                            <strong>Payment method: {{ $quotation->payement_type }}</strong><br>
+                                            <br><br>
+                                        </address>
                                     </div>
                                     <div class="col-6 mt-4 text-end">
                                         <address>
-                                            <h3>Quotation Number: {{ $quotation->quotation_no }}</h3>
+                                            <h5>Quotation Number: {{ $quotation->quotation_no }}</h5>
                                             <strong>Due Date: {{ date('d-m-Y',strtotime($quotation->date)) }}</strong><br>
                                             <strong>Order Date: {{ date('d-m-Y',strtotime($quotation->due_date)) }}</strong><br>
                                             <strong>Description: {{ $quotation->description }}</strong><br>
@@ -56,12 +72,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
                         <div class="row">
                             <div class="col-12">
                                 <div>
@@ -84,11 +94,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php
-                                                    $total_price = '0';
-                                                    $grand_total = '0';
-                                                    $total_tax_amount = '0'
-                                                    @endphp
+
                                                     @foreach ( $quotation['QuotationDetails'] as $key => $quotationdetails)
                                                     <tr>
                                                         <td class="text-center">{{$key+1}}</td>
@@ -99,12 +105,27 @@
                                                         <td class="text-center">{{$quotationdetails->unit_price}} MAD</td>
                                                         <td class="text-center">{{ number_format($quotationdetails->selling_price, 2, '.', ',') }} MAD</td>
                                                     </tr>
-                                                    @php
-                                                    $total_price += $quotationdetails->selling_price;
-                                                    $grand_total += $quotationdetails->grand_total;
-                                                    $total_tax_amount += $quotationdetails->tax_amount;
-                                                    @endphp
+
                                                     @endforeach
+                                                    @if (is_null($quotation->discount))
+                                                    @else
+                                                    <tr>
+                                                        <td class="no-line"></td>
+                                                        <td class="no-line"></td>
+                                                        <td class="no-line"></td>
+                                                        <td class="no-line"></td>
+                                                        <td class="no-line"></td>
+                                                        <td class="no-line text-center">
+                                                            <strong>Discount Amount</strong>
+                                                        </td>
+                                                        <td class="no-line text-center"><b>{{ number_format( $quotation->discount, 2, '.', ',') }} MAD</b></td>
+                                                    </tr>
+                                                    @endif
+                                                    @php
+                                                    $sellingPrices = $quotation['QuotationDetails']->pluck('selling_price')->toArray();
+                                                    $subtotal = CalculateGrandTotal($sellingPrices,$quotation->discount,0);
+                                                    $Grand_total = CalculateGrandTotal($sellingPrices, $quotation->discount , 20 );
+                                                    @endphp
                                                     <tr>
                                                         <td class="thick-line"></td>
                                                         <td class="thick-line"></td>
@@ -114,7 +135,7 @@
                                                         <td class="thick-line text-center">
                                                             <strong>Subtotal</strong>
                                                         </td>
-                                                        <td class="thick-line text-end">{{ number_format($total_price, 2, '.', ',') }} MAD</td>
+                                                        <td class="thick-line text-end">{{ number_format($subtotal['grand_total'], 2, '.', ',') }} MAD</td>
                                                     </tr>
 
                                                     <tr>
@@ -137,7 +158,7 @@
                                                         <td class="no-line text-center">
                                                             <strong>Total Tax</strong>
                                                         </td>
-                                                        <td class="no-line text-end">{{ number_format($total_tax_amount, 2, '.', ',') }} MAD</td>
+                                                        <td class="no-line text-end">{{ number_format( $Grand_total['tax_amount'] , 2, '.', ',') }} MAD</td>
 
                                                     </tr>
                                                     <tr>
@@ -147,10 +168,10 @@
                                                         <td class="no-line"></td>
                                                         <td class="no-line"></td>
                                                         <td class="no-line text-center">
-                                                            <strong>Total</strong>
+                                                            <strong>Grand Total</strong>
                                                         </td>
                                                         <td class="no-line text-end">
-                                                            <h4 class="m-0">{{ number_format($grand_total, 2, '.', ',') }} MAD</h4>
+                                                            <h4 class="m-0">{{ number_format($Grand_total['grand_total'], 2, '.', ',') }} MAD</h4>
                                                         </td>
                                                     </tr>
                                                 </tbody>
