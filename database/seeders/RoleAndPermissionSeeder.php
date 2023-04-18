@@ -19,7 +19,6 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => 'm_supp']);
         Permission::create(['name' => 'm_cust']);
         Permission::create(['name' => 'm_unit']);
-
         Permission::create(['name' => 'm_brand']);
         Permission::create(['name' => 'm_categ']);
         Permission::create(['name' => 'm_prod']);

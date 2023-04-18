@@ -185,7 +185,7 @@ route::middleware('auth')->group(function () {
         Route::get('/Invoices/delete/{id}', 'DeleteInvoices')->name('delete.invoice');
         Route::get('/Invoices/Approve/{id}', 'ApproveInvoices')->name('Approve.invoice');
         Route::post('/Invoices/Accept/{id}', 'AcceptInvoices')->name('accept.invoice');
-        Route::get('/Invoices/Print/page', 'PrintInvoicePage')->name('all.invoices.print');
+
         Route::get('/Invoices/Report/daily', 'DailyInvoicePage')->name('all.invoices.daily');
         Route::get('/Invoices/Daily/search', 'SearchByDateInvoice')->name('search.date.invoice');
         Route::get('/Invoices/Print/{id}', 'PrintInvoice')->name('Print.invoice');

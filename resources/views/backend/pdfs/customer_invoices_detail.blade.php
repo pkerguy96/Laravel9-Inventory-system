@@ -74,16 +74,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <!-- foreach ($order->lineItems as $line) or some such thing here -->
+
                                                     <tr>
                                                         <td>{{$payement['customers']['name']}}</td>
                                                         <td class="text-center">{{$payement['customers']['phone']}}</td>
                                                         <td class="text-center">{{$payement['customers']['email']}}</td>
-
-
                                                     </tr>
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -122,38 +118,24 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php
-                                                    $total_price = '0';
-                                                    $invoices_details = App\Models\InvoiceDetail::where('invoice_id',$payement->invoice_id)->get();
-                                                    @endphp
-                                                    @foreach ( $invoices_details as $key => $invdetails)
+
+                                                    @foreach ( $invoice['InvoiceDetails'] as $key => $invdetails)
                                                     <tr>
                                                         <td class="text-center">{{$key+1}}</td>
                                                         <td class="text-center">{{$invdetails['categories']['category_name']}}</td>
                                                         <td class="text-center">{{$invdetails['products']['product_name']}}</td>
-
                                                         <td class="text-center">{{$invdetails->qte}}</td>
                                                         <td class="text-center">{{$invdetails->unit_price}}</td>
-                                                        <td class="text-center">{{$invdetails->selling_price}}</td>
+                                                        <td class="text-center">{{ number_format($invdetails->selling_price, 2, '.', ',') }} MAD</td>
 
                                                     </tr>
-                                                    @php
-                                                    $total_price += $invdetails->selling_price;
-                                                    @endphp
                                                     @endforeach
-                                                    <tr>
-                                                        <td class="thick-line"></td>
-                                                        <td class="thick-line"></td>
-                                                        <td class="thick-line"></td>
-                                                        <td class="thick-line"></td>
-
-                                                        <td class="thick-line text-center">
-                                                            <strong>Subtotal</strong>
-                                                        </td>
-                                                        <td class="thick-line text-end">{{ $total_price }} MAD</td>
-                                                    </tr>
+                                                    @php
+                                                    $sellingPrices = $invoice['InvoiceDetails']->pluck('selling_price')->toArray();
+                                                    $Subtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount, 0);
+                                                    $Grandtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount, 20);
+                                                    @endphp
                                                     @if (is_null($payement->discount_amount))
-
                                                     @else
                                                     <tr>
                                                         <td class="no-line"></td>
@@ -164,9 +146,34 @@
                                                         <td class="no-line text-center">
                                                             <strong>Discount Amount</strong>
                                                         </td>
-                                                        <td class="no-line text-end">{{ $payement->discount_amount }}</td>
+                                                        <td class="no-line text-end">{{ number_format($payement->discount_amount , 2, '.', ',') }}
+                                                            MAD</td>
                                                     </tr>
                                                     @endif
+                                                    <tr>
+                                                        <td class="thick-line"></td>
+                                                        <td class="thick-line"></td>
+                                                        <td class="thick-line"></td>
+                                                        <td class="thick-line"></td>
+
+                                                        <td class="thick-line text-center">
+                                                            <strong>Subtotal</strong>
+                                                        </td>
+                                                        <td class="thick-line text-end">{{ number_format($Subtotal['grand_total'], 2, '.', ',') }}
+                                                            MAD</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="thick-line"></td>
+                                                        <td class="thick-line"></td>
+                                                        <td class="thick-line"></td>
+                                                        <td class="thick-line"></td>
+
+                                                        <td class="thick-line text-center">
+                                                            <strong>Tax 20%</strong>
+                                                        </td>
+                                                        <td class="thick-line text-end"> {{ number_format( $Grandtotal['tax_amount'], 2, '.', ',') }}
+                                                            MAD</td>
+                                                    </tr>
                                                     <tr>
                                                         <td class="no-line"></td>
                                                         <td class="no-line"></td>
@@ -176,7 +183,7 @@
                                                         <td class="no-line text-center">
                                                             <strong>Paid Amount</strong>
                                                         </td>
-                                                        <td class="no-line text-end">{{ $payement->paid_amount}}</td>
+                                                        <td class="no-line text-end">{{ number_format($payement->paid_amount , 2, '.', ',') }} MAD</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="no-line"></td>
@@ -187,7 +194,7 @@
                                                         <td class="no-line text-center">
                                                             <strong>Due Amount</strong>
                                                         </td>
-                                                        <td class="no-line text-end">{{ $payement->due_amount}}</td>
+                                                        <td class="no-line text-end">{{ number_format($payement->due_amount , 2, '.', ',') }} MAD</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="no-line"></td>
@@ -199,7 +206,7 @@
                                                             <strong>Total</strong>
                                                         </td>
                                                         <td class="no-line text-end">
-                                                            <h4 class="m-0">{{ $payement->total_amount}}</h4>
+                                                            <h4 class="m-0">{{ number_format($payement->total_amount, 2, '.', ',') }} MAD</h4>
                                                         </td>
                                                     </tr>
 
@@ -211,14 +218,12 @@
 
                                                         <td colspan="3" style="text-align: center; font-weight:bold;">Amount</td>
                                                     </tr>
-                                                    @php
-                                                    $Pdetails = App\Models\PayementDetail::where('invoice_id',$payement->invoice_id)->get();
-                                                    @endphp
+
                                                     @foreach ($Pdetails as $value)
                                                     <tr>
                                                         <td colspan="4" style="text-align: center; font-weight:bold;">{{ date('d-m-y',strtotime($value->date)) }}</td>
 
-                                                        <td colspan="3" style="text-align: center; font-weight:bold;">{{ $value->paid_amount_current }} MAD</td>
+                                                        <td colspan="3" style="text-align: center; font-weight:bold;">{{ number_format($value->paid_amount_current, 2, '.', ',') }} MAD</td>
                                                     </tr>
 
                                                     @endforeach

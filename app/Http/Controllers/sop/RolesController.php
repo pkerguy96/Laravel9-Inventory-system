@@ -10,7 +10,7 @@ class RolesController extends Controller
 {
     public function allroles()
     {
-        $roles = role::all();
+        $roles = Role::orderByRaw("name = 'SuperAdmin' desc, name asc")->get();
         return view('backend.adminroles.all_roles', compact('roles'));
     }
     public function Allrolespermissions()

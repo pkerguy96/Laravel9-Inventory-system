@@ -2,24 +2,16 @@
 @section('admin')
 
 @php
-Cache::forget('invoice')
+Cache::forget('invoice');
 @endphp
 <div class="page-content">
     <div class="container-fluid">
-        {{ cache('invoices:v1') }}{{ cache('invoices:v1') }}{{ cache('invoices:v1') }}{{ cache('invoices:v1') }}{{ cache('invoices:v1') }}
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Dashboard {{ Cache::get('totalsells') }}</h4>
-
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                    </div>
-
+                    <h4 class="mb-sm-0">Dashboard </h4>
                 </div>
             </div>
         </div>
@@ -31,9 +23,9 @@ Cache::forget('invoice')
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Total Sales</p>
+                                <p class="text-truncate font-size-14 mb-2"> {{ __('Total Sales') }}</p>
                                 <h4 class="mb-2" id="totalsells"></h4>
-                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>9.23%</span>from previous period</p>
+                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>9.23%</span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-primary rounded-3">
@@ -49,9 +41,9 @@ Cache::forget('invoice')
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">New Orders</p>
+                                <p class="text-truncate font-size-14 mb-2">{{ __('New Orders') }}</p>
                                 <h4 class="mb-2" id="neworder">938</h4>
-                                <p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ri-arrow-right-down-line me-1 align-middle"></i>1.09%</span>from previous period</p>
+                                <p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ri-arrow-right-down-line me-1 align-middle"></i>1.09%</span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-success rounded-3">
@@ -69,9 +61,9 @@ Cache::forget('invoice')
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Total Customers</p>
+                                <p class="text-truncate font-size-14 mb-2">{{ __('Total Customers') }}</p>
                                 <h4 class="mb-2" id="customers"></h4>
-                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>16.2%</span>from previous period</p>
+                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>16.2%</span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-primary rounded-3">
@@ -87,9 +79,9 @@ Cache::forget('invoice')
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-truncate font-size-14 mb-2">Products Out Of Stock</p>
+                                <p class="text-truncate font-size-14 mb-2">{{ __('Products Out Of Stock') }}</p>
                                 <h4 class="mb-2" id="outofstock"></h4>
-                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>11.7%</span>from previous period</p>
+                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>11.7%</span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-success rounded-3">
@@ -116,19 +108,19 @@ Cache::forget('invoice')
 
                             </div>
 
-                            <h4 class="card-title mb-4">Latest Transactions</h4>
+                            <h4 class="card-title mb-4">{{ __('Latest Transactions') }}</h4>
 
                             <div class="table-responsive">
                                 <table class="table table-centered mb-0 align-middle table-hover table-nowrap" id="invoices">
                                     <thead class="table-light">
                                         <tr>
-                                            <th>Invoice Number</th>
-                                            <th>name</th>
-                                            <th>Date</th>
-                                            <th>Due Date</th>
-                                            <th>Status</th>
-                                            <th>Description</th>
-                                            <th style="width: 120px;">Salary</th>
+                                            <th>{{ __('Invoice Number') }}</th>
+                                            <th>{{ __('name') }}</th>
+                                            <th>{{ __('Date') }}</th>
+                                            <th>{{ __('Due Date') }}</th>
+                                            <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Description') }}</th>
+                                            <th style="width: 120px;">{{ __('Latest Transactions') }}</th>
                                         </tr>
                                     </thead><!-- end thead -->
                                     <tbody>
@@ -156,7 +148,7 @@ Cache::forget('invoice')
             try {
                 const response = await fetch('{{route("get-total-sells")}}');
                 const data = await response.json();
-                console.log(data);
+
                 document.getElementById('totalsells').textContent = data.totalsells + ' MAD';
                 document.getElementById('neworder').textContent = data.neworders + ' This Week';
                 document.getElementById('outofstock').textContent = data.outofstocks;
@@ -167,10 +159,8 @@ Cache::forget('invoice')
                 let rows = '';
                 let total = 0;
                 data.invoices.forEach(invoice => {
-                    const invoiceTotal = invoice.invoice_details.reduce((total, detail) => {
-                        return total + detail.grand_total;
-                    }, 0);
-                    total += invoiceTotal;
+
+
                     rows += `<tr>
                                             <td>
                                                 <h6 class="mb-0">${invoice.invoice_no}</h6>
@@ -181,13 +171,13 @@ Cache::forget('invoice')
                                             ${invoice.due_date}
                                             </td>
                                             <td>
-                                                <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 ${invoice.status === 1 ? 'text-success' : 'text-danger'}  align-middle me-2"></i>${invoice.status === 1 ? 'Approved' : 'Pending'}</div>
+                                                <div class="font-size-13"><i class="ri-checkbox-blank-circle-fill font-size-10 ${invoice.status === 1 ? 'text-success' : 'text-danger'}  align-middle me-2"></i>${invoice.status === 1 ? "{{__('Approved')}}" : "{{__('Pending')}}"}</div>
                                             </td>
                                             <td>
                                             ${invoice.description == null ? '' : invoice.description}
                                             </td>
                                             
-                                            <td>${total.toFixed(2)} MAD</td>
+                                            <td>${invoice.payements.total_amount.toFixed(2)} MAD</td>
                                         </tr>`;
                 });
                 tbody.innerHTML = rows;

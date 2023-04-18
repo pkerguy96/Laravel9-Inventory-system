@@ -132,8 +132,14 @@
     });
 </script>
 <script type="text/javascript">
-    document.getElementById('category_id').addEventListener('change', function() {
-        var category_id = this.value;
+    window.addEventListener('load', function() {
+        var category_id = document.getElementById('category_id').value;
+        if (category_id) {
+            fetchProducts(category_id);
+        }
+    });
+
+    function fetchProducts(category_id) {
         fetch(`{{ route('fetch-product') }}?category_id=${category_id}`, {
                 method: "GET",
             })
@@ -146,6 +152,6 @@
                 document.getElementById('product_id').innerHTML = html;
             })
             .catch(error => console.log(error));
-    });
+    }
 </script>
 @endsection

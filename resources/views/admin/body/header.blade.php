@@ -127,25 +127,7 @@
                                                         @endif
 
                                                     </a>
-                                                    <!-- ends -->
-                                                    <!--  <div class="flex-1">
 
-
-                                                        @if($notifications->count()> 0)
-                                                        @foreach($notifications as $notification)
-                                                        <div class="notif-div">
-                                                            <button type="button" class="btn-close" aria-label="Close" style="margin-left:98%;" data-attr-notid="{{$notification->id}}" onclick="removeNotification(event, this)"></button>
-                                                            <h6 class="mb-1">{{ $notification->message }}</h6>
-                                                            <div class="font-size-12 text-muted">
-                                                                <p class="mb-1">Only {{ $notification['products']['product_qte']  }} Are Left </p>
-                                                                <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</p>
-                                                            </div>
-                                                        </div>
-
-                                                        @endforeach
-                                                        @endif
-
-                                                    </div> -->
                                                 </div>
                                             </a>
 
@@ -201,8 +183,8 @@
                     <!-- item-->
                     <a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="ri-user-line align-middle me-1"></i> Profile</a>
                     <a class="dropdown-item" href="{{ route('change.password') }}"><i class="ri-wallet-2-line align-middle me-1"></i> Change Password</a>
-                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i class="ri-settings-2-line align-middle me-1"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock screen</a>
+
+
                     <div class="dropdown-divider"></div>
 
                     <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>

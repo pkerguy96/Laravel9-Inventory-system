@@ -35,7 +35,7 @@
                      <ul class="sub-menu" aria-expanded="false">
                          <li><a href="{{route('all.customers')}}">All Customers</a></li>
                          <li><a href="{{route('customers.credit')}}">Customers Credit </a></li>
-                         <li><a href="{{route('customers.Paid')}}">Paid Customers</a></li>
+                         <li><a href="{{route('customers.Paid')}}">Customers Payments</a></li>
                          <li><a href="{{route('customers.wise.report')}}">Customers Wise Report</a></li>
 
                      </ul>
@@ -130,7 +130,7 @@
                          <li><a href="{{route('all.invoices')}}">All Invoices</a></li>
                          <li><a href="{{route('all.invoices.daily')}}">Daily Invoices Report</a></li>
                          <li><a href="{{route('all.pending.invoices')}}">Pending Invoices</a></li>
-                         <li><a href="{{route('all.invoices.print')}}">Print Invoices</a></li>
+
                      </ul>
                  </li>
                  <li class="menu-title">Stock</li>

@@ -83,7 +83,7 @@
                                                 <td class="text-center"> {{ $item['customers']['name'] }}</td>
                                                 <td class="text-center">{{ $item['Invoices']['invoice_no'] }}</td>
                                                 <td class="text-center">{{ date('d-m-Y',strtotime( $item['Invoices']['date'] ))}}</td>
-                                                <td class="text-center">{{ $item->due_amount }}</td>
+                                                <td class="text-center">{{ number_format( $item->due_amount , 2, '.', ',') }} MAD</td>
                                             </tr>
                                             @php
                                             $total_price += $item->due_amount ;
@@ -99,7 +99,7 @@
                                                     <strong>Grand Due Total</strong>
                                                 </td>
                                                 <td class="no-line text-end">
-                                                    <h4 class="m-0">{{ $total_price}} MAD</h4>
+                                                    <h4 class="m-0">{{ number_format( $total_price , 2, '.', ',') }} MAD</h4>
                                                 </td>
                                             </tr>
 

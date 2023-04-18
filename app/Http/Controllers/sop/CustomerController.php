@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\sop;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
 use App\Imports\CustomersImport;
+use App\Models\Invoice;
 use App\Models\Payement;
 use App\Models\PayementDetail;
 use Illuminate\Http\Request;
@@ -29,7 +31,8 @@ class CustomerController extends Controller
     public function StoreCustomer(Request $request)
     {
         if ($request->hasFile('customers_csv')) {
-
+            /* dashboard kpis cache reset */
+            Cache::forget('totalcustomers');
             $import = new CustomersImport();
             Excel::import($import, $request->file('customers_csv'));
             $dupscount = $import->duplicatesrow();
@@ -40,6 +43,7 @@ class CustomerController extends Controller
             }
             return redirect()->route('all.customers')->with($notification);
         } else {
+            Cache::forget('totalcustomers');
             Customer::insert([
                 'name' =>  $request->name,
                 'phone' =>  $request->phone,
@@ -76,6 +80,7 @@ class CustomerController extends Controller
     }
     public function DeleteCustomer($id)
     {
+        Cache::forget('totalcustomers');
         Customer::findorfail($id)->delete();
 
         $notification = InsertNotification('Customer Deleted Successfully', 'info');
@@ -94,8 +99,10 @@ class CustomerController extends Controller
     }
     public function EditCustomersInvoice($inv_id)
     {
+        $invoice = Invoice::with('InvoiceDetails')->where('id', $inv_id)->first();
+
         $payements  = Payement::where('invoice_id', $inv_id)->first();
-        return view('backend.customers.Customers_edit_invoice', compact(('payements')));
+        return view('backend.customers.Customers_edit_invoice', compact('payements', 'invoice'));
     }
     public function UpdateCustomerPayement(request $request, $inv_id)
     {
@@ -130,8 +137,10 @@ class CustomerController extends Controller
     }
     public function InvoicesDetailsCustomers($inv_id)
     {
+        $Pdetails = PayementDetail::where('invoice_id', $inv_id)->get();
+        $invoice = Invoice::with('InvoiceDetails')->where('id', $inv_id)->first();
         $payement = Payement::where('invoice_id', $inv_id)->first();
-        return view('backend.pdfs.customer_invoices_detail', compact('payement'));
+        return view('backend.pdfs.customer_invoices_detail', compact('payement', 'invoice', 'Pdetails'));
     }
     public function Allpaidcustomers()
     {

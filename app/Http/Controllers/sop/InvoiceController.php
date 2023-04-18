@@ -4,7 +4,7 @@ namespace App\Http\Controllers\sop;
 
 use Illuminate\Support\Facades\DB;
 use App\Events\ProductQuantityUpdated;
-
+use Illuminate\Support\Facades\Cache;
 use App\Models\Payement;
 use App\Models\PayementDetail;
 use App\Models\Invoice;
@@ -53,7 +53,7 @@ class InvoiceController extends Controller
             $notification = InsertNotification($errorMessage, 'error');
             return redirect()->back()->with($notification);
         } else {
-            if ($request->paid_amount > $request->amount) {
+            if ($request->paid_amount > $request->Gtotal) {
                 $notification = InsertNotification('Partial Payement is greater then total please check again', 'error');
                 return redirect()->back()->with($notification);
             } else {
@@ -149,6 +149,11 @@ class InvoiceController extends Controller
     }
     public function AcceptInvoices(request $request, $id)
     {
+        /* dashboard kpis cache reset */
+        Cache::forget('invoices');
+        Cache::forget('neworders');
+        Cache::forget('outofstock');
+        Cache::forget('invoice');
 
         foreach ($request->qte as $key => $value) {
             $invoiceDetails = InvoiceDetail::where('id', $key)->first();
@@ -189,11 +194,7 @@ class InvoiceController extends Controller
             return redirect()->route('all.pending.invoices')->with($notification);
         }
     }
-    public function PrintInvoicePage()
-    {
-        $allinvoices = Invoice::orderby('date', 'desc')->orderby('id', 'desc')->where('status', '1')->get();
-        return view('backend.Invoices.Print_invoices', compact(('allinvoices')));
-    }
+
     /* Invoice details for admins */
     public function PrintInvoice($id)
     {

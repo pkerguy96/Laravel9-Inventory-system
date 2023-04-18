@@ -67,7 +67,7 @@
                                                 <td class="text-center"><strong>Customer Name</strong></td>
                                                 <td class="text-center"><strong>Invoice No</strong></td>
                                                 <td class="text-center"><strong>Date</strong></td>
-                                                <td class="text-center"><strong>Due Amount</strong></td>
+                                                <td class="text-center"><strong>Paid Amount</strong></td>
                                                 </td>
 
                                             </tr>
@@ -83,10 +83,10 @@
                                                 <td class="text-center"> {{ $item['customers']['name'] }}</td>
                                                 <td class="text-center">{{ $item['Invoices']['invoice_no'] }}</td>
                                                 <td class="text-center">{{ date('d-m-Y',strtotime( $item['Invoices']['date'] ))}}</td>
-                                                <td class="text-center">{{ $item->due_amount }}</td>
+                                                <td class="text-center">{{ number_format($item->paid_amount , 2, '.', ',') }} MAD</td>
                                             </tr>
                                             @php
-                                            $total_price += $item->due_amount ;
+                                            $total_price += $item->paid_amount ;
                                             @endphp
                                             @endforeach
 
@@ -96,10 +96,10 @@
                                                 <td class="no-line"></td>
 
                                                 <td class="no-line text-center">
-                                                    <strong>Grand Due Total</strong>
+                                                    <strong>Total Payments</strong>
                                                 </td>
                                                 <td class="no-line text-end">
-                                                    <h4 class="m-0">{{ $total_price}} MAD</h4>
+                                                    <h4 class="m-0">{{ number_format($total_price, 2, '.', ',') }} MAD</h4>
                                                 </td>
                                             </tr>
 

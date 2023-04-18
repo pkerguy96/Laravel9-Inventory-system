@@ -98,13 +98,13 @@
                                             @endphp
                                             @foreach ( $data as $key => $item)
                                             <tr>
-                                                <td class="text-center">{{$key+1}}</td>
-                                                <td class="text-center">{{$item['payements']['customers']['name']}}</td>
-                                                <td class="text-center">{{$item->invoice_no}}</td>
+                                                <td class="text-center"><a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{$key+1}} </a></td>
+                                                <td class="text-center"><a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{$item['payements']['customers']['name']}}</a></td>
+                                                <td class="text-center"><a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{$item->invoice_no}}</a></td>
 
-                                                <td class="text-center">{{date('d-m-Y',strtotime($item->date))}}</td>
-                                                <td class="text-center">{{$item->description}}</td>
-                                                <td class="text-center">{{$item['payements']['total_amount']}}</td>
+                                                <td class="text-center"><a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{date('d-m-Y',strtotime($item->date))}}</a></td>
+                                                <td class="text-center"><a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{$item->description}}</a></td>
+                                                <td class="text-center"><a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important"> {{ number_format($item['payements']['total_amount'], 2, '.', ',') }} MAD</a></td>
 
                                             </tr>
                                             @php
@@ -122,7 +122,7 @@
                                                     <strong>Total</strong>
                                                 </td>
                                                 <td class="no-line text-end">
-                                                    <h4 class="m-0">{{ $total_price}}</h4>
+                                                    <h4 class="m-0"> {{ number_format($total_price, 2, '.', ',') }} MAD</h4>
                                                 </td>
                                             </tr>
 

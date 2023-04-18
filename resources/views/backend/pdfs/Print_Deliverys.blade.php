@@ -35,7 +35,7 @@
                                 <div class="invoice-title">
                                     <h4 class="float-end font-size-16"><strong></strong></h4>
                                     <h3>
-                                        <img src="{{asset('backend/assets/images/logo.png')}}" alt="logo" height="24" /> Promed Plannet
+                                        <img src="{{ asset('backend/assets/images/logo.png') }}" alt="logo" height="24" /> Promed Plannet
                                     </h3>
                                 </div>
                                 <hr>
@@ -46,7 +46,7 @@
                                         <address>
                                             <strong>{{ $data['customers']['name'] }}</strong><br>
                                             <strong>{{ $data['customers']['address'] }}</strong> <br>
-                                            <strong>{{ $data['customers']['email']  }}</strong><br>
+                                            <strong>{{ $data['customers']['email'] }}</strong><br>
                                             <strong> Ice: {{ $data['customers']['ice'] }}</strong> <br>
                                             <strong> {{ $data['customers']['phone'] }} </strong>
                                         </address>
@@ -54,8 +54,8 @@
                                     <div class="col-6 mt-4 text-end">
                                         <address>
                                             <h5>Delivery Number: {{ $data->delivery_no }}</h5>
-                                            <strong>Date: {{ date('d-m-Y',strtotime($data->date)) }}</strong><br>
-                                            <strong>Description: {{ $data->description ?? 'N/A'}}</strong><br>
+                                            <strong>Date: {{ date('d-m-Y', strtotime($data->date)) }}</strong><br>
+                                            <strong>Description: {{ $data->description ?? 'N/A' }}</strong><br>
                                             <br><br>
                                         </address>
                                     </div>
@@ -84,19 +84,36 @@
                                                         </td>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-
-                                                    @foreach ( $data['DeliveryDetails'] as $key => $deliverydetail)
-                                                    <tr>
-                                                        <td class="text-center">{{$key+1}}</td>
-                                                        <td class="text-center">{{$deliverydetail['products']['ref_num']}}</td>
-                                                        <td class="text-center">{{$deliverydetail['categories']['category_name']}}</td>
-                                                        <td class="text-center">{{$deliverydetail['products']['product_name']}}</td>
-                                                        <td class="text-center">{{$deliverydetail->qte}}</td>
-                                                        <td class="text-center">{{$deliverydetail->unit_price}} MAD</td>
-                                                        <td class="text-center">{{ number_format($deliverydetail->selling_price, 2, '.', ',') }} MAD</td>
+                                                <tbody id="body">
+                                                    @php
+                                                    $qte = 0;
+                                                    @endphp
+                                                    @foreach ($data['DeliveryDetails'] as $key => $deliverydetail)
+                                                    <tr class="to-keep">
+                                                        <td class="text-center">{{ $key + 1 }}</td>
+                                                        <td class="to-keep text-center">
+                                                            {{ $deliverydetail['products']['ref_num'] }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $deliverydetail['categories']['category_name'] }}
+                                                        </td>
+                                                        <td class="to-keep text-center">
+                                                            {{ $deliverydetail['products']['product_name'] }}
+                                                        </td>
+                                                        <td class="to-keep text-center">{{ $deliverydetail->qte }}
+                                                        </td>
+                                                        <td class="to-keep text-center">
+                                                            {{ $deliverydetail->unit_price }}
+                                                            MAD
+                                                        </td>
+                                                        <td class="to-keep text-center">
+                                                            {{ number_format($deliverydetail->selling_price, 2, '.', ',') }}
+                                                            MAD
+                                                        </td>
                                                     </tr>
-
+                                                    @php
+                                                    $qte = $qte + $deliverydetail->qte;
+                                                    @endphp
                                                     @endforeach
 
                                                     @if (is_null($data->discount))
@@ -110,13 +127,16 @@
                                                         <td class="no-line text-center">
                                                             <strong>Discount Amount</strong>
                                                         </td>
-                                                        <td class="no-line text-center"><b>{{ number_format( $data->discount, 2, '.', ',') }} MAD</b></td>
+                                                        <td class="no-line text-center">
+                                                            <b>{{ number_format($data->discount, 2, '.', ',') }}
+                                                                MAD</b>
+                                                        </td>
                                                     </tr>
                                                     @endif
                                                     @php
                                                     $sellingPrices = $data['DeliveryDetails']->pluck('selling_price')->toArray();
-                                                    $subtotal = CalculateGrandTotal($sellingPrices,$data->discount,0);
-                                                    $Grand_total = CalculateGrandTotal($sellingPrices, $data->discount , 20 );
+                                                    $subtotal = CalculateGrandTotal($sellingPrices, $data->discount, 0);
+                                                    $Grand_total = CalculateGrandTotal($sellingPrices, $data->discount, 20);
                                                     @endphp
                                                     <tr>
                                                         <td class="thick-line"></td>
@@ -127,7 +147,10 @@
                                                         <td class="thick-line text-center">
                                                             <strong>Subtotal</strong>
                                                         </td>
-                                                        <td class="thick-line text-center"><b>{{ number_format($subtotal['grand_total'], 2, '.', ',') }} MAD</b></td>
+                                                        <td class="thick-line text-center">
+                                                            <b>{{ number_format($subtotal['grand_total'], 2, '.', ',') }}
+                                                                MAD</b>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="no-line"></td>
@@ -149,7 +172,10 @@
                                                         <td class="no-line text-center">
                                                             <strong>Total Tax</strong>
                                                         </td>
-                                                        <td class="no-line text-center"><b>{{ number_format( $Grand_total['tax_amount'] , 2, '.', ',') }} MAD</b></td>
+                                                        <td class="no-line text-center">
+                                                            <b>{{ number_format($Grand_total['tax_amount'], 2, '.', ',') }}
+                                                                MAD</b>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="no-line"></td>
@@ -161,7 +187,10 @@
                                                             <strong>Grand Total</strong>
                                                         </td>
                                                         <td class="no-line text-center">
-                                                            <h4 class="m-0">{{ number_format($Grand_total['grand_total'], 2, '.', ',') }} MAD</h4>
+                                                            <h4 class="m-0">
+                                                                {{ number_format($Grand_total['grand_total'], 2, '.', ',') }}
+                                                                MAD
+                                                            </h4>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -176,7 +205,7 @@
                                             <div class="col-md-12 text-center  ">
                                                 <div class="card card-body border-1 border-dark">
                                                     <p class="card-text ">Current invoice total:
-                                                        <b> {{$amountInWords}}</b>
+                                                        <b> {{ $amountInWords }}</b>
                                                     </p>
                                                 </div>
                                             </div>
@@ -186,7 +215,7 @@
 
                                         <div class="d-print-none">
                                             <div class="float-end">
-                                                <a id="print" class="btn btn-success waves-effect waves-light"><i class="fa fa-print"></i></a>
+                                                <a id="print" href="javascript:void()" class="btn btn-success waves-effect waves-light"><i class="fa fa-print"></i></a>
                                                 <a href="#" class="btn btn-primary waves-effect waves-light ms-2">Download</a>
                                             </div>
                                         </div>
@@ -211,7 +240,24 @@
 </div>
 
 <!-- End Page-content -->
-
-
-
-@endsection
+<script defer>
+    var body = document.querySelector("#body").cloneNode(true);
+    [...body.querySelectorAll("*")].forEach(e => {
+        if (!e.classList.contains("to-keep")) e.remove();
+    });
+    getPrintFunction("livraison", {
+        client: "{{ $data['customers']['name'] }}",
+        address: "{{ $data['customers']['address'] }}",
+        ice: "{{ $data['customers']['ice'] }}",
+        phone: "{{ $data['customers']['phone'] }}",
+        bon: "{{ $data->delivery_no }}",
+        date: "{{ date('d-m-Y', strtotime($data->date)) }}",
+        total: "{{ number_format($Grand_total['grand_total'], 2, '.', ',') }}",
+        quantity: "{{ $qte }}",
+        total_text: "{{ $amountInWords }}",
+        rows: body.innerHTML,
+    }).then((print) => {
+        document.querySelector("#print").addEventListener("click", print);
+    });
+</script>
+@endsection -->

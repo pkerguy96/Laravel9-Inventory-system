@@ -20,6 +20,7 @@ use App\Models\notifications;
 use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
 use App\Models\InvoiceDetail;
+use App\Models\Payement;
 
 class FetchController extends Controller
 {
@@ -76,16 +77,16 @@ class FetchController extends Controller
         //  Cache::forget('invoices');
 
         $minutes = 720;
-        $key = 'totalsells';
-        $key2 = 'neworders';
-        $key3 = 'totalcustomers';
-        $key4 = 'outofstock';
-        $key5 = 'invoice';
+        $key = 'totalsells'; // treseta mnin ikon invoice jdid
+        $key2 = 'neworders'; //treseta mnin ikon invoice jdid
+        $key3 = 'totalcustomers'; // treseta mnin iji customer
+        $key4 = 'outofstock'; // treseta mnin tajouta product ola tmodifya quantity means accepting an invoice tahia
+        $key5 = 'invoice'; // treseta mnin ikon invoice jdid
         $oneWeekAgo = Carbon::now()->subWeek();
         $currentDate = Carbon::now();
 
         $totalsell = Cache::remember($key, $minutes, function () {
-            return  InvoiceDetail::sum('grand_total');
+            return  Payement::sum('total_amount');
         });
         $neworder = Cache::remember($key2, $minutes, function () use ($oneWeekAgo, $currentDate) {
 
@@ -102,7 +103,7 @@ class FetchController extends Controller
         $invoice = cache::remember($key5, $minutes, function () use ($oneWeekAgo, $currentDate) {
 
 
-            return Invoice::with('clients', 'InvoiceDetails')
+            return Invoice::with('clients', 'InvoiceDetails', 'payements')
                 ->orderBy('created_at', 'desc')
                 ->take(6)
                 ->get();
