@@ -10,20 +10,20 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Edit Category </h4><br><br>
+                        <h4 class="card-title">{{ __("Edit Category") }} </h4><br><br>
 
                         <form method="post" action="{{ route('modify.category') }}" id="myForm">
                             @csrf
                             <input type="hidden" name="categoryid" value="{{ $categoryinfo->id}}">
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Category Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Category Name") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text" value="{{ $categoryinfo->category_name }}">
                                 </div>
                             </div>
                             <!-- end row -->
 
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Update Category">
+                            <input type="submit" class="btn btn-info waves-effect waves-light" value="{{ __('Update Category') }}">
                         </form>
 
 
@@ -49,7 +49,7 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Units Name',
+                    required: '{{ __("Please enter category name") }}',
                 },
 
             },

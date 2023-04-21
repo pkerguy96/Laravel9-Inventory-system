@@ -17,26 +17,26 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Invoice </h4><br><br>
+                        <h4 class="card-title">{{ __("Add New Invoice") }} </h4><br><br>
 
 
 
                         <div class="row justify-content-center justify-content-md-center justify-content-sm-between gap-sm-3 gap-md-5 flex-wrap">
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">Invoice Number</label>
+                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">{{ __("Invoice Number") }}</label>
                                     <input class="form-control" type="text" value="{{$invoice_no}}" name="invoice_no" id="invoice_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Date</label>
+                                    <label for="example-text-input" class="form-label">{{ __("Date") }}</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Due Date</label>
+                                    <label for="example-text-input" class="form-label">{{ __("Due Date") }}</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="due_date" id="due_date">
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                             <!-- brand start -->
                             <div class=" col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="Brand_id" class="form-label">Brand</label>
+                                    <label for="Brand_id" class="form-label">{{ __("Brand") }}</label>
                                     <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
                                         @foreach ($brands as $key )
                                         <option value="{{$key->id}}">{{$key->Brand_name}}</option>
@@ -56,7 +56,7 @@
                             <!-- brand end -->
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="category_id" class="form-label">Category</label>
+                                    <label for="category_id" class="form-label">{{ __("Category") }}</label>
                                     <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                         @foreach ($categories as $key )
                                         <option value="{{$key->id}}">{{$key->category_name}}</option>
@@ -67,15 +67,15 @@
 
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="product_id" class="form-label">Product Name</label>
+                                    <label for="product_id" class="form-label">{{ __("Product Name") }}</label>
                                     <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
-                                        <option selected="">Open this select menu</option>
+                                        <option selected="">{{ __("") }}Open this select menu</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="stock_qte" class="form-label">Stock</label>
+                                    <label for="stock_qte" class="form-label">{{ __("Stock") }}</label>
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
-                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
+                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> {{ __("Add More") }}</i>
                                 </div>
                             </div>
 
@@ -104,13 +104,13 @@
                                 <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
                                     <thead>
                                         <tr class="text-center">
-                                            <th>Brand</th>
-                                            <th>Product Name</th>
-                                            <th>Category</th>
-                                            <th width="7%">Pieces</th>
-                                            <th width="10%">Unit Price</th>
-                                            <th width="15%">Total Price</th>
-                                            <th width="7%">Action</th>
+                                            <th>{{ __("Brand") }}</th>
+                                            <th>{{ __("Product Name") }}</th>
+                                            <th>{{ __("Category") }}</th>
+                                            <th width="7%">{{ __("Pieces") }}</th>
+                                            <th width="10%">{{ __("Unit Price") }}</th>
+                                            <th width="15%">{{ __("Total Price") }}</th>
+                                            <th width="7%">{{ __("Action") }}</th>
 
                                         </tr>
                                     </thead>
@@ -118,7 +118,7 @@
 
                                     </tbody>
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Discount </strong></td>
+                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Discount") }} </strong></td>
                                         <td>
                                             <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
                                         </td>
@@ -126,7 +126,7 @@
                                     </tr>
                                     <tbody id=" rowAdd" class="rowAdd">
                                         <tr>
-                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
+                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Subtotal") }}</strong></td>
 
                                             <td>
                                                 <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
@@ -135,7 +135,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
+                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Tax 20%") }}</strong></td>
 
 
                                             <td>
@@ -144,7 +144,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5" style="text-align: right;"><strong class="text-right">Grand Total estimated amount</strong></td>
+                                            <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Grand Total estimated amount") }}</strong></td>
                                             <td>
                                                 <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
                                             </td>
@@ -161,20 +161,20 @@
                             </div><br>
                             <div class="row">
                                 <div class="form-group col-md-3">
-                                    <label for="">Payement Status</label>
+                                    <label for="">{{ __("Payement Status") }}</label>
                                     <select name="pay_status" id="pay_status" class="form-select">
-                                        <option value="">Select Payement</option>
-                                        <option value="full_paid">Full Payement</option>
-                                        <option value="full_due">Full due</option>
-                                        <option value="partial_paid">Partial Payement</option>
+                                        <option value="">{{ __("Select Payement") }}</option>
+                                        <option value="full_paid">{{ __("Full Payement") }}</option>
+                                        <option value="full_due">{{ __("Full due") }}</option>
+                                        <option value="partial_paid">{{ __("Partial Payement") }}</option>
                                     </select>
                                     <input type="text" name="paid_amount" class="form-control paid_amount" placeholder="Enter Amount" style="display: none;">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="">customer Name</label>
+                                    <label for="">{{ __("customer Name") }}</label>
                                     <select name="customer_id" id="customer_id" class="form-select">
 
-                                        <option value="">Select Customer</option>
+                                        <option value="">{{ __("Select Customer") }}</option>
                                         @foreach ( $customers as $key)
                                         <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
                                         @endforeach
@@ -185,16 +185,16 @@
                                 </div>
                                 <div class="form-group col-md-3">
 
-                                    <label for="example-text-input" class="form-label">delivery receipt</label>
+                                    <label for="example-text-input" class="form-label">{{ __("delivery receipt") }}</label>
                                     <select id="delivery_id" name="delivery_id" class="form-select" aria-label="Default select example">
-                                        <option selected="">Select delivery receipt</option>
+                                        <option selected="">{{ __("Select delivery receipt") }}</option>
                                     </select>
                                 </div>
 
                             </div><br>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info" id="addButton">Add Invoice</button>
+                                <button type="submit" class="btn btn-info" id="addButton">{{ __("Add Invoice") }}</button>
                             </div>
                         </form>
 

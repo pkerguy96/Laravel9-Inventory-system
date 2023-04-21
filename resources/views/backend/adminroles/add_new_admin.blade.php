@@ -3,6 +3,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -10,12 +11,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Admin </h4><br><br>
+                        <h4 class="card-title">{{ __("Add New Admin") }} </h4><br><br>
 
                         <form method="post" action="{{route('append.admin')}}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Name") }} </label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text">
                                 </div>
@@ -24,7 +25,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Email</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Email") }} </label>
                                 <div class="form-group col-sm-10">
                                     <input name="email" class="form-control" type="email">
                                 </div>
@@ -34,7 +35,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Username</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Username") }} </label>
                                 <div class="form-group col-sm-10">
                                     <input name="username" class="form-control" type="text">
                                 </div>
@@ -42,25 +43,25 @@
                             <!-- end row -->
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Password</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Password") }} </label>
                                 <div class="form-group col-sm-10">
                                     <input name="password" class="form-control" type="password" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Confirm Password</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Confirm Password") }} </label>
                                 <div class="form-group col-sm-10">
                                     <input id="password_confirmation" name="password_confirmation" class="form-control" type="password" required>
                                 </div>
                             </div>
                             <!-- end row -->
                             <div class="row  mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Role</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Role") }} </label>
                                 <div class="col-sm-10">
                                     <select name="role" id="role" class="form-select col-md-6">
 
-                                        <option value="" disabled>Select A Role:</option>
-                                        <option value="none">No Role</option>
+                                        <option value="" disabled>{{ __("Select A Role:") }} </option>
+                                        <option value="none">{{ __("No Role") }} </option>
                                         @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">
                                             {{ $role->name }}
@@ -110,19 +111,19 @@
             },
             messages: {
                 name: {
-                    required: 'Please enter  Name',
+                    required: '{{ __("Please enter  Name") }}',
                 },
                 username: {
-                    required: 'Please enter username P',
+                    required: '{{ __("Please enter username") }}',
                 },
                 email: {
-                    required: 'Please enter Customers Email',
+                    required: '{{ __("Please enter Customers Email") }}',
                 },
                 password: {
-                    required: 'Please enter a password ',
+                    required: '{{ __("Please enter a password") }} ',
                 },
                 password_confirmation: {
-                    required: 'Please enter a password ',
+                    required: '{{ __("Please enter a password") }} ',
                 },
 
             },

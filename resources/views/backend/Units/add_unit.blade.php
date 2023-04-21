@@ -1,78 +1,80 @@
 @extends('admin.admin_master')
 @section('admin')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <div class="page-content">
+        <div class="container-fluid">
 
-<div class="page-content">
-    <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ __('Add New Unit') }} </h4><br><br>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Add New Unit </h4><br><br>
-
-                        <form method="post" action="{{ route('append.unit') }}" id="myForm" enctype="multipart/form-data">
-                            @csrf
-                            <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Unit Name</label>
-                                <div class="form-group col-sm-10">
-                                    <input name="name" class="form-control" type="text">
+                            <form method="post" action="{{ route('append.unit') }}" id="myForm"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="row mb-3">
+                                    <label for="example-text-input"
+                                        class="col-sm-2 col-form-label">{{ __('Unit Name') }}</label>
+                                    <div class="form-group col-sm-10">
+                                        <input name="name" class="form-control" type="text">
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- end row -->
-                            <div class="row mb-3">
-                                <label for="formFile" class="col-sm-2 col-form-label">Upload Customers by csv</label>
-                                <div class="form-group col-sm-10">
-                                    <input class="form-control" type="file" name="units_csv" id="formFile">
+                                <!-- end row -->
+                                <div class="row mb-3">
+                                    <label for="formFile"
+                                        class="col-sm-2 col-form-label">{{ __('Upload Customers by csv') }}</label>
+                                    <div class="form-group col-sm-10">
+                                        <input class="form-control" type="file" name="units_csv" id="formFile">
+                                    </div>
                                 </div>
-                            </div>
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Unit">
-                        </form>
+                                <input type="submit" class="btn btn-info waves-effect waves-light"
+                                    value="{{ __('Add Unit') }}">
+                            </form>
 
 
 
+                        </div>
                     </div>
-                </div>
-            </div> <!-- end col -->
+                </div> <!-- end col -->
+            </div>
+
+
+
         </div>
-
-
-
     </div>
-</div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#myForm').validate({
-            rules: {
-                name: {
-                    required: true,
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#myForm').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+
                 },
+                messages: {
+                    name: {
+                        required: "{{ __('Please Enter Units Name') }}",
+                    },
 
-            },
-            messages: {
-                name: {
-                    required: 'Please Enter Units Name',
                 },
-
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            },
-            invalidHandler: function(event) {
-                if ($("#formFile").prop("files").length) event.target.submit();
-            },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                invalidHandler: function(event) {
+                    if ($("#formFile").prop("files").length) event.target.submit();
+                },
+            });
         });
-    });
-</script>
-
+    </script>
 @endsection

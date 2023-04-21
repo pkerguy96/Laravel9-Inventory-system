@@ -10,12 +10,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Customer </h4><br><br>
+                        <h4 class="card-title">{{ __("Add New Customer") }} </h4><br><br>
 
                         <form method="post" action="{{ route('append.customer') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Customer Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Name") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text">
                                 </div>
@@ -24,7 +24,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Customer Phone Number</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Phone Number") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="phone" class="form-control" type="text">
                                 </div>
@@ -34,7 +34,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Customer Email</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Email") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="email" class="form-control" type="email">
                                 </div>
@@ -42,7 +42,7 @@
                             <!-- end row -->
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Customer Address</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Address") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="address" class="form-control" type="text">
                                 </div>
@@ -50,19 +50,19 @@
                             <!-- end row -->
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">ICE Number</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("ICE Number") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="ice" class="form-control" type="text">
                                 </div>
                             </div>
                             <!-- end row -->
                             <div class="row mb-3">
-                                <label for="formFile" class="col-sm-2 col-form-label">Upload Customers by csv</label>
+                                <label for="formFile" class="col-sm-2 col-form-label">{{ __("Upload Customers by csv") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input class="form-control" type="file" name="customers_csv" id="formFile">
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Customer">
+                            <input type="submit" class="btn btn-info waves-effect waves-light" value="{{ __('Add Customer') }}">
                         </form>
 
 
@@ -99,19 +99,19 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Customers Name',
+                    required: '{{ __("Please Enter Customers Name") }}',
                 },
                 phone: {
-                    required: 'Please Enter Customers Phone Number',
+                    required: '{{ __("Please Enter Customers Phone Number") }}',
                 },
                 email: {
-                    required: 'Please Enter Customers Email',
+                    required: '{{ __("Please Enter Customers Email") }}',
                 },
                 address: {
-                    required: 'Please Enter Customers Address',
+                    required: '{{ __("Please Enter Customers Address") }}',
                 },
                 ice: {
-                    required: 'Please Enter Companys Ice',
+                    required: '{{ __("Please Enter Companys Ice") }}',
                 },
             },
             errorElement: 'span',

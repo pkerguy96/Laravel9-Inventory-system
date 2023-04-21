@@ -10,20 +10,20 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Edit Brand </h4><br><br>
+                        <h4 class="card-title">{{ __("Edit Brand") }} </h4><br><br>
 
                         <form method="post" action="{{ route('modify.Brand') }}" id="myForm">
                             @csrf
                             <input type="hidden" name="brandid" value="{{ $data->id}}">
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Brand Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Brand Name") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text" value="{{ $data->Brand_name	 }}">
                                 </div>
                             </div>
                             <!-- end row -->
 
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Update Brand">
+                            <input type="submit" class="btn btn-info waves-effect waves-light" value="{{ __('Update Brand') }}">
                         </form>
 
 
@@ -49,7 +49,7 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Units Name',
+                    required: '{{ __("Please enter a brand name") }}',
                 },
 
             },

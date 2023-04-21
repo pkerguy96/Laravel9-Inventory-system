@@ -10,12 +10,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Brand </h4><br><br>
+                        <h4 class="card-title">{{ __("Add New Brand") }} </h4><br><br>
 
                         <form method="post" action="{{ route('append.brand') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Brand Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Brand Name") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text">
                                 </div>
@@ -23,12 +23,12 @@
                             <!-- end row -->
 
                             <div class="row mb-3">
-                                <label for="formFile" class="col-sm-2 col-form-label">Upload brands by csv</label>
+                                <label for="formFile" class="col-sm-2 col-form-label">{{ __("Upload brands by csv") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input class="form-control" type="file" name="brands_cvs" id="formFile">
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Add Brand">
+                            <input type="submit" class="btn btn-info waves-effect waves-light" value="{{ __('Add Brand') }}">
                         </form>
 
 
@@ -55,7 +55,7 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Customers Name',
+                    required: '{{ __("Please enter a brand name") }}',
                 },
 
             },

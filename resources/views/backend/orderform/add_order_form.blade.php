@@ -1,6 +1,5 @@
 @extends('admin.admin_master')
 @section('admin')
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div class="page-content">
@@ -10,29 +9,29 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Order Form </h4><br><br>
+                        <h4 class="card-title">{{ __('Add New Order Form') }} </h4><br><br>
 
 
 
                         <div class="row justify-content-center justify-content-md-center justify-content-sm-between gap-sm-3 gap-md-5 flex-wrap">
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">Receipt Number</label>
-                                    <input class="form-control" type="text" value="{{$orderform_no}}" name="orderform_no" id="orderform_no" readonly style="background-color: #ddd;">
+                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">{{ __('order form number') }}</label>
+                                    <input class="form-control" type="text" value="{{ $orderform_no }}" name="orderform_no" id="orderform_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Date</label>
-                                    <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
+                                    <label for="example-text-input" class="form-label">{{ __('Date') }}</label>
+                                    <input class="form-control" type="date" value="{{ $date }}" name="date" id="date">
                                 </div>
                             </div>
                             <div class=" col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="Brand_id" class="form-label">Brand</label>
+                                    <label for="Brand_id" class="form-label">{{ __('Brand') }}</label>
                                     <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
-                                        @foreach ($brands as $key )
-                                        <option value="{{$key->id}}">{{$key->Brand_name}}</option>
+                                        @foreach ($brands as $key)
+                                        <option value="{{ $key->id }}">{{ $key->Brand_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -44,10 +43,10 @@
                             <!-- brand end -->
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="category_id" class="form-label">Category</label>
+                                    <label for="category_id" class="form-label">{{ __('Category') }}</label>
                                     <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
-                                        @foreach ($categories as $key )
-                                        <option value="{{$key->id}}">{{$key->category_name}}</option>
+                                        @foreach ($categories as $key)
+                                        <option value="{{ $key->id }}">{{ $key->category_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -55,15 +54,15 @@
 
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="product_id" class="form-label">Product Name</label>
+                                    <label for="product_id" class="form-label">{{ __('Product Name') }}</label>
                                     <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
-                                        <option selected="">Open this select menu</option>
+                                        <option selected="">{{ __('Open this select menu') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="stock_qte" class="form-label">Stock</label>
+                                    <label for="stock_qte" class="form-label">{{ __('Stock') }}</label>
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
@@ -76,7 +75,8 @@
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
-                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
+                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore">
+                                        {{ __('Add More') }}</i>
                                 </div>
                             </div>
 
@@ -87,17 +87,17 @@
 
                     <!-- End of card body -->
                     <div class="card-body">
-                        <form action="{{route('store.order.form')}}" method="post" action="">
+                        <form action="{{ route('store.order.form') }}" method="post" action="">
                             @csrf
                             <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
                                 <thead>
                                     <tr>
-                                        <th>Brand</th>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th width="7%">Pieces</th>
+                                        <th>{{ __('Brand') }}</th>
+                                        <th>{{ __('Product Name') }}</th>
+                                        <th>{{ __('Category') }}</th>
+                                        <th width="7%">{{ __('Pieces') }}</th>
 
-                                        <th width="7%">Action</th>
+                                        <th width="7%">{{ __('Action') }}</th>
 
                                     </tr>
                                 </thead>
@@ -108,7 +108,7 @@
                                 <tbody id=" rowAdd" class="rowAdd">
 
                                     <tr>
-                                        <td colspan="3" style="text-align: right;"><strong class="text-right">Total Quantity</strong></td>
+                                        <td colspan="3" style="text-align: right;"><strong class="text-right">{{ __('Total Quantity') }}</strong></td>
                                         <td>
                                             <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
                                         </td>
@@ -120,7 +120,7 @@
 
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info" id="addButton">Add Order Form</button>
+                                <button type="submit" class="btn btn-info" id="addButton">{{ __('Add Order Form') }}</button>
                             </div>
                         </form>
 
@@ -310,6 +310,4 @@
             .catch(error => console.log(error));
     });
 </script>
-
-
 @endsection

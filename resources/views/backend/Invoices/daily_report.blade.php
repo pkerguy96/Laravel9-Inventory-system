@@ -10,7 +10,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Daily Invoice Report</h4><br><br>
+                        <h4 class="card-title">{{ __("Invoice report by date") }}</h4><br><br>
 
 
                         <form method="GET" action="{{route('search.date.invoice')}}" id="promedform" target="_blank">
@@ -18,13 +18,13 @@
 
                                 <div class="col-md-4">
                                     <div class="md-3 form-group">
-                                        <label for="example-text-input" class="form-label"> Start Date</label>
+                                        <label for="example-text-input" class="form-label"> {{ __("Start Date") }}</label>
                                         <input class="form-control" type="date" name="startdate" id="startdate" placeholder="YY-MM-DD">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="md-3 form-group">
-                                        <label for="example-text-input" class="form-label"> End Date</label>
+                                        <label for="example-text-input" class="form-label"> {{ __("End Date") }}</label>
                                         <input class="form-control" type="date" name="enddate" id="enddate" placeholder="YY-MM-DD">
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                 <div class="col-md-4">
                                     <div class="md-3 ">
                                         <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
-                                        <button type="submit" class="btn btn-info">Search</button>
+                                        <button type="{{ __('submit') }}" class="btn btn-info">{{ __("Search") }}</button>
                                     </div>
                                 </div>
 
@@ -65,13 +65,14 @@
             },
             messages: {
                 startdate: {
-                    required: 'Please Select A Start Date',
+                    required: '{{ __("Please Select A Start Date") }}',
                 },
                 enddate: {
-                    required: 'Please Select An End Date',
+                    required: '{{ __("Please Select An End Date") }}',
                 },
 
             },
+
             errorElement: 'span',
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');

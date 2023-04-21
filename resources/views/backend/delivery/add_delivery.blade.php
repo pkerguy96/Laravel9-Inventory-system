@@ -10,20 +10,20 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Add New Delivery Receipt </h4><br><br>
+                        <h4 class="card-title">{{ __("Add New Delivery Receipt") }} </h4><br><br>
 
 
 
                         <div class="row justify-content-center justify-content-md-center justify-content-sm-between gap-sm-3 gap-md-5 flex-wrap">
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">Receipt Number</label>
+                                    <label for="example-text-input" class="form-label" style="white-space: nowrap;">{{ __("Receipt Number") }}</label>
                                     <input class="form-control" type="text" value="{{$delivery_no}}" name="delivery_no" id="delivery_no" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
-                                    <label for="example-text-input" class="form-label">Date</label>
+                                    <label for="example-text-input" class="form-label">{{ __("Date") }}</label>
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                             <!-- brand start -->
                             <div class=" col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="Brand_id" class="form-label">Brand</label>
+                                    <label for="Brand_id" class="form-label">{{ __("Brand") }}</label>
                                     <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
                                         @foreach ($brands as $key )
                                         <option value="{{$key->id}}">{{$key->Brand_name}}</option>
@@ -44,7 +44,7 @@
                             <!-- brand end -->
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="category_id" class="form-label">Category</label>
+                                    <label for="category_id" class="form-label">{{ __("Category") }}</label>
                                     <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                         @foreach ($categories as $key )
                                         <option value="{{$key->id}}">{{$key->category_name}}</option>
@@ -55,7 +55,7 @@
 
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="product_id" class="form-label">Product Name</label>
+                                    <label for="product_id" class="form-label">{{ __("Product Name") }}</label>
                                     <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
                                         <option selected="">Open this select menu</option>
                                     </select>
@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-md-2 col-sm-12">
                                 <div class="mb-3">
-                                    <label for="stock_qte" class="form-label">Stock</label>
+                                    <label for="stock_qte" class="form-label">{{ __("Stock") }}</label>
                                     <input class="form-control" type="text" name="stock_qte" id="stock_qte" readonly style="background-color: #ddd;">
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
 
-                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore"> Add More</i>
+                                    <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore">{{ __("Add More") }}</i>
                                 </div>
                             </div>
 
@@ -92,13 +92,13 @@
                             <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
                                 <thead>
                                     <tr>
-                                        <th>Brand</th>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th width="7%">Pieces</th>
-                                        <th width="10%">Unit Price</th>
-                                        <th width="15%">Total Price</th>
-                                        <th width="7%">Action</th>
+                                        <th>{{ __("Brand") }}</th>
+                                        <th>{{ __("Product Name") }}</th>
+                                        <th>{{ __("Category") }}</th>
+                                        <th width="7%">{{ __("Pieces") }}</th>
+                                        <th width="10%">{{ __("Unit Price") }}</th>
+                                        <th width="15%">{{ __("Total Price") }}</th>
+                                        <th width="7%">{{ __("Action") }}</th>
 
                                     </tr>
                                 </thead>
@@ -108,7 +108,7 @@
 
                                 <tbody id=" rowAdd" class="rowAdd">
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Discount </strong></td>
+                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Discount") }} </strong></td>
                                         <td>
                                             <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
                                         </td>
@@ -116,7 +116,7 @@
                                     </tr>
                                 <tbody id=" rowAdd" class="rowAdd">
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Subtotal</strong></td>
+                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Subtotal") }}</strong></td>
 
                                         <td>
                                             <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
@@ -125,7 +125,7 @@
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">Tax 20%</strong></td>
+                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Tax 20%") }}</strong></td>
 
 
                                         <td>
@@ -134,14 +134,14 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Grand Total estimated amount</strong></td>
+                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Grand Total estimated amount") }}</strong></td>
                                         <td>
                                             <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
                                         </td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">Total Quantity</strong></td>
+                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Total Quantity") }}</strong></td>
                                         <td>
                                             <input type="text" name="Qtotal" value="0" id="Qtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
                                         </td>
@@ -151,16 +151,16 @@
                             </table><br>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <textarea name="description" class="form-control" id="description" placeholder="Enter description here"></textarea>
+                                    <textarea name="description" class="form-control" id="description" placeholder="{{ __('Enter description here') }}"></textarea>
                                 </div>
                             </div><br>
                             <div class="row">
 
                                 <div class="form-group col-md-6">
-                                    <label for="">customer Name</label>
+                                    <label for="">{{ __("customer Name") }}</label>
                                     <select name="customer_id" id="customer_id" class="form-select">
 
-                                        <option value="">Select Customer</option>
+                                        <option value="">{{ __("Select Customer") }}</option>
                                         @foreach ( $customers as $key)
                                         <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
                                         @endforeach
@@ -174,7 +174,7 @@
                             </div><br>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-info" id="addButton">Add Invoice</button>
+                                <button type="{{ __('submit') }}" class="btn btn-info" id="addButton">{{ __("Add Invoice") }}</button>
                             </div>
                         </form>
 

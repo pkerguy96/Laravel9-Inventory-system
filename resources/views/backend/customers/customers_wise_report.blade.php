@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Customers Wise Report</h4>
+                    <h4 class="mb-sm-0">{{ __("Customers Wise Report") }}</h4>
                 </div>
             </div>
         </div>
@@ -21,9 +21,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <strong>Customer Credit Report</strong>
+                                <strong>{{ __("Customer Credit Report") }}</strong>
                                 <input type="radio" name="customers_report" value='customer_true' class="search_value">&nbsp;&nbsp;
-                                <strong>Customer Payment Report</strong>
+                                <strong>{{ __("Customer Payment Report") }}</strong>
                                 <input type="radio" name="customers_report" value='payment_true' class="search_value">
                             </div>
                         </div>
@@ -31,16 +31,16 @@
                             <form action="{{route('customers.wise.credit.report')}}" method="GET" id="promform" target="_blank">
                                 <div class="row">
                                     <div class="col-sm-8 form-group">
-                                        <label for="">Customer Name</label>
+                                        <label for="">{{ __("Customer Name") }}</label>
                                         <select name="customer_id" class="form-select" aria-label="Default select example">
-                                            <option value="">Open this select menu</option>
+                                            <option value="">{{ __("Open this select menu") }}</option>
                                             @foreach ( $customers as $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-sm-4" style="padding-top: 22px;">
-                                        <button type="submit" class="btn btn-primary">Search</button>
+                                        <button type="{{ __('submit') }}" class="btn btn-primary">{{ __("Search") }}</button>
                                     </div>
                                 </div>
                             </form>
@@ -49,16 +49,16 @@
                             <form action="{{route('customers.wise.payement.report')}}" method="GET" id="promform" target="_blank">
                                 <div class="row">
                                     <div class="col-sm-8 form-group">
-                                        <label for="">Customer Name</label>
+                                        <label for="">{{ __("Customer Name") }}</label>
                                         <select name="customer_id" class="form-select" aria-label="Default select example">
-                                            <option value="">Open this select menu</option>
+                                            <option value="">{{ __("Open this select menu") }}</option>
                                             @foreach ( $customers as $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-sm-4" style="padding-top: 22px;">
-                                        <button type="submit" class="btn btn-primary">Search</button>
+                                        <button type="{{ __('submit') }}" class="btn btn-primary">{{ __("Search") }}</button>
                                     </div>
                                 </div>
                             </form>

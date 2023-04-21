@@ -1,12 +1,14 @@
 <header id="page-topbar">
-
+    @php
+    var_dump(Auth::check());
+    @endphp
 
     <div class="navbar-header">
         <div class="d-flex">
 
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index.html" class="logo logo-dark">
+                <a href="{{ route('dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo-sm" height="22">
                     </span>
@@ -15,7 +17,7 @@
                     </span>
                 </a>
 
-                <a href="index.html" class="logo logo-light">
+                <a href="{{ route('dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo-sm-light" height="22">
                     </span>
@@ -44,7 +46,7 @@
 
 
 
-            <div class="dropdown d-none d-sm-inline-block">
+            <div class="dropdown d-block d-sm-inline-block">
                 @php
                 $lel = app()->getLocale();
                 @endphp
@@ -65,7 +67,8 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ri-notification-3-line"></i>
-                    <span class="{{$notifications->count() > 0?'noti-dot' : ''}}"></span>
+                    <span class="{{isset($notifications) && $notifications->count() > 0 ? 'noti-dot' : ''}}"></span>
+
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown" style="">
                     <div class="p-3">
@@ -92,7 +95,8 @@
 
                                                     <!-- start -->
                                                     <a href="" class="text-reset notification-item w-100">
-                                                        @if($notifications->count()> 0)
+
+                                                        @if(isset($notifications) && $notifications->count()> 0)
                                                         @foreach($notifications as $notification)
                                                         <div class="d-flex">
                                                             <div class="{{$notifications->count() > 0?'avatar-xs me-3' : ''}}">
@@ -106,7 +110,7 @@
 
                                                                 <div class="notif-div">
                                                                     <button type="button" class="btn-close" aria-label="Close" style="margin-left:98%;" data-attr-notid="{{$notification->id}}" onclick="removeNotification(event, this)"></button>
-                                                                    <h6 class="mb-1">{{ $notification->message }}</h6>
+                                                                    <h6 class="mb-1 mt-n4">{{ $notification->message }}</h6>
                                                                     <div class="font-size-12 text-muted">
                                                                         <p class="mb-1">Only {{ $notification['products']['product_qte']  }} Are Left </p>
                                                                         <p class="mb-0"><i class="mdi mdi-clock-outline"></i>{{ \Carbon\Carbon::parse($notification->created_at)->diffForHumans() }}</p>
@@ -164,12 +168,11 @@
             </div>
 
             @php
+            if(Auth::check()){
             $id = Auth::user()->id;
-
             $adminData = App\Models\User::find($id);
-
+            }
             @endphp
-
 
 
 

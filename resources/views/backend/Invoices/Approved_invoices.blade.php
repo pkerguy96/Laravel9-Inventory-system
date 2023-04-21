@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Approve Invoices</h4>
+                    <h4 class="mb-sm-0">{{ __("Approve Invoice") }}</h4>
                 </div>
             </div>
         </div>
@@ -19,22 +19,22 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Invoice No: #{{$invoice->invoice_no}} -- {{date('d-m-Y',strtotime($invoice->date))}}</h4>
-                        <a href="{{route('all.pending.invoices')}}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right"><i class="fas fa-list"> Pending Invoices </i></a> <br><br>
+                        <h4>{{ __("Invoice No") }}: #{{$invoice->invoice_no}} -- {{date('d-m-Y',strtotime($invoice->date))}}</h4>
+                        <a href="{{route('all.pending.invoices')}}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right"><i class="fas fa-list"> {{ __("Pending Invoices") }} </i></a> <br><br>
                         <table class="table table-dark" width="100%">
                             <tbody>
                                 <tr>
                                     <td>
-                                        <p>Customer Info:</p>
+                                        <p>{{ __("Customer Info") }}:</p>
                                     </td>
                                     <td>
-                                        <p>Name: <strong>{{$payement['customers']['name']}}</strong></p>
+                                        <p>{{ __("Name") }}: <strong>{{$payement['customers']['name']}}</strong></p>
                                     </td>
                                     <td>
-                                        <p>Phone: <strong>{{$payement['customers']['phone']}}</strong></p>
+                                        <p>{{ __("Phone") }}: <strong>{{$payement['customers']['phone']}}</strong></p>
                                     </td>
                                     <td>
-                                        <p>Email: <strong>{{$payement['customers']['email']}}</strong></p>
+                                        <p>{{ __("Email") }}: <strong>{{$payement['customers']['email']}}</strong></p>
                                     </td>
 
                                 </tr>
@@ -42,7 +42,7 @@
                                     <td></td>
                                     <td colspan="3">
 
-                                        <p>Description:
+                                        <p>{{ __("Description") }}:
                                             <strong>{{$invoice->description ?? 'N/A'}}</strong>
 
                                         </p>
@@ -57,12 +57,12 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">SL</th>
-                                        <th class="text-center">Category</th>
-                                        <th class="text-center">Product Name</th>
-                                        <th class="text-center" style="background-color: #8B008B;">Current Stock</th>
-                                        <th class="text-center">Quantity</th>
-                                        <th class="text-center">Unite Price</th>
-                                        <th class="text-center">Total Price</th>
+                                        <th class="text-center">{{ __("Category") }}</th>
+                                        <th class="text-center">{{ __("Product Name") }}</th>
+                                        <th class="text-center" style="background-color: #8B008B;">{{ __("Current Stock") }}</th>
+                                        <th class="text-center">{{ __("Quantity") }}</th>
+                                        <th class="text-center">{{ __("Unite Price") }}</th>
+                                        <th class="text-center">{{ __("Total Price") }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,40 +89,40 @@
                                     $Grandtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 20);
                                     @endphp
                                     <tr class="text-center">
-                                        <td colspan="6">Discount:</td>
+                                        <td colspan="6">{{ __("Discount") }}:</td>
 
                                         <td>{{ isset($payement->discount_amount) ? number_format($payement->discount_amount, 2, '.', ',').' MAD' : 'N/A' }}</td>
 
 
                                     </tr>
                                     <tr class="text-center">
-                                        <td colspan="6">Subtotal:</td>
+                                        <td colspan="6">{{ __("Subtotal") }}:</td>
 
                                         <td>{{ number_format(  $Subtotal['grand_total'] , 2, '.', ',') }} MAD</td>
                                     </tr>
 
                                     <tr class="text-center">
-                                        <td colspan="6">Tax:</td>
+                                        <td colspan="6">{{ __("Tax 20%") }}:</td>
 
                                         <td> {{ number_format(  $Grandtotal['tax_amount'] , 2, '.', ',') }} MAD</td>
                                     </tr>
                                     <tr class="text-center">
-                                        <td colspan="6">Grand Total</td>
+                                        <td colspan="6">{{ __("Grand Total") }}:</td>
                                         <td> {{ number_format( $Grandtotal['grand_total'] , 2, '.', ',') }} MAD</td>
                                     </tr>
 
                                     <tr class="text-center">
-                                        <td colspan="6">Paid Amount</td>
+                                        <td colspan="6">{{ __("Paid Amount") }}:</td>
                                         <td> {{ number_format( $payement->paid_amount , 2, '.', ',') }} MAD</td>
                                     </tr>
                                     <tr class="text-center">
-                                        <td colspan="6">Due Amount</td>
+                                        <td colspan="6">{{ __("Due Amount") }}:</td>
                                         <td> {{ number_format(  $payement->due_amount , 2, '.', ',') }} MAD</td>
                                     </tr>
 
                                 </tbody>
                             </table>
-                            <button type="submit" class="btn btn-info">Approve Invoice</button>
+                            <button type="{{ __('submit') }}" class="btn btn-info">{{ __("Approve Invoice") }}</button>
                         </form>
                     </div>
                 </div>

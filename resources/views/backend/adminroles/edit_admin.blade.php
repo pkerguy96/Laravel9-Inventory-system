@@ -10,12 +10,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Edit Admin </h4><br><br>
+                        <h4 class="card-title">{{ __("Edit Admin") }}</h4><br><br>
                         <form method="post" action="{{ route('modify.admin') }}" id="myForm">
                             @csrf
                             <input type="hidden" value="{{$data->id}}" name="adminid">
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Name") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text" value="{{$data->name}}">
                                 </div>
@@ -24,7 +24,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Username</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Username") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="username" class="form-control" type="text" value="{{$data->username}}">
                                 </div>
@@ -34,19 +34,19 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Email</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Email") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="email" class="form-control" type="email" value="{{$data->email}}">
                                 </div>
                             </div>
                             <!-- end row -->
                             <div class="row  mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Admin Role</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Admin Role") }}</label>
                                 <div class="col-sm-10">
                                     <select name="role" id="role" class="form-select col-md-6">
 
-                                        <option value="" disabled>Select A Role:</option>
-                                        <option value="none" {{ $data->roles->isEmpty() ? 'selected' : '' }}>No Role</option>
+                                        <option value="" disabled>{{ __("") }}Select A Role:</option>
+                                        <option value="none" {{ $data->roles->isEmpty() ? 'selected' : '' }}>{{ __("No Role") }}</option>
                                         @foreach ($roles as $role)
                                         <option value="{{ $role->id }}" {{ $data->hasRole($role->name) ? 'selected' : '' }}>
                                             {{ $role->name }}
@@ -60,7 +60,7 @@
 
 
 
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Modify Admin">
+                            <input type="submit" class="btn btn-info waves-effect waves-light" value="{{ __('Modify Admin') }}">
                         </form>
 
 

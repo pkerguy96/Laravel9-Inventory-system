@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">All Delivery Receipts</h4>
+                    <h4 class="mb-sm-0">{{ __("All Delivery Receipts") }}</h4>
                 </div>
             </div>
         </div>
@@ -19,19 +19,21 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{route('add.delivery')}}" class="btn btn-dark btn-rounded waves-effect waves-light" style="float:right"><i class="fas fa-plus-circle"> Add Delivery Receipt </i></a> <br>
-                        <h4 class="card-title">All Delivery Receipts </h4>
+                        <div class="d-flex justify-content-between align-items-center flex-row-reverse mb-md-3">
+                            <a href="{{route('add.delivery')}}" class="btn btn-dark btn-rounded waves-effect waves-light"><i class="fas fa-plus-circle"> <span class="d-none d-sm-inline">{{ __("Add Delivery Receipt") }} </span></i></a>
+                            <h4 class="card-title">{{ __("All Delivery Receipts") }} </h4>
+                        </div>
                         <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Delivery Number</th>
-                                    <th>Customer Name</th>
-                                    <th>Date</th>
-                                    <th>Total Quantity</th>
-                                    <th>Discount</th>
-                                    <th>Grand Total</th>
-                                    <th>Action</th>
+                                    <th>{{ __("Delivery Number") }}</th>
+                                    <th>{{ __("Customer Name") }}</th>
+                                    <th>{{ __("Date") }}</th>
+                                    <th>{{ __("Total Quantity") }}</th>
+                                    <th>{{ __("Discount") }}</th>
+                                    <th>{{ __("Grand Total") }}</th>
+                                    <th>{{ __("Action") }}</th>
                             </thead>
 
                             <tbody>
@@ -52,7 +54,7 @@
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}}</a> </td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->total_qte}} </a></td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->discount ?? 'N/A'}} </a></td>
-                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{$Grand_total['grand_total']}} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ number_format($Grand_total['grand_total'], 2, '.', ',') }} MAD</a></td>
                                     <td>
 
                                         <a href="{{route('print.delivery',$item->id)}}" class="btn btn-success waves-effect waves-light" title="Print"> <i class="fas fa-print"></i> </a>

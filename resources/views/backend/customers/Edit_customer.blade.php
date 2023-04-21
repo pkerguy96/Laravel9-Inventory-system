@@ -10,12 +10,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Modify Customer </h4><br><br>
+                        <h4 class="card-title">{{ __("Modify Customer") }} </h4><br><br>
                         <form method="post" action="{{ route('modify.customer') }}" id="myForm">
                             @csrf
                             <input type="hidden" value="{{$customerinfo->id}}" name="supplierId">
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Name</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Name") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="name" class="form-control" type="text" value="{{$customerinfo->name}}">
                                 </div>
@@ -24,7 +24,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Phone Number</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Phone Number") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="phone" class="form-control" type="text" value="{{$customerinfo->phone}}">
                                 </div>
@@ -34,7 +34,7 @@
 
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Email</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Email") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="email" class="form-control" type="email" value="{{$customerinfo->email}}">
                                 </div>
@@ -42,7 +42,7 @@
                             <!-- end row -->
 
                             <div class="row mb-3">
-                                <label for="example-text-input" class="col-sm-2 col-form-label">Supplier Address</label>
+                                <label for="example-text-input" class="col-sm-2 col-form-label">{{ __("Customer Address") }}</label>
                                 <div class="form-group col-sm-10">
                                     <input name="address" class="form-control" type="text" value="{{$customerinfo->address}}">
                                 </div>
@@ -50,7 +50,7 @@
                             <!-- end row -->
 
 
-                            <input type="submit" class="btn btn-info waves-effect waves-light" value="Modify Customer">
+                            <input type="submit" class="btn btn-info waves-effect waves-light" value="{{ __('Modify Customer') }}">
                         </form>
 
 
@@ -84,16 +84,16 @@
             },
             messages: {
                 name: {
-                    required: 'Please Enter Suppliers Name',
+                    required: '{{ __("Please Enter customer Name") }}',
                 },
                 phone: {
-                    required: 'Please Enter Suppliers Phone Number',
+                    required: '{{ __("Please Enter customer Phone Number") }}',
                 },
                 email: {
-                    required: 'Please Enter Suppliers Email',
+                    required: '{{ __("Please Enter customer Email") }}',
                 },
                 address: {
-                    required: 'Please Enter Suppliers Address',
+                    required: '{{ __("Please Enter customer Address") }}',
                 },
             },
             errorElement: 'span',
