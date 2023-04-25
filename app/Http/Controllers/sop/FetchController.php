@@ -116,6 +116,9 @@ class FetchController extends Controller
     public function gettotalsells()
     {
         try {
+
+
+
             $minutes = 1440;
             $key = 'totalsells'; // treseta mnin ikon invoice jdid
             $key2 = 'neworders'; //treseta mnin ikon invoice jdid
@@ -130,7 +133,7 @@ class FetchController extends Controller
             });
             $neworder = Cache::remember($key2, $minutes, function () use ($oneWeekAgo, $currentDate) {
 
-                return  InvoiceDetail::whereBetween('created_at', [$oneWeekAgo, $currentDate])
+                return  Invoice::whereBetween('created_at', [$oneWeekAgo, $currentDate])
                     ->count();
             });
             $totalCustomer = cache::remember($key3, $minutes, function () {
@@ -145,12 +148,18 @@ class FetchController extends Controller
                     ->take(6)
                     ->get();
             });
+            $totalsellscomparaison = totalsalespercentagecalculations();
+            $neworderscomparaison = totalorderscalculations();
+            $totalcustomerscomparaison = totalcustomerscalculations();
             $data = [
                 'totalsells' => $totalsell,
                 'neworders' => $neworder,
                 'totalCustomers' => $totalCustomer,
                 'outofstocks' => $totaloutofstock,
                 'invoices' => $invoice,
+                'sellsco' => $totalsellscomparaison,
+                'ordersco' => $neworderscomparaison,
+                'customersco' => $totalcustomerscomparaison
             ];
             return response()->json($data);
         } catch (\Exception $e) {

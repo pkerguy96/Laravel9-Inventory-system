@@ -15,7 +15,7 @@ class StockController extends Controller
     {
         try {
             $data = Product::orderby('supplier_id', 'asc')->orderby('category_id', 'asc')->get();
-            return view('backend.Stock.View_Stock', compact('data'));
+            return view('backend.stock.View_Stock', compact('data'));
         } catch (\Exception $e) {
             Log::error('Stockreport function: ' . $e->getMessage());
             report($e);
@@ -38,7 +38,7 @@ class StockController extends Controller
         try {
             $suppliers  = Supplier::all();
             $categories = Category::all();
-            return view('backend.Stock.supplier_stock_filtration', compact('suppliers', 'categories'));
+            return view('backend.stock.supplier_stock_filtration', compact('suppliers', 'categories'));
         } catch (\Exception $e) {
             Log::error('Searchbysuporstock function: ' . $e->getMessage());
             report($e);

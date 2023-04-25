@@ -179,6 +179,8 @@ class InvoiceController extends Controller
             Cache::forget('neworders');
             Cache::forget('outofstock');
             Cache::forget('invoice');
+            Cache::forget('total_sales_calculation');
+            Cache::forget('total_order_calculation');
 
             foreach ($request->qte as $key => $value) {
                 $invoiceDetails = InvoiceDetail::where('id', $key)->first();

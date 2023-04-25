@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -67,8 +68,18 @@ class AdminController extends Controller
                 $file = $request->file('profile_image');
                 $filename = date('YmdHi') . $file->getClientOriginalName();
                 $file->move(public_path('upload/admin_images'), $filename);
-                $data['profile_image'] = $filename;
+
+                // Delete old profile image if it exists
+                if ($data->profile_image) {
+                    $oldImagePath = public_path('upload/admin_images/') . $data->profile_image;
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+
+                $data->profile_image = $filename;
             }
+
             $data->save();
             $notification = InsertNotification('Admin Profile Updated Successfully', 'success');
             return redirect()->route('admin.profile')->with($notification);

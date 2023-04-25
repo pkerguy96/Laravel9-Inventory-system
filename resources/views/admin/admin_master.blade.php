@@ -4,10 +4,10 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Dashboard | Promedplanet - Admin & Dashboard Template</title>
+    <title>Dashboard | Promedplanet</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesdesign" name="author" />
+    <meta content="Promedplanet Inventory System" name="description" />
+    <meta content="Promedplanet" name="Aymen Elkor" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
@@ -348,6 +348,19 @@
     <!-- Form Select 2  JS -->
     <script src="{{ asset('backend/assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/form-advanced.init.js') }}"></script>
+    <!-- <script>
+        $(document).ready(function() {
+            $('#tabledata').DataTable({
+                "language": {
+                    "lengthMenu": "{{ __('Display _MENU_ records per page') }}",
+                    "zeroRecords": "{{ __('Nothing found - sorry') }}",
+                    "info": "{{ __('Showing page _PAGE_ of _PAGES_') }}",
+                    "infoEmpty": "{{ __('No records available') }}",
+                    "infoFiltered": "{{ __('filtered from _MAX_ total records') }}"
+                }
+            });
+        });
+    </script> -->
 
 </body>
 

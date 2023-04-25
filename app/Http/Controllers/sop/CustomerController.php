@@ -52,6 +52,7 @@ class CustomerController extends Controller
                 return redirect()->route('all.customers')->with($notification);
             } else {
                 Cache::forget('totalcustomers');
+                Cache::forget('total_customers_calculation');
                 Customer::insert([
                     'name' =>  $request->name,
                     'phone' =>  $request->phone,
@@ -107,6 +108,7 @@ class CustomerController extends Controller
     {
         try {
             Cache::forget('totalcustomers');
+            Cache::forget('total_customers_calculation');
             Customer::findorfail($id)->delete();
             $notification = InsertNotification('Customer Deleted Successfully', 'info');
             return redirect()->route('all.customers')->with($notification);

@@ -22,7 +22,7 @@ use App\Http\Controllers\sop\UnitController;
 use App\Models\OrderForm;
 
 Route::get('/', function () {
-    /*   return view('welcome'); */
+
     return redirect()->route('login');
 });
 

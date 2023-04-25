@@ -1,7 +1,4 @@
 <header id="page-topbar">
-    @php
-    var_dump(Auth::check());
-    @endphp
 
     <div class="navbar-header">
         <div class="d-flex">
@@ -12,9 +9,7 @@
                     <span class="logo-sm">
                         <img src="{{ asset('backend/assets/images/logo-sm.png') }}" alt="logo-sm" height="22">
                     </span>
-                    <span class="logo-lg">
-                        <img src="{{ asset('backend/assets/images/logo-dark.png') }}" alt="logo-dark" height="20">
-                    </span>
+
                 </a>
 
                 <a href="{{ route('dashboard') }}" class="logo logo-light">
@@ -157,29 +152,24 @@
                     </div>
                 </div>
             </div>
-
-
-
-
             <div class="dropdown d-none d-lg-inline-block ms-">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                     <i class="ri-fullscreen-line"></i>
                 </button>
             </div>
-
             @php
+            $adminData = null;
             if(Auth::check()){
             $id = Auth::user()->id;
             $adminData = App\Models\User::find($id);
             }
             @endphp
-
-
-
             <div class="dropdown d-inline-block user-dropdown">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ (!empty($adminData->profile_image))? url('upload/admin_images/'.$adminData->profile_image):url('upload/no_image.jpg') }}" alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1">{{ $adminData->name }}</span>
+
+                    <img class="rounded-circle header-profile-user" src="{{ (!empty($adminData) && !empty($adminData->profile_image))? url('upload/admin_images/'.$adminData->profile_image):url('upload/no_image.jpg') }}" alt="Header Avatar">
+                    <span class="d-none d-xl-inline-block ms-1">{{ !empty($adminData) ? $adminData->name : '' }}</span>
+
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">

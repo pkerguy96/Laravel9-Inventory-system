@@ -1,9 +1,6 @@
 @extends('admin.admin_master')
 @section('admin')
 
-@php
-Cache::forget('invoice');
-@endphp
 <div class="page-content">
     <div class="container-fluid">
 
@@ -11,7 +8,7 @@ Cache::forget('invoice');
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0">Dashboard {{__('test.name')}}</h4>
+                    <h4 class="mb-sm-0"> {{__('Dashboard')}} </h4>
                 </div>
             </div>
         </div>
@@ -25,7 +22,7 @@ Cache::forget('invoice');
                             <div class="flex-grow-1">
                                 <p class="text-truncate font-size-14 mb-2"> {{ __('Total Sales') }}</p>
                                 <h4 class="mb-2" id="totalsells"></h4>
-                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>9.23%</span>{{ __('from previous period') }}</p>
+                                <p class="text-muted mb-0"><span class=" fw-bold font-size-12 me-2" id="totalco"><i></i></span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-primary rounded-3">
@@ -42,8 +39,8 @@ Cache::forget('invoice');
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-truncate font-size-14 mb-2">{{ __('New Orders') }}</p>
-                                <h4 class="mb-2" id="neworder">938</h4>
-                                <p class="text-muted mb-0"><span class="text-danger fw-bold font-size-12 me-2"><i class="ri-arrow-right-down-line me-1 align-middle"></i>1.09%</span>{{ __('from previous period') }}</p>
+                                <h4 class="mb-2" id="neworder"></h4>
+                                <p class="text-muted mb-0"><span class=" fw-bold font-size-12 me-2" id="orderco"><i class="ri-arrow-right-down-line me-1 align-middle"></i></span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-success rounded-3">
@@ -63,7 +60,7 @@ Cache::forget('invoice');
                             <div class="flex-grow-1">
                                 <p class="text-truncate font-size-14 mb-2">{{ __('Total Customers') }}</p>
                                 <h4 class="mb-2" id="customers"></h4>
-                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>16.2%</span>{{ __('from previous period') }}</p>
+                                <p class="text-muted mb-0"><span class=" fw-bold font-size-12 me-2 " id="customerco"><i class="ri-arrow-right-up-line me-1 align-middle"></i></span>{{ __('from previous period') }}</p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-primary rounded-3">
@@ -81,7 +78,7 @@ Cache::forget('invoice');
                             <div class="flex-grow-1">
                                 <p class="text-truncate font-size-14 mb-2">{{ __('Products Out Of Stock') }}</p>
                                 <h4 class="mb-2" id="outofstock"></h4>
-                                <p class="text-muted mb-0"><span class="text-success fw-bold font-size-12 me-2"><i class="ri-arrow-right-up-line me-1 align-middle"></i>11.7%</span>{{ __('from previous period') }}</p>
+                                <p class="text-muted mb-0"><span class=" fw-bold font-size-12 me-2"><i></i></span></p>
                             </div>
                             <div class="avatar-sm">
                                 <span class="avatar-title bg-light text-success rounded-3">
@@ -148,19 +145,18 @@ Cache::forget('invoice');
             try {
                 const response = await fetch('{{route("get-total-sells")}}');
                 const data = await response.json();
-
                 document.getElementById('totalsells').textContent = data.totalsells + ' MAD';
-                document.getElementById('neworder').textContent = data.neworders + ' This Week';
-                document.getElementById('outofstock').textContent = data.outofstocks;
-                document.getElementById('customers').textContent = data.totalCustomers;
+                document.getElementById('neworder').textContent = data.neworders + ' {{__("This Week")}}';
+                document.getElementById('outofstock').textContent = data.outofstocks + ' {{__("products")}}';
+                document.getElementById('customers').textContent = data.totalCustomers + ' {{__("Customers")}}';
+                percentageDomCalculation('customerco', data.customersco);
+                percentageDomCalculation('orderco', data.ordersco);
+                percentageDomCalculation('totalco', data.sellsco);
                 const table = document.getElementById('invoices');
                 const tbody = table.querySelector('tbody');
-
                 let rows = '';
                 let total = 0;
                 data.invoices.forEach(invoice => {
-
-
                     rows += `<tr>
                                             <td>
                                                 <h6 class="mb-0">${invoice.invoice_no}</h6>
@@ -184,9 +180,28 @@ Cache::forget('invoice');
             } catch (error) {
                 console.log(error);
             }
+        }
 
+        function percentageDomCalculation(id, data) {
+            let totalsellcospan = document.getElementById(id);
+            let totelsellTextnode = "";
+            if (data != null && data != undefined) {
+                if (data >= 0) {
+                    totalsellcospan.classList.add('text-success');
+                    totalsellcospan.firstChild.className = 'ri-arrow-right-up-line me-1 align-middle';
+                } else {
+                    totalsellcospan.classList.add('text-danger');
 
-
+                    totalsellcospan.firstChild.className = 'ri-arrow-right-down-line me-1 align-middle';
+                }
+                totelsellTextnode = document.createTextNode(Math.abs(data).toFixed(2) + ' %');
+            } else {
+                totalsellcospan.firstChild.className = 'me-1 align-middle';
+                totalsellcospan.classList.add('font-size-14')
+                totelsellTextnode = document.createTextNode("No sales recorded");
+            }
+            totalsellcospan.appendChild(totelsellTextnode);
         }
     </script>
+
     @endsection

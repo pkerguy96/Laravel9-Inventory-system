@@ -17,7 +17,7 @@ class BrandsController extends Controller
     {
         try {
             $brands = Brand::latest()->get();
-            return view('backend.Brands.allbrands', compact(('brands')));
+            return view('backend.brands.allbrands', compact(('brands')));
         } catch (\Exception $e) {
             Log::error('All brands function: ' . $e->getMessage());
             report($e);
@@ -26,7 +26,7 @@ class BrandsController extends Controller
     }
     public function AddBrand()
     {
-        return view('backend.Brands.add_brand');
+        return view('backend.brands.add_brand');
     }
 
     public function StoreBrand(Request $request)
@@ -65,7 +65,7 @@ class BrandsController extends Controller
     {
         try {
             $data = Brand::findorfail($id);
-            return view('backend.Brands.Edit_brand', compact(('data')));
+            return view('backend.brands.Edit_brand', compact(('data')));
         } catch (\Exception $e) {
             Log::error('EditBrand function: ' . $e->getMessage());
             report($e);
