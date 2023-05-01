@@ -12,7 +12,6 @@
             </div>
         </div>
         <!-- end page title -->
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -30,17 +29,13 @@
                                     <th>{{ __('Total Quantity') }}</th>
                                     <th>{{ __('Action') }}</th>
                             </thead>
-
                             <tbody>
-
-
                                 @foreach ($data as $key => $item)
                                 <tr>
-                                    <td><a href="{{ route('order.form.details', $item->id) }}" class="text-reset !important">{{ $key + 1 }}</a></td>
+                                    <td>{{ $key + 1 }}</td>
                                     <td><a href="{{ route('order.form.details', $item->id) }}" class="text-reset !important">{{ $item->orderform_no }}</a></td>
                                     <td><a href="{{ route('order.form.details', $item->id) }}" class="text-reset !important">{{ date('d-m-Y', strtotime($item->date)) }}</a>
                                     </td>
-
                                     <td><a href="{{ route('order.form.details', $item->id) }}" class="text-reset !important">{{ $item->total_qte }}</a></td>
                                     <td>
                                         <a href="{{ route('delete.quotation', $item->id) }}" class="btn btn-danger sm" title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i> </a>
@@ -50,14 +45,10 @@
 
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
-
-
-
     </div> <!-- container-fluid -->
 </div>
 @endsection

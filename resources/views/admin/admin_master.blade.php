@@ -31,7 +31,13 @@
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
-
+    <link rel="stylesheet" type="text/css" href="{{ asset('select.css') }}" />
+    <style>
+        .page-content {
+            margin-left: 0;
+            margin-inline-start: ;
+        }
+    </style>
     <script>
         async function getPrintFunction(type = "facture", data = {}) {
             var path, regex;
@@ -117,125 +123,6 @@
                 }, 1000);
             };
         }
-
-        // getPrintFunction("facture", {
-        //     client: "ahmedqo",
-        //     address: "04 rue nador",
-        //     ice: "1000000s54s5455",
-        //     phone: "4545545455454",
-        //     bill: "2023/10",
-        //     date: "1000000s54s5455",
-        //     bon: "1000000s54s5455",
-        //     tax: "1000000s54s5455",
-        //     total: "1000000s54s5455",
-        //     sub_total: "1000000s54s5455",
-        //     total_tax: "1000000s54s5455",
-        //     total_text: "1000000s54s5455",
-        //     rows: `	<tr>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 	</tr>`,
-        // }).then((print) => {
-        //     document.querySelector("#print-facture").addEventListener("click", print);
-        // });
-
-        // getPrintFunction("livraison", {
-        //     client: "ahmedqo",
-        //     address: "04 rue nador",
-        //     ice: "1000000s54s5455",
-        //     phone: "4545545455454",
-        //     bon: "2023/10",
-        //     date: "1000000s54s5455",
-        //     total: "1000000s54s5455",
-        //     quantity: "100",
-        //     total_text: "1000000s54s5455",
-        //     rows: `	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 		<td>&nbsp;</td>
-        // 	</tr>`,
-        // }).then((print) => {
-        //     document.querySelector("#print-livraison").addEventListener("click", print);
-        // });
-
-        // getPrintFunction("commande", {
-        //     date: "1000000s54s5455",
-        //     rows: `	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 	</tr>`,
-        // }).then((print) => {
-        //     document.querySelector("#print-commande").addEventListener("click", print);
-        // });
-
-        // getPrintFunction("devis", {
-        //     date: "1000000s54s5455",
-        //     devis: "2023/20",
-        //     total: "1000000s54s5455",
-        //     sub_total: "1000000s54s5455",
-        //     total_tax: "1000000s54s5455",
-        //     rows: `	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 	</tr>
-        // 	<tr>
-        // 		<td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        //         <td>&nbsp;</td>
-        // 	</tr>`,
-        // }).then((print) => {
-        //     document.querySelector("#print-devis").addEventListener("click", print);
-        // });
     </script>
 
 </head>
@@ -348,9 +235,11 @@
     <!-- Form Select 2  JS -->
     <script src="{{ asset('backend/assets/libs/select2/js/select2.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/pages/form-advanced.init.js') }}"></script>
-    <!-- <script>
+    <script src="{{  asset('select.js') }}"></script>
+    <script>
         $(document).ready(function() {
-            $('#tabledata').DataTable({
+            $('#datatab').DataTable({
+                autoWidth: false,
                 "language": {
                     "lengthMenu": "{{ __('Display _MENU_ records per page') }}",
                     "zeroRecords": "{{ __('Nothing found - sorry') }}",
@@ -360,7 +249,8 @@
                 }
             });
         });
-    </script> -->
+        new Select();
+    </script>
 
 </body>
 

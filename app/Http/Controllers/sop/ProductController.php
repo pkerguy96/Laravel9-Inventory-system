@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -68,6 +69,7 @@ class ProductController extends Controller
                 'created_by' => Auth::user()->id,
                 'created_at' => Carbon::now(),
             ]);
+            Cache::forget('outofstock');
             $notification = InsertNotification('Product Added Successfully', 'success');
             return redirect()->route('all.Products')->with($notification);
         } catch (\Exception $e) {
@@ -105,6 +107,7 @@ class ProductController extends Controller
                 'updated_by' => Auth::user()->id,
                 'updated_at' => Carbon::now(),
             ]);
+            Cache::forget('outofstock');
             $notification = InsertNotification('Product Updated Successfully', 'success');
             return redirect()->route('all.Products')->with($notification);
         } catch (\Exception $e) {
@@ -118,6 +121,7 @@ class ProductController extends Controller
         try {
             Product::findorfail($id)->delete();
             $notification = InsertNotification('Product Deleted Successfully', 'info');
+            Cache::forget('outofstock');
             return redirect()->route('all.Products')->with($notification);
         } catch (\Exception $e) {
             Log::error('Deleteproduct function: ' . $e->getMessage());

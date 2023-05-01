@@ -18,7 +18,8 @@ class DeliveryController extends Controller
     public function Alldelivery()
     {
         try {
-            $deliverys = DeliveryReceipt::with('DeliveryDetails')->get();
+            $deliverys = DeliveryReceipt::with('DeliveryDetails')->orderBy('date', 'desc')
+                ->get();
             return view('backend.delivery.all_deliverys', compact(('deliverys')));
         } catch (\Exception $e) {
             Log::error('Alldelivery function: ' . $e->getMessage());
@@ -53,6 +54,7 @@ class DeliveryController extends Controller
                 $delivery->customer_id = $request->customer_id;
                 $delivery->delivery_no = $request->delivery_no;
                 $delivery->discount = $request->discount_amount;
+                $delivery->tax_rate = $request->tax_rate;
                 $delivery->date =  date('Y-m-d', strtotime($request->date));
                 $delivery->description = $request->description;
                 $delivery->total_qte = $request->Qtotal;

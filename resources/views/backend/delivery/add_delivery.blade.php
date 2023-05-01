@@ -2,18 +2,13 @@
 @section('admin')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <div class="page-content">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">{{ __("Add New Delivery Receipt") }} </h4><br><br>
-
-
-
                         <div class="row justify-content-center justify-content-md-center justify-content-sm-between gap-sm-3 gap-md-5 flex-wrap">
                             <div class="col-md-2 col-sm-12 mb-3 mb-sm-0">
                                 <div class="md-3">
@@ -27,14 +22,13 @@
                                     <input class="form-control" type="date" value="{{$date}}" name="date" id="date">
                                 </div>
                             </div>
-
                         </div>
                         <div class="row d-flex justify-content-center  mt-2 mt-sm-1 mt-md-2 mt-lg-3 mt-xl-3 flex-wrap">
                             <!-- brand start -->
                             <div class=" col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="Brand_id" class="form-label">{{ __("Brand") }}</label>
-                                    <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
+                                    <select x-select placeholder="{{ __('Select Brand') }}" id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
                                         @foreach ($brands as $key )
                                         <option value="{{$key->id}}">{{$key->Brand_name}}</option>
                                         @endforeach
@@ -45,18 +39,17 @@
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="category_id" class="form-label">{{ __("Category") }}</label>
-                                    <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
+                                    <select x-select placeholder="{{ __('Select Category') }}" id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                         @foreach ($categories as $key )
                                         <option value="{{$key->id}}">{{$key->category_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="product_id" class="form-label">{{ __("Product Name") }}</label>
-                                    <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
+                                    <select x-select placeholder="{{ __('Select Product') }}" id="product_id" name="product_id" class="form-select" aria-label="Default select example">
                                         <option selected="">Open this select menu</option>
                                     </select>
                                 </div>
@@ -68,10 +61,7 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row float-end mt-0 ">
-
-
                             <div class="col-md-12">
                                 <div class="md-3">
                                     <label for="example-text-input" class="form-label" style="margin-top: 32px;"></label>
@@ -79,100 +69,96 @@
                                     <i class="btn btn-info   btn-rounded waves-effect waves-light fas fa-plus-circle eeventmore">{{ __("Add More") }}</i>
                                 </div>
                             </div>
-
                         </div>
-
-
                     </div>
-
                     <!-- End of card body -->
                     <div class="card-body">
                         <form action="{{route('store.delivery')}}" method="post" action="">
                             @csrf
-                            <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
-                                <thead>
-                                    <tr>
-                                        <th>{{ __("Brand") }}</th>
-                                        <th>{{ __("Product Name") }}</th>
-                                        <th>{{ __("Category") }}</th>
-                                        <th width="7%">{{ __("Pieces") }}</th>
-                                        <th width="10%">{{ __("Unit Price") }}</th>
-                                        <th width="15%">{{ __("Total Price") }}</th>
-                                        <th width="7%">{{ __("Action") }}</th>
+                            <div class="table-responsive">
+                                <table class="table-sm table-bordered" width="100%" style="border-color:#ddd ;">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __("Brand") }}</th>
+                                            <th>{{ __("Product Name") }}</th>
+                                            <th>{{ __("Category") }}</th>
+                                            <th width="7%">{{ __("Pieces") }}</th>
+                                            <th width="10%">{{ __("Unit Price") }}</th>
+                                            <th width="15%">{{ __("Total Price") }}</th>
+                                            <th width="7%">{{ __("Action") }}</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody id="rowAdd" class="rowAdd">
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rowAdd" class="rowAdd">
 
-                                </tbody>
+                                    </tbody>
 
-                                <tbody id=" rowAdd" class="rowAdd">
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Discount") }} </strong></td>
-                                        <td>
-                                            <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                <tbody id=" rowAdd" class="rowAdd">
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Subtotal") }}</strong></td>
+                                    <tbody id=" rowAdd" class="rowAdd">
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Discount") }} </strong></td>
+                                            <td>
+                                                <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="Discount Amount">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    <tbody id=" rowAdd" class="rowAdd">
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Subtotal") }}</strong></td>
 
-                                        <td>
-                                            <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
-                                            <input type="hidden" name="amountrd" id="amountrd" class="amountrd">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Tax 20%") }}</strong></td>
+                                            <td>
+                                                <input type="text" name="amount" value="0" id="amount" class="form-control amount" readonly style="background-color: #ddd;">
+                                                <input type="hidden" name="amountrd" id="amountrd" class="amountrd">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;">
+                                                <strong class="text-right mr-sm-2">{{ __('Tax') }}</strong>
+                                                <select name="tax_rate" class="btn btn-light dropdown-toggle" id="tax_rate">
+                                                    <option value="20">20%</option>
+                                                    <option value="7">7%</option>
+                                                </select>
+                                            </td>
 
 
-                                        <td>
-                                            <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
+                                            <td>
+                                                <input type="text" name="tax" value="0" id="tax" class="form-control amount" readonly style="background-color: #ddd;">
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Grand Total estimated amount") }}</strong></td>
-                                        <td>
-                                            <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Total Quantity") }}</strong></td>
-                                        <td>
-                                            <input type="text" name="Qtotal" value="0" id="Qtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table><br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Grand Total estimated amount") }}</strong></td>
+                                            <td>
+                                                <input type="text" name="Gtotal" value="0" id="Gtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" style="text-align: right;"><strong class="text-right">{{ __("Total Quantity") }}</strong></td>
+                                            <td>
+                                                <input type="text" name="Qtotal" value="0" id="Qtotal" class="form-control Gtotal" readonly style="background-color: #ddd;">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table><br>
+                            </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <textarea name="description" class="form-control" id="description" placeholder="{{ __('Enter description here') }}"></textarea>
                                 </div>
                             </div><br>
                             <div class="row">
-
                                 <div class="form-group col-md-6">
                                     <label for="">{{ __("customer Name") }}</label>
-                                    <select name="customer_id" id="customer_id" class="form-select">
-
+                                    <select x-select placeholder="{{ __('Select Customer') }}" name="customer_id" id="customer_id" class="form-select">
                                         <option value="">{{ __("Select Customer") }}</option>
                                         @foreach ( $customers as $key)
                                         <option value="{{$key->id}}"> {{ $key->name  }} - {{ $key->email }}</option>
                                         @endforeach
-
-
                                     </select>
-
                                 </div>
-
-
                             </div><br>
-
                             <div class="form-group">
                                 <button type="{{ __('submit') }}" class="btn btn-info" id="addButton">{{ __("Add Invoice") }}</button>
                             </div>
@@ -183,16 +169,8 @@
                 </div>
             </div> <!-- end col -->
         </div>
-
-
-
     </div>
 </div>
-
-
-
-
-
 <script id="document-template" type="text/x-handlebars-template">
 
     <tr class="delete_add_more_item" id="delete_row">
@@ -336,8 +314,18 @@
                 // add the value of each qte input to the total
                 totalQte += parseInt($(this).val()) || 0;
             });
-            // set the total qte to the qtotal input
+            // set the total qte to the qtotal input 
             $qtotal.val(totalQte);
+        }
+        document.getElementById('tax_rate').addEventListener('change', function() {
+            totalAmountPrice()
+        });
+
+        function taxRate(subtotal, selecttaxRate) {
+            let taxRate = parseFloat(selecttaxRate);
+
+            if (taxRate == 7) return 0.07 * subtotal;
+            if (taxRate == 20) return 0.20 * subtotal;
         }
         /* calculater total */
         function totalAmountPrice() {
@@ -363,7 +351,8 @@
             })); // round subtotal to 2 decimal places
 
             // Calculate tax amount as 20% of subtotal
-            var onlytax = 0.20 * sum;
+            var taxRateValue = $('#tax_rate').val();
+            var onlytax = taxRate(sum, taxRateValue);
             $('#tax').val(onlytax.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
@@ -380,14 +369,14 @@
     });
 </script>
 <script type="text/javascript">
-    document.getElementById('category_id').addEventListener('change', function() {
+    document.getElementById('category_id').addEventListener('select', function() {
         var category_id = this.value;
         fetch(`{{ route('fetch-product') }}?category_id=${category_id}`, {
                 method: "GET",
             })
             .then(response => response.json())
             .then(data => {
-                let html = '<option value="">Select Category</option>';
+                let html = '';
                 data.forEach(function(v) {
                     html += `<option value="${v.id}"> ${v.product_name} </option>`;
                 });
@@ -402,7 +391,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            let html = '<option value="">Select Category</option>';
+            let html = '';
             data.forEach(function(v) {
                 html += `<option value="${v.id}"> ${v.product_name} </option>`;
             });
@@ -411,7 +400,7 @@
         .catch(error => console.log(error));
 </script>
 <script type="text/javascript">
-    document.getElementById('product_id').addEventListener('change', function() {
+    document.getElementById('product_id').addEventListener('select', function() {
         var product_id = this.value;
         fetch(`{{ route('get-product-info') }}?product_id=${product_id}`, {
                 method: "GET",
@@ -425,7 +414,7 @@
     });
 </script>
 <script type="text/javascript">
-    document.getElementById('customer_id').addEventListener('change', function() {
+    document.getElementById('customer_id').addEventListener('select', function() {
         var customer_id = this.value;
         fetch(`{{ route('get-customer-delivery-receipt') }}?customer_id=${customer_id}`, {
                 method: "GET",

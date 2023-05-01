@@ -14,7 +14,6 @@
             </div>
         </div>
         <!-- end page title -->
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -86,7 +85,7 @@
                                     @php
                                     $sellingPrices = $invoice['InvoiceDetails']->pluck('selling_price')->toArray();
                                     $Subtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 0);
-                                    $Grandtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , 20);
+                                    $Grandtotal = CalculateGrandTotal($sellingPrices, $payement->discount_amount , $invoice->tax_rate);
                                     @endphp
                                     <tr class="text-center">
                                         <td colspan="6">{{ __("Discount") }}:</td>
@@ -102,7 +101,7 @@
                                     </tr>
 
                                     <tr class="text-center">
-                                        <td colspan="6">{{ __("Tax 20%") }}:</td>
+                                        <td colspan="6">{{ __("Tax") }} {{ $invoice->tax_rate }}%:</td>
 
                                         <td> {{ number_format(  $Grandtotal['tax_amount'] , 2, '.', ',') }} MAD</td>
                                     </tr>

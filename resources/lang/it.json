@@ -141,7 +141,7 @@
     "Grand Total": "Totale",
     "Add New Invoice": "Aggiungi nuova fattura",
     "Full due": "Totale dovuto",
-    "delivery receipt": "Ricevuta di consegna",
+    "Delivery receipt": "Ricevuta di consegna",
     "Select delivery receipt": "Seleziona ricevuta di consegna",
     "All Invoices": "Tutte le fatture",
     "All Invoices Data": "Tutti i dati di fatturazione",
@@ -291,5 +291,7 @@
     "All Admins": "Tutti gli Amministratori",
     "This Week": "Questa Settimana",
     "products": "prodotti",
-    "Customers": "Clienti"
+    "Customers": "Clienti",
+    "Add New Quotation": "Aggiungi una nuova citazione",
+    "en": "it"
 }

@@ -135,7 +135,13 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="5" style="text-align: right;"> <strong class="text-right">{{ __("Tax 20%") }}</strong></td>
+                                            <td colspan="5" style="text-align: right;">
+                                                <strong class="text-right mr-sm-2">{{ __('Tax') }}</strong>
+                                                <select name="tax_rate" class="btn btn-light dropdown-toggle" id="tax_rate">
+                                                    <option value="20">20%</option>
+                                                    <option value="7">7%</option>
+                                                </select>
+                                            </td>
 
 
                                             <td>
@@ -162,17 +168,17 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="">{{ __("Payement Status") }}</label>
-                                    <select name="pay_status" id="pay_status" class="form-select">
+                                    <select name="pay_status" id="pay_status" class="form-select mb-2">
                                         <option value="">{{ __("Select Payement") }}</option>
                                         <option value="full_paid">{{ __("Full Payement") }}</option>
                                         <option value="full_due">{{ __("Full due") }}</option>
                                         <option value="partial_paid">{{ __("Partial Payement") }}</option>
                                     </select>
-                                    <input type="text" name="paid_amount" class="form-control paid_amount" placeholder="Enter Amount" style="display: none;">
+                                    <input type="text" name="paid_amount" class="form-control paid_amount mt-3 mb-2 mt-sm-3" placeholder="Enter Amount" style="display: none;">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="">{{ __("customer Name") }}</label>
-                                    <select name="customer_id" id="customer_id" class="form-select">
+                                    <label for="">{{ __("Customer Name") }}</label>
+                                    <select name="customer_id" id="customer_id" class="form-select mb-2">
 
                                         <option value="">{{ __("Select Customer") }}</option>
                                         @foreach ( $customers as $key)
@@ -185,7 +191,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
 
-                                    <label for="example-text-input" class="form-label">{{ __("delivery receipt") }}</label>
+                                    <label for="example-text-input" class="form-label">{{ __("Delivery receipt") }}</label>
                                     <select id="delivery_id" name="delivery_id" class="form-select" aria-label="Default select example">
                                         <option selected="">{{ __("Select delivery receipt") }}</option>
                                     </select>
@@ -248,7 +254,7 @@
 
 
      <td>
-     <input type="hidden"  class="form-control unit_pricerd text-right" name="unit_pricerd[]" value=""> 
+     <input type="hidden"  class="form-control unit_pricerd text-right  " name="unit_pricerd[]" value=""> 
     
     <input type="hidden"  class="form-control selling_pricerd text-right" name="selling_pricerd[]" value=""> 
         <input type="text" class="form-control selling_price text-right" name="selling_price[]" value="0" readonly> 
@@ -342,7 +348,16 @@
         $(document).on('keyup', '#discount_amount', function() {
             totalAmountPrice();
         });
+        document.getElementById('tax_rate').addEventListener('change', function() {
+            totalAmountPrice()
+        });
 
+        function taxRate(subtotal, selecttaxRate) {
+            let taxRate = parseFloat(selecttaxRate);
+
+            if (taxRate == 7) return 0.07 * subtotal;
+            if (taxRate == 20) return 0.20 * subtotal;
+        }
         /* calculater total */
         function totalAmountPrice() {
             var sum = 0;
@@ -367,7 +382,8 @@
             })); // round subtotal to 2 decimal places
 
             // Calculate tax amount as 20% of subtotal
-            var onlytax = 0.20 * sum;
+            var taxRateValue = $('#tax_rate').val();
+            var onlytax = taxRate(sum, taxRateValue);
             $('#tax').val(onlytax.toLocaleString("en-US", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2

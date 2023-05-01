@@ -116,9 +116,6 @@ class FetchController extends Controller
     public function gettotalsells()
     {
         try {
-
-
-
             $minutes = 1440;
             $key = 'totalsells'; // treseta mnin ikon invoice jdid
             $key2 = 'neworders'; //treseta mnin ikon invoice jdid

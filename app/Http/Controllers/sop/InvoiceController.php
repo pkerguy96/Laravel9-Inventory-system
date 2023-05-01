@@ -70,6 +70,7 @@ class InvoiceController extends Controller
                     $invoice->date = date('Y-m-d', strtotime($request->date));
                     $invoice->due_date = date('Y-m-d', strtotime($request->due_date));
                     $invoice->description = $request->description;
+                    $invoice->tax_rate = $request->tax_rate;
                     $invoice->status = '0';
                     $invoice->created_by = Auth::user()->id;
 
@@ -100,7 +101,7 @@ class InvoiceController extends Controller
                             $payements->customer_id = $customerid;
                             $payements->pay_status = $request->pay_status;
                             $payements->discount_amount = $request->discount_amount;
-                            $total_amount_with_tax =  CalculateGrandTotal($request->selling_pricerd, $request->discount_amount, 20);
+                            $total_amount_with_tax =  CalculateGrandTotal($request->selling_pricerd, $request->discount_amount, $request->tax_rate);
                             $payements->total_amount =  $total_amount_with_tax['grand_total'];
                             if ($request->pay_status == 'full_paid') {
                                 $payements->paid_amount =  $total_amount_with_tax['grand_total'];
@@ -164,7 +165,7 @@ class InvoiceController extends Controller
         try {
             $payement = Payement::where('invoice_id', $id)->first();
             $invoice = Invoice::with('InvoiceDetails')->findorfail($id);
-            return view('backend.Invoices.Approved_invoices', compact('invoice', 'payement'));
+            return view('backend.Invoices.all_invoices', compact('invoice', 'payement'));
         } catch (\Exception $e) {
             Log::error('ApproveInvoices function: ' . $e->getMessage());
             report($e);

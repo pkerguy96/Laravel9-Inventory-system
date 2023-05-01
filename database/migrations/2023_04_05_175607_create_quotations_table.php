@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('payement_type')->nullable();
             $table->double('total_qte')->nullable();
             $table->double('discount')->nullable();
+            $table->double('tax_rate')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();

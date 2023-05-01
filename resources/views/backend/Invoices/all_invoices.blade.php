@@ -39,7 +39,7 @@
 
                                 @foreach($allinvoices as $key => $item)
                                 <tr>
-                                    <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $key+1}} </a></td>
+                                    <td> {{ $key+1}} </td>
                                     <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item->invoice_no }} </a></td>
                                     <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ $item['payements']['customers']['name'] }} </a></td>
                                     <td> <a href="{{ route('Print.invoice.client',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}} </a></td>

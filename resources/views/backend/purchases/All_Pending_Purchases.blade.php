@@ -25,12 +25,9 @@
                             <thead>
                                 <tr>
                                     <th>{{ __('Sl') }}</th>
-                                    <th>{{ __('Purchase Number') }}</th>
                                     <th>{{ __('Purchase Date') }}</th>
-                                    <th>{{ __('Supplier') }}</th>
-                                    <th>{{ __('Category') }}</th>
-                                    <th>{{ __('Quantity') }}</th>
-                                    <th>{{ __('Product Name') }}</th>
+                                    <th>{{ __('Purchase Number') }}</th>
+                                    <th>{{ __('Grand Total') }}</th>
                                     <th>{{ __('Status') }}</th>
                                     <th>{{ __('Action') }}</th>
                             </thead>
@@ -38,31 +35,28 @@
                             <tbody>
 
                                 @foreach ($purchases as $key => $item)
+                                @php
+                                $purchaseDetail = $item->PurchaseDetails->where('purchase_id', $item->id);
+                                $sellingPrices = $purchaseDetail->pluck('buying_price')->toArray();
+                                $Grand_total = CalculateGrandTotal($sellingPrices, 0, $item->tax_rate);
+                                @endphp
                                 <tr>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important"> {{ $key + 1 }} </a> </td>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important"> {{ $item->purchase_no }} </a></td>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important">
-                                            {{ date('d-m-Y', strtotime($item->date)) }} </a></td>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important"> {{ $item['suppliers']->name }}</a> </td>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important"> {{ $item['categories']->category_name }}
-                                        </a></td>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important"> {{ $item->qte }} </a></td>
-                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important">
-                                            {{ $item['products']->product_name }}</a> </td>
+                                    <td> {{ $key + 1 }} </td>
+                                    <td><a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important">{{ date('d-m-Y', strtotime($item->date)) }}</a> </td>
+                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important">{{ $item->purchase_no }} </a></td>
+                                    <td> <a href="{{ route('Purchases.details', $item->id) }}" class="text-reset !important">{{ number_format($Grand_total['grand_total'], 2, '.', ',') }} MAD</a></td>
                                     <td>
                                         @if ($item->status == '0')
-                                        <span class="btn btn-warning">{{ __('Pending') }}</span>
-                                        @elseif($item->status == '1')
-                                        <span class="btn btn-success">{{ __('Approved') }}</span>
+                                        <a class=" btn btn-warning" disabled style="cursor: not-allowed;">{{ __('Pending') }}</a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($item->status == '0')
+                                        <a href="{{ route('approve.purchase', $item->id) }}" class="btn btn-success sm" title="approve Data"> <i class="fas fa-check-circle"></i> </a>
+                                        <a href="{{ route('delete.purchase', $item->id) }}" class="btn btn-danger sm" title="Delete Data" id="delete"> <i class="fas fa-trash-alt"></i> </a>
                                         @endif
                                     </td>
 
-                                    <td>
-                                        @if ($item->status == '0')
-                                        <a href="{{ route('approve.purchase', $item->id) }}" class="btn btn-success sm" title="Approve Purchase" id="approve">
-                                            <i class="fas fa-check-circle"></i> </a>
-                                        @endif
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

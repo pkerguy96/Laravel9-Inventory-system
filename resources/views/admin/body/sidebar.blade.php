@@ -126,8 +126,8 @@
                      </a>
                      <ul class="sub-menu" aria-expanded="false">
                          <li><a href="{{route('all.invoices')}}">{{ __("All Invoices") }}</a></li>
-                         <li><a href="{{route('all.invoices.daily')}}">{{ __("Daily Invoices Report") }}</a></li>
                          <li><a href="{{route('all.pending.invoices')}}">{{ __("Pending Invoices") }}</a></li>
+                         <li><a href="{{route('all.invoices.daily')}}">{{ __("Daily Invoices Report") }}</a></li>
 
                      </ul>
                  </li>

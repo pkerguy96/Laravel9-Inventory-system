@@ -54,6 +54,6 @@
     <footer>
         <b>PROMED PLANET SARL AU</b> au capital de 100 000 MAD / <b>RC</b>: 12937 / <b>IF</b>: 52551967 / <b>TAXE PROFESSIONNELLE</b>: 41304239 <br /><b>ICE</b
 			>: 003103471000024 | <b>Compte bancaire</b>: 011 450 0000452100001985 13 <br /><b>SIEGE SOCIAL</b>: ETG 1 AV MED V° HAY CHARAF AIT KORCHI PRES DE LA GENDARMERIE ROYALE BENI MELLAL <br /><b>GSM</b>: 0661 47 25 34 // 0039 388 126 9567 | <b>Email</b>:
-        promed.planet@gmail.com | <b>Web</b>: www.promedpalnet.ma
+        promed.planet@gmail.com | <b>Web</b>: www.promedplanet.com
     </footer>
 </body>

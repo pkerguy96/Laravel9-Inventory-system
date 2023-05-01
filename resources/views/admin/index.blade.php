@@ -94,45 +94,38 @@
         <div class="row">
 
 
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="dropdown float-end">
-                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="mdi mdi-dots-vertical"></i>
-                                </a>
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
 
-                            </div>
 
-                            <h4 class="card-title mb-4">{{ __('Latest Transactions') }}</h4>
+                        <h4 class="card-title mb-4">{{ __('Latest Transactions') }}</h4>
 
-                            <div class="table-responsive">
-                                <table class="table table-centered mb-0 align-middle table-hover table-nowrap" id="invoices">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>{{ __('Invoice Number') }}</th>
-                                            <th>{{ __('name') }}</th>
-                                            <th>{{ __('Date') }}</th>
-                                            <th>{{ __('Due Date') }}</th>
-                                            <th>{{ __('Status') }}</th>
-                                            <th>{{ __('Description') }}</th>
-                                            <th style="width: 120px;">{{ __('Latest Transactions') }}</th>
-                                        </tr>
-                                    </thead><!-- end thead -->
-                                    <tbody>
+                        <div class="table-responsive">
+                            <table class="table table-centered mb-0 align-middle table-hover table-nowrap" id="invoices">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>{{ __('Invoice Number') }}</th>
+                                        <th>{{ __('name') }}</th>
+                                        <th>{{ __('Date') }}</th>
+                                        <th>{{ __('Due Date') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th>{{ __('Description') }}</th>
+                                        <th style="width: 120px;">{{ __('Latest Transactions') }}</th>
+                                    </tr>
+                                </thead><!-- end thead -->
+                                <tbody>
 
-                                    </tbody><!-- end tbody -->
-                                </table> <!-- end table -->
-                            </div>
-                        </div><!-- end card -->
+                                </tbody><!-- end tbody -->
+                            </table> <!-- end table -->
+                        </div>
                     </div><!-- end card -->
-                </div>
-                <!-- end col -->
-
-
-
+                </div><!-- end card -->
             </div>
+            <!-- end col -->
+
+
+
             <!-- end row -->
         </div>
 

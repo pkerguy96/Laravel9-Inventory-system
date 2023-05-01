@@ -142,7 +142,7 @@
     "Grand Total": "Prix Total",
     "Add New Invoice": "Ajouter une nouvelle facture",
     "Full due": "Montant total dû",
-    "delivery receipt": "Reçu bon de livraison",
+    "Delivery receipt": "Reçu bon de livraison",
     "Select delivery receipt": "Sélectionnez le bon de livraison",
     "All Invoices": "Toutes les factures",
     "All Invoices Data": "Toutes les données de facturation",
@@ -297,5 +297,7 @@
     "filtered from _MAX_ total records": "filtré à partir du nombre total d'enregistrements _MAX_",
     "This Week": "Cette semaine",
     "products": "Produits",
-    "Customers": "Clients"
+    "Customers": "Clients",
+    "Add New Quotation": "Ajouter un nouveau devis",
+    "en": "fr"
 }

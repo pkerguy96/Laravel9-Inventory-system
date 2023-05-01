@@ -44,18 +44,19 @@ class QuotationController extends Controller
     public function StoreQuotations(request $request)
     {
         try {
-            if (empty($request->category_id)  || empty($request->Brand_id)  || empty($request->product_id)) {
-                $errorMessage = empty($request->category_id) ? "Please select a category." : (empty($request->Brand_id) ? "Please select a brand." : "Please select a product.");
+            if (empty($request->category_id)  || empty($request->product_id)) {
+                $errorMessage = empty($request->category_id) ? "Please select a category." : "Please select a product.";
                 $notification = InsertNotification($errorMessage, 'error');
                 return redirect()->back()->with($notification);
             } else {
-
                 $quotation = new quotation();
                 $quotation->quotation_no = $request->quotation_no;
                 $quotation->date = date('Y-m-d', strtotime($request->date));
                 $quotation->due_date = date('Y-m-d', strtotime($request->due_date));
                 $quotation->description = $request->description;
                 $quotation->discount = $request->discount_amount;
+                $quotation->tax_rate = doubleval($request->tax_rate);
+
                 $quotation->payement_type = $request->payement_status;
                 $quotation->created_by = Auth::user()->id;
 

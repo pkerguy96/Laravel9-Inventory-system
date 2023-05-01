@@ -28,7 +28,6 @@
                                 <tr>
                                     <th>Sl</th>
                                     <th>{{ __("Delivery Number") }}</th>
-                                    <th>{{ __("Customer Name") }}</th>
                                     <th>{{ __("Date") }}</th>
                                     <th>{{ __("Total Quantity") }}</th>
                                     <th>{{ __("Discount") }}</th>
@@ -44,16 +43,16 @@
                                 $deliveryDetails = $item->DeliveryDetails->where('delivery_id', $item->id);
                                 $sellingPrices = $deliveryDetails->pluck('selling_price')->toArray();
                                 // calculate tax for the selling prices
-                                $Grand_total = CalculateGrandTotal($sellingPrices, $deliveryDiscount , 20);
+                                $Grand_total = CalculateGrandTotal($sellingPrices, $deliveryDiscount , $item->tax_rate);
                                 @endphp
 
                                 <tr>
-                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important"> {{ $key+1}} </a></td>
+                                    <td> {{ $key+1}} </td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->delivery_no }} </a></td>
-                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item['customers']['name'] }} </a></td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}}</a> </td>
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->total_qte}} </a></td>
-                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->discount ?? 'N/A'}} </a></td>
+                                    <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ $item->discount > 0 ? number_format($item->discount, 2, '.', ',') .' MAD' : 'N/A' }} </a></td>
+
                                     <td> <a href="{{ route('print.delivery',$item->id) }}" class="text-reset !important">{{ number_format($Grand_total['grand_total'], 2, '.', ',') }} MAD</a></td>
                                     <td>
 

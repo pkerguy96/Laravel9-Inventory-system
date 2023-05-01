@@ -29,7 +29,7 @@
                             <div class=" col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="Brand_id" class="form-label">{{ __('Brand') }}</label>
-                                    <select id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
+                                    <select x-select placeholder="{{ __('Select Brand') }}" id="Brand_id" name="Brand_id" class="form-select" aria-label="Default select example">
                                         @foreach ($brands as $key)
                                         <option value="{{ $key->id }}">{{ $key->Brand_name }}</option>
                                         @endforeach
@@ -44,7 +44,7 @@
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="category_id" class="form-label">{{ __('Category') }}</label>
-                                    <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
+                                    <select x-select placeholder="{{ __('Select Category') }}" id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                         @foreach ($categories as $key)
                                         <option value="{{ $key->id }}">{{ $key->category_name }}</option>
                                         @endforeach
@@ -55,7 +55,7 @@
                             <div class="col-md-3 col-sm-12">
                                 <div class="mb-3">
                                     <label for="product_id" class="form-label">{{ __('Product Name') }}</label>
-                                    <select id="product_id" name="product_id" class="form-select" aria-label="Default select example">
+                                    <select x-select placeholder="{{ __('Select Product') }}" id="product_id" name="product_id" class="form-select" aria-label="Default select example">
                                         <option selected="">{{ __('Open this select menu') }}</option>
                                     </select>
                                 </div>
@@ -265,14 +265,14 @@
 
 
 <script type="text/javascript">
-    document.getElementById('category_id').addEventListener('change', function() {
+    document.getElementById('category_id').addEventListener('select', function() {
         var category_id = this.value;
         fetch(`{{ route('fetch-product') }}?category_id=${category_id}`, {
                 method: "GET",
             })
             .then(response => response.json())
             .then(data => {
-                let html = '<option value="">Select Category</option>';
+                let html = '';
                 data.forEach(function(v) {
                     html += `<option value="${v.id}"> ${v.product_name} </option>`;
                 });
@@ -287,7 +287,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            let html = '<option value="">Select Category</option>';
+            let html = '';
             data.forEach(function(v) {
                 html += `<option value="${v.id}"> ${v.product_name} </option>`;
             });
@@ -297,7 +297,7 @@
 </script>
 
 <script type="text/javascript">
-    document.getElementById('product_id').addEventListener('change', function() {
+    document.getElementById('product_id').addEventListener('select', function() {
         var product_id = this.value;
         fetch(`{{ route('get-product-info') }}?product_id=${product_id}`, {
                 method: "GET",

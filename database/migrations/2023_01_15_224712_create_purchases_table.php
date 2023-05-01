@@ -15,18 +15,10 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
-            $table->integer('brand_id');
-            $table->integer('product_id');
-            $table->integer('category_id');
             $table->string('purchase_no');
             $table->date('date');
             $table->string('description')->nullable();
-            $table->double('qte');
-            $table->double('unit_price');
-            $table->double('buying_price');
-            $table->double('tax_amount');
-            $table->double('grand_total');
+            $table->double('tax_rate');
             $table->tinyInteger('status')->default('0')->comment('0=Pending,1=Approved');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

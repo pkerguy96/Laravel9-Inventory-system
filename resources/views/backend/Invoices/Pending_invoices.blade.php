@@ -1,7 +1,5 @@
 @extends('admin.admin_master')
 @section('admin')
-
-
 <div class="page-content">
     <div class="container-fluid">
 
@@ -14,7 +12,6 @@
             </div>
         </div>
         <!-- end page title -->
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -42,15 +39,13 @@
                                     @foreach($allinvoices as $key => $item)
                                     <tr>
                                         <td> {{ $key+1}} </td>
-                                        <td> {{ $item->invoice_no }} </td>
-                                        <td> {{ $item['payements']['customers']['name'] }} </td>
-                                        <td> {{ date('d-m-Y',strtotime($item->date))}} </td>
-                                        <td> {{ $item->description}} </td>
-                                        <td> {{ number_format(  $item['payements']['total_amount'], 2, '.', ',') }} MAD</td>
+                                        <td> <a href="{{ route('Approve.invoice',$item->id) }}" class="text-reset !important"> {{ $item->invoice_no }}</a> </td>
+                                        <td> <a href="{{ route('Approve.invoice',$item->id) }}" class="text-reset !important">{{ $item['payements']['customers']['name'] }}</a> </td>
+                                        <td> <a href="{{ route('Approve.invoice',$item->id) }}" class="text-reset !important">{{ date('d-m-Y',strtotime($item->date))}}</a> </td>
+                                        <td> <a href="{{ route('Approve.invoice',$item->id) }}" class="text-reset !important">{{ $item->description}}</a> </td>
+                                        <td> <a href="{{ route('Approve.invoice',$item->id) }}" class="text-reset !important">{{ number_format(  $item['payements']['total_amount'], 2, '.', ',') }} MAD</a></td>
                                         <td> @if($item->status == '0' )
-                                            <span class="btn btn-warning">Pending</span>
-                                            @elseif($item->status == '1')
-                                            <span class="btn btn-success">Approved</span>
+                                            <span class="btn btn-warning" disabled style="cursor: not-allowed;">Pending</span>
                                             @endif
                                         </td>
                                         <td>
@@ -64,15 +59,10 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                     </div>
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row -->
-
-
-
     </div> <!-- container-fluid -->
 </div>
 
